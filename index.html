@@ -1054,13 +1054,16 @@ async function fetchData() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const text = await res.text();
     const rows = parseCSV(text);
-    render(rows);
-    fetchIntentos = 0; // reset en éxito
+
+    // Siempre ocultar loader y mostrar app, independientemente de errores en render
     document.getElementById('loader').style.display = 'none';
     if (!document.querySelector('.tab-content.active')) {
       document.getElementById('tab-plaza').classList.add('active');
     }
     document.getElementById('update-time').textContent = 'Act. ' + new Date().toLocaleTimeString('es-AR');
+    fetchIntentos = 0;
+
+    try { render(rows); } catch(renderErr) { console.warn('render error:', renderErr); }
   } catch(e) {
     const loaderEl = document.getElementById('loader');
     if (fetchIntentos >= FETCH_MAX_INTENTOS) {
@@ -1128,11 +1131,11 @@ function render(rows) {
     const atm = isATM(strike);
     const K = parseFloat(strike);
     const T = (diasVto||37)/365;
-    const r = Math.log(1+0.40);
+    const rf = Math.log(1+0.40);
     const viC = strikeLast[K]?.viCall || 0.60;
     const viP = strikeLast[K]?.viPut  || 0.60;
-    const gC  = spotGGAL ? bsGreeks(spotGGAL, K, T, r, viC, 'C') : null;
-    const gP  = spotGGAL ? bsGreeks(spotGGAL, K, T, r, viP, 'P') : null;
+    const gC  = spotGGAL ? bsGreeks(spotGGAL, K, T, rf, viC, 'C') : null;
+    const gP  = spotGGAL ? bsGreeks(spotGGAL, K, T, rf, viP, 'P') : null;
 
     // Colorimetría ITM/ATM/OTM
     let rowBgC = '', rowBgP = '';
