@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GGAL Options Desk</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #f5f5f7;
+    --white: #ffffff;
+    --border: #e2e2e6;
+    --border-light: #f0f0f4;
+    --text: #111118;
+    --muted: #8888a0;
+    --accent: #d4581a;
+    --accent-light: #fff4ee;
+    --positive: #16a34a;
+    --negative: #dc2626;
+    --blue: #2563eb;
+    --shadow: 0 1px 3px rgba(0,0,0,0.07);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Calibri','Inter',sans-serif; font-size:13px; }
+
+  header {
+    background:var(--white); border-bottom:1px solid var(--border);
+    position:sticky; top:0; z-index:100; box-shadow:var(--shadow);
+  }
+  .header-inner {
+    max-width:1500px; margin:0 auto; padding:0 28px;
+    height:62px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo { display:flex; align-items:center; gap:10px; }
+  .logo-icon {
+    width:34px; height:34px; background:var(--accent); border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    color:white; font-weight:700; font-size:13px; letter-spacing:-0.5px;
+  }
+  .logo-title { font-size:15px; font-weight:700; }
+  .logo-title span { color:var(--accent); }
+  .logo-sub { font-size:10px; color:var(--muted); margin-top:1px; }
+
+  .nav-tabs { display:flex; gap:2px; }
+  .nav-tab {
+    padding:7px 15px; font-size:12px; font-weight:500;
+    color:var(--muted); cursor:pointer; border:none; background:none;
+    border-radius:6px; font-family:'Inter',sans-serif; transition:all 0.15s;
+  }
+  .nav-tab:hover { background:var(--bg); color:var(--text); }
+  .nav-tab.active { background:var(--accent-light); color:var(--accent); font-weight:600; }
+
+  .header-right { display:flex; align-items:center; gap:24px; }
+  .stat-block { text-align:right; }
+  .stat-label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; font-weight:500; }
+  .stat-value { font-size:22px; font-weight:700; font-family:'DM Mono',monospace; line-height:1.1; }
+  .live-pill {
+    display:flex; align-items:center; gap:6px; background:var(--accent-light);
+    color:var(--accent); font-size:10px; font-weight:600;
+    padding:5px 10px; border-radius:20px; letter-spacing:0.5px;
+  }
+  .live-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); animation:blink 2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .update-time { font-size:10px; color:var(--muted); margin-top:3px; text-align:right; }
+
+  .container { max-width:1500px; margin:0 auto; padding:20px 28px; }
+
+  .loader { display:flex; flex-direction:column; align-items:center; padding:80px; gap:14px; }
+  .loader-bar { width:180px; height:3px; background:var(--border); border-radius:3px; overflow:hidden; }
+  .loader-fill { height:100%; background:var(--accent); animation:load 1.4s ease infinite; }
+  @keyframes load { 0%{width:0;margin-left:0} 50%{width:60%;margin-left:20%} 100%{width:0;margin-left:100%} }
+  .loader-text { font-size:12px; color:var(--muted); }
+
+  .tab-content { display:none; }
+  .tab-content.active { display:block; }
+
+  .plaza-wrap { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .card { background:var(--white); border:1px solid var(--border); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); }
+  .card-header { padding:12px 16px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+  .card-title { font-size:12px; font-weight:600; }
+  .calls-title { color:var(--positive); }
+  .puts-title { color:var(--negative); }
+  .card-sub { font-size:10px; color:var(--muted); }
+
+  table { width:100%; border-collapse:collapse; }
+  th {
+    padding:7px 12px; text-align:right; font-size:10px; font-weight:500;
+    color:var(--muted); letter-spacing:0.5px; text-transform:uppercase;
+    background:#fafafa; border-bottom:1px solid var(--border);
+  }
+  th:first-child { text-align:left; }
+  td {
+    padding:6px 12px; text-align:right;
+    border-bottom:1px solid var(--border-light);
+    font-family:'DM Mono',monospace; font-size:12px;
+  }
+  td:first-child { text-align:left; font-family:'Inter',sans-serif; color:var(--muted); font-size:11px; }
+  tr:last-child td { border-bottom:none; }
+  tr:hover td { background:#fafafa; }
+  .atm td { background:var(--accent-light) !important; }
+  .atm td:nth-child(2) { color:var(--accent); font-weight:600; }
+
+  .bid { color:var(--blue); }
+  .ask { color:var(--negative); }
+  .last-val { color:var(--text); font-weight:600; }
+  .empty { color:#ccc; }
+  .pos { color:var(--positive); font-weight:500; }
+  .neg { color:var(--negative); font-weight:500; }
+  .neu { color:var(--muted); }
+
+  .section-label {
+    font-size:11px; font-weight:600; color:var(--muted);
+    letter-spacing:1px; text-transform:uppercase;
+    padding-bottom:12px; margin-bottom:16px;
+    border-bottom:1px solid var(--border);
+  }
+  .estrategias-wrap { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; }
+  .strat-card { background:var(--white); border:1px solid var(--border); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); }
+  .strat-header { padding:10px 14px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:baseline; }
+  .strat-name { font-size:13px; font-weight:600; }
+  .strat-desc { font-size:10px; color:var(--muted); }
+  .calls-strat { border-top:3px solid var(--positive); }
+  .puts-strat { border-top:3px solid var(--negative); }
+  .mixed-strat { border-top:3px solid var(--blue); }
+  .lanz-strat { border-top:3px solid var(--accent); }
+
+  @media(max-width:900px) {
+    .plaza-wrap { grid-template-columns:1fr; }
+    .nav-tabs { display:none; }
+    .stat-value { font-size:18px; }
+  }
+
+  /* PAYOFF BUILDER */
+  .payoff-wrap { display:grid; grid-template-columns:480px 1fr; gap:16px; align-items:start; }
+  .payoff-panel { background:var(--white); border:1px solid var(--border); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); }
+  .payoff-panel-header { padding:12px 16px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+  .payoff-panel-title { font-size:13px; font-weight:600; }
+  .pata-row {
+    display:grid; grid-template-columns:65px 1fr 90px 90px 70px 28px;
+    gap:6px; padding:10px 14px; border-bottom:1px solid var(--border-light);
+    align-items:center;
+  }
+  .pata-label { font-size:11px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.4px; font-family:'Calibri',sans-serif; }
+  .pata-headers { display:grid; grid-template-columns:65px 1fr 90px 90px 70px 28px; gap:6px; padding:7px 14px; background:#fafafa; border-bottom:1px solid var(--border); }
+  input[type=number], input[type=text], input[type=date], select {
+    width:100%; padding:6px 8px; border:1px solid var(--border);
+    border-radius:5px; font-size:14px; font-family:'Calibri',sans-serif;
+    color:var(--text); background:var(--white); outline:none;
+  }
+  input[type=number]:focus, select:focus { border-color:var(--accent); }
+  select { font-family:'Calibri',sans-serif; font-size:14px; }
+  .cant-input { font-size:18px !important; font-weight:800 !important; text-align:center; }
+  .btn-add {
+    margin:10px 14px; width:calc(100% - 28px);
+    padding:8px; border:1px dashed var(--border); border-radius:6px;
+    background:none; color:var(--muted); font-size:12px; cursor:pointer;
+    font-family:'Inter',sans-serif; transition:all 0.15s;
+  }
+  .btn-add:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-light); }
+  .btn-remove {
+    width:24px; height:24px; border-radius:4px; border:none;
+    background:none; color:var(--muted); font-size:14px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:all 0.15s;
+  }
+  .btn-remove:hover { background:#fee2e2; color:var(--negative); }
+  .estrategia-detected {
+    margin:0 14px 10px; padding:8px 12px;
+    background:var(--accent-light); border-radius:6px;
+    font-size:12px; font-weight:600; color:var(--accent);
+    text-align:center; min-height:34px; display:flex; align-items:center; justify-content:center;
+  }
+  .payoff-stats {
+    display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px;
+    background:var(--border); border-top:1px solid var(--border);
+  }
+  .payoff-stat {
+    background:var(--white); padding:10px 14px; text-align:center;
+  }
+  .payoff-stat-label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.4px; font-family:'Calibri',sans-serif; }
+  .payoff-stat-val { font-size:15px; font-weight:700; font-family:'Calibri',sans-serif; margin-top:2px; }
+  .chart-card { background:var(--white); border:1px solid var(--border); border-radius:10px; padding:16px; box-shadow:var(--shadow); }
+  .chart-title { font-size:12px; font-weight:600; color:var(--muted); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px; }
+  .tipo-btn-group { display:flex; gap:4px; }
+  .tipo-btn {
+    padding:4px 10px; font-size:11px; font-weight:500; border-radius:4px;
+    border:1px solid var(--border); background:none; cursor:pointer;
+    font-family:'Inter',sans-serif; transition:all 0.15s; color:var(--muted);
+  }
+  .tipo-btn.active-call { background:#dcfce7; color:var(--positive); border-color:var(--positive); }
+  .tipo-btn.active-put { background:#fee2e2; color:var(--negative); border-color:var(--negative); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">GO</div>
+      <div>
+        <div class="logo-title">GGAL <span>Options</span></div>
+        <div class="logo-sub">Mercado de opciones · En vivo</div>
+      </div>
+    </div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showTab('plaza',this)">Plaza</button>
+      <button class="nav-tab" onclick="showTab('calls',this)">Estrategias Call</button>
+      <button class="nav-tab" onclick="showTab('puts',this)">Estrategias Put</button>
+      <button class="nav-tab" onclick="showTab('lanzamiento',this)">Lanzamiento / Sintética</button>
+      <button class="nav-tab" onclick="showTab('payoff',this)">Payoff Builder</button>
+    </div>
+    <div class="header-right">
+      <div class="stat-block">
+        <div class="stat-label">Días al vto.</div>
+        <div class="stat-value" id="dias-val">—</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-label">GGAL Last</div>
+        <div class="stat-value" id="spot-val">—</div>
+      </div>
+      <div>
+        <div class="live-pill"><div class="live-dot"></div>EN VIVO</div>
+        <div class="update-time" id="update-time">—</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div id="loader" class="loader">
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+    <div class="loader-text">Cargando datos de mercado...</div>
+  </div>
+
+  <!-- PLAZA -->
+  <div id="tab-plaza" class="tab-content">
+    <div class="plaza-wrap">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title calls-title">▲ CALLS</div>
+          <div class="card-sub">Opciones de compra</div>
+        </div>
+        <table>
+          <thead><tr><th>Ticker</th><th>Strike</th><th>Bid</th><th>Last</th><th>Offer</th><th>VI</th></tr></thead>
+          <tbody id="calls-body"></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title puts-title">▼ PUTS</div>
+          <div class="card-sub">Opciones de venta</div>
+        </div>
+        <table>
+          <thead><tr><th>Ticker</th><th>Strike</th><th>Bid</th><th>Last</th><th>Offer</th><th>VI</th></tr></thead>
+          <tbody id="puts-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALLS -->
+  <div id="tab-calls" class="tab-content">
+    <div class="section-label">Estrategias con Calls</div>
+    <div class="estrategias-wrap">
+      <div class="strat-card calls-strat">
+        <div class="strat-header"><div class="strat-name">Bull Spread</div><div class="strat-desc">B1 − B2</div></div>
+        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="bull-body"></tbody></table>
+      </div>
+      <div class="strat-card calls-strat">
+        <div class="strat-header"><div class="strat-name">Ratio</div><div class="strat-desc">B1 / B2</div></div>
+        <table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="ratio-body"></tbody></table>
+      </div>
+      <div class="strat-card calls-strat">
+        <div class="strat-header"><div class="strat-name">Ratio +2</div><div class="strat-desc">B1 / B3</div></div>
+        <table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="ratio2-body"></tbody></table>
+      </div>
+      <div class="strat-card calls-strat">
+        <div class="strat-header"><div class="strat-name">Ratio +3</div><div class="strat-desc">B1 / B4</div></div>
+        <table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="ratio3-body"></tbody></table>
+      </div>
+      <div class="strat-card mixed-strat">
+        <div class="strat-header"><div class="strat-name">Mariposa</div><div class="strat-desc">B1 + B3 − B2×2</div></div>
+        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="mariposa-body"></tbody></table>
+      </div>
+      <div class="strat-card mixed-strat">
+        <div class="strat-header"><div class="strat-name">Mariposa +1</div><div class="strat-desc">B1 + B5 − B3×2</div></div>
+        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="mariposa1-body"></tbody></table>
+      </div>
+      <div class="strat-card mixed-strat">
+        <div class="strat-header"><div class="strat-name">Mariposa +2</div><div class="strat-desc">B1 + B7 − B4×2</div></div>
+        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="mariposa2-body"></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PUTS -->
+  <div id="tab-puts" class="tab-content">
+    <div class="section-label">Estrategias con Puts</div>
+    <div class="estrategias-wrap">
+      <div class="strat-card puts-strat">
+        <div class="strat-header"><div class="strat-name">Bear Spread</div><div class="strat-desc">B2 − B1</div></div>
+        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="bear-body"></tbody></table>
+      </div>
+      <div class="strat-card puts-strat">
+        <div class="strat-header"><div class="strat-name">Ratio Put</div><div class="strat-desc">B2 / B1</div></div>
+        <table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="pratio-body"></tbody></table>
+      </div>
+      <div class="strat-card puts-strat">
+        <div class="strat-header"><div class="strat-name">Ratio Put +2</div><div class="strat-desc">B3 / B1</div></div>
+        <table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="pratio2-body"></tbody></table>
+      </div>
+      <div class="strat-card puts-strat">
+        <div class="strat-header"><div class="strat-name">Ratio Put +3</div><div class="strat-desc">B4 / B1</div></div>
+        <table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="pratio3-body"></tbody></table>
+      </div>
+      <div class="strat-card mixed-strat">
+        <div class="strat-header"><div class="strat-name">Mariposa Put</div><div class="strat-desc">B1 + B3 − B2×2</div></div>
+        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="pmariposa-body"></tbody></table>
+      </div>
+      <div class="strat-card mixed-strat">
+        <div class="strat-header"><div class="strat-name">Mariposa Put +1</div><div class="strat-desc">B1 + B5 − B3×2</div></div>
+        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="pmariposa1-body"></tbody></table>
+      </div>
+      <div class="strat-card mixed-strat">
+        <div class="strat-header"><div class="strat-name">Mariposa Put +2</div><div class="strat-desc">B1 + B7 − B4×2</div></div>
+        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="pmariposa2-body"></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- LANZAMIENTO -->
+  <div id="tab-lanzamiento" class="tab-content">
+    <div class="section-label">Lanzamiento Cubierto & Tasa Sintética</div>
+    <div class="estrategias-wrap">
+      <div class="strat-card lanz-strat">
+        <div class="strat-header"><div class="strat-name">Lanzamiento Cubierto</div><div class="strat-desc">TNA · Cobertura</div></div>
+        <table>
+          <thead><tr><th>Strike</th><th>TNA</th><th>Cobertura</th></tr></thead>
+          <tbody id="lanz-body"></tbody>
+        </table>
+      </div>
+      <div class="strat-card mixed-strat">
+        <div class="strat-header"><div class="strat-name">Tasa Sintética</div><div class="strat-desc">Call − Put + Strike</div></div>
+        <table>
+          <thead><tr><th>Strike</th><th>TNA</th></tr></thead>
+          <tbody id="sint-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAYOFF BUILDER -->
+  <div id="tab-payoff" class="tab-content">
+    <div class="payoff-wrap">
+      <div>
+        <div class="payoff-panel">
+          <div class="payoff-panel-header">
+            <div class="payoff-panel-title">Armá tu estrategia</div>
+            <div class="tipo-btn-group">
+              <button class="tipo-btn active-call" id="btn-call" onclick="setTipoDefault('C',this)">CALL</button>
+              <button class="tipo-btn" id="btn-put" onclick="setTipoDefault('P',this)">PUT</button>
+            </div>
+          </div>
+          <div class="pata-headers" style="grid-template-columns:60px 90px 80px 80px 50px 28px;">
+            <span class="pata-label">Tipo</span>
+            <span class="pata-label">Strike / Precio</span>
+            <span class="pata-label">Prima / Costo</span>
+            <span class="pata-label" style="color:#a0c4ff;">Last</span>
+            <span class="pata-label">Cant.</span>
+            <span></span>
+          </div>
+          <div id="patas-container"></div>
+          <button class="btn-add" onclick="agregarPata()">+ Agregar pata</button>
+          <div class="estrategia-detected" id="estrategia-label">Ingresá las patas</div>
+          <div class="payoff-stats" style="grid-template-columns:1fr 1fr 1fr 1fr;">
+            <div class="payoff-stat">
+              <div class="payoff-stat-label">Capital</div>
+              <div class="payoff-stat-val" id="stat-costo">—</div>
+            </div>
+            <div class="payoff-stat">
+              <div class="payoff-stat-label">PnL</div>
+              <div class="payoff-stat-val" id="stat-pnl">—</div>
+            </div>
+            <div class="payoff-stat">
+              <div class="payoff-stat-label">Máx ganancia</div>
+              <div class="payoff-stat-val" id="stat-maxgan" style="color:var(--positive)">—</div>
+            </div>
+            <div class="payoff-stat">
+              <div class="payoff-stat-label">Máx pérdida</div>
+              <div class="payoff-stat-val" id="stat-maxper" style="color:var(--negative)">—</div>
+            </div>
+          </div>
+          <!-- Costo financiero -->
+          <div style="padding:10px 16px; border-top:1px solid var(--border-light); background:#fafbff;">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;align-items:center;">
+              <div>
+                <div class="pata-label" style="margin-bottom:3px;">Tasa anual (%)</div>
+                <input type="number" id="cf-tasa" value="40" step="1" oninput="recalcularCF()" style="font-size:14px;">
+              </div>
+              <div>
+                <div class="pata-label" style="margin-bottom:3px;">Días</div>
+                <div id="cf-dias" style="font-size:16px;font-weight:700;font-family:'Calibri',sans-serif;padding-top:4px;">—</div>
+              </div>
+              <div>
+                <div class="pata-label" style="margin-bottom:3px;">Costo financiero</div>
+                <div id="cf-valor" style="font-size:16px;font-weight:700;color:var(--negative);font-family:'Calibri',sans-serif;padding-top:4px;">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sizes y rango -->
+        <div class="payoff-panel" style="margin-top:10px; padding:12px 14px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:10px;">
+            <div>
+              <div class="pata-label" style="margin-bottom:4px;">Option Size</div>
+              <input type="number" id="opt-size" value="100" oninput="recalcular()">
+            </div>
+            <div>
+              <div class="pata-label" style="margin-bottom:4px;">Underlying Size</div>
+              <input type="number" id="und-size" value="1" oninput="recalcular()">
+            </div>
+            <div>
+              <div class="pata-label" style="margin-bottom:4px;">Spot GGAL</div>
+              <input type="number" id="spot-input" placeholder="6600" oninput="recalcular()">
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <div>
+              <div class="pata-label" style="margin-bottom:4px;">Rango gráfico (%)</div>
+              <input type="number" id="rango-pct" value="30" min="5" max="100" oninput="recalcular()">
+            </div>
+            <div>
+              <div class="pata-label" style="margin-bottom:4px;">Break-evens</div>
+              <div id="breakevens" style="font-size:12px; font-family:'DM Mono',monospace; color:var(--accent); padding-top:6px;">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Guardar operación -->
+        <div class="payoff-panel" style="margin-top:10px; padding:12px 14px;">
+          <div class="payoff-panel-title" style="margin-bottom:10px;">📋 Guardar operación</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
+            <div>
+              <div class="pata-label" style="margin-bottom:4px;">Fecha del trade</div>
+              <input type="date" id="op-fecha" style="width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:5px;font-size:12px;">
+            </div>
+            <div>
+              <div class="pata-label" style="margin-bottom:4px;">Nota</div>
+              <input type="text" id="op-nota" placeholder="ej: cobertura cartera" style="width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:5px;font-size:12px;">
+            </div>
+          </div>
+          <button onclick="guardarOperacion()" style="width:100%;padding:8px;background:var(--accent);color:white;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;">
+            Guardar operación
+          </button>
+        </div>
+
+        <!-- Historial -->
+        <div class="payoff-panel" style="margin-top:10px;">
+          <div class="payoff-panel-header">
+            <div class="payoff-panel-title">Historial de operaciones</div>
+          </div>
+          <div id="op-lista"></div>
+        </div>
+      </div>
+
+      <!-- Gráfico -->
+      <div class="chart-card" style="background:#0d0d1a; border-color:#2a2a3e;">
+        <div class="chart-title" style="color:#606080;">Payoff al vencimiento</div>
+        <canvas id="payoff-chart"></canvas>
+
+        <!-- Griegas -->
+        <div style="margin-top:16px;">
+          <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;font-family:'Calibri',sans-serif;">Griegas de la posición</div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px;" id="griegas-panel">
+            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;">
+              <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Δ Delta</div>
+              <div id="gr-delta" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#a0c4ff;">—</div>
+            </div>
+            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;">
+              <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Γ Gamma</div>
+              <div id="gr-gamma" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#a0c4ff;">—</div>
+            </div>
+            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;">
+              <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">ν Vega</div>
+              <div id="gr-vega" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#a0c4ff;">—</div>
+            </div>
+            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;">
+              <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Θ Theta/día</div>
+              <div id="gr-theta" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#a0c4ff;">—</div>
+            </div>
+            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;">
+              <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">ρ Rho</div>
+              <div id="gr-rho" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#a0c4ff;">—</div>
+            </div>
+            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;">
+              <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">P. Éxito</div>
+              <div id="gr-prob" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#22c55e;">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Neutralizador de griegas -->
+        <div style="margin-top:10px;">
+          <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Neutralizador de griegas</div>
+          <div id="neutralizador-panel" style="background:#111122;border-radius:8px;padding:10px 14px;font-family:'Calibri',sans-serif;font-size:13px;color:#a0a0c0;">
+            Cargá una posición para ver sugerencias de cobertura.
+          </div>
+        </div>
+        <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;">
+
+          <!-- Tabla escenarios -->
+          <div style="overflow-x:auto;">
+            <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Tabla de escenarios</div>
+            <table id="payoff-tabla" style="width:100%;border-collapse:collapse;font-size:13px;font-family:'Calibri',sans-serif;">
+              <thead>
+                <tr style="border-bottom:1px solid #2a2a3e;">
+                  <th style="padding:3px 8px;text-align:left;color:#808090;font-weight:600;">Var.</th>
+                  <th style="padding:3px 8px;text-align:right;color:#808090;font-weight:600;">GGAL</th>
+                  <th style="padding:3px 8px;text-align:right;color:#808090;font-weight:600;">P&amp;L Vto.</th>
+                  <th style="padding:3px 8px;text-align:right;color:#a0c4ff;font-weight:600;">Teórico</th>
+                </tr>
+              </thead>
+              <tbody id="payoff-tabla-body"></tbody>
+            </table>
+          </div>
+
+          <!-- Posición total -->
+          <div>
+            <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Posición total</div>
+
+            <!-- CALLs -->
+            <div style="font-size:10px;font-weight:700;color:#22c55e;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;font-family:'Calibri',sans-serif;">Calls</div>
+            <table style="width:100%;border-collapse:collapse;font-size:13px;font-family:'Calibri',sans-serif;margin-bottom:8px;">
+              <thead>
+                <tr style="border-bottom:1px solid #2a2a3e;">
+                  <th style="padding:2px 6px;text-align:left;color:#808090;font-weight:600;">Strike</th>
+                  <th style="padding:2px 6px;text-align:right;color:#808090;font-weight:600;">Cant.</th>
+                  <th style="padding:2px 6px;text-align:right;color:#808090;font-weight:600;">Prima</th>
+                  <th style="padding:2px 6px;text-align:right;color:#f59e0b;font-weight:600;">VI</th>
+                  <th style="padding:2px 6px;text-align:right;color:#a0c4ff;font-weight:600;">Δ</th>
+                </tr>
+              </thead>
+              <tbody id="pos-calls"></tbody>
+            </table>
+
+            <!-- PUTs -->
+            <div style="font-size:10px;font-weight:700;color:#ef4444;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;font-family:'Calibri',sans-serif;">Puts</div>
+            <table style="width:100%;border-collapse:collapse;font-size:13px;font-family:'Calibri',sans-serif;margin-bottom:8px;">
+              <thead>
+                <tr style="border-bottom:1px solid #2a2a3e;">
+                  <th style="padding:2px 6px;text-align:left;color:#808090;font-weight:600;">Strike</th>
+                  <th style="padding:2px 6px;text-align:right;color:#808090;font-weight:600;">Cant.</th>
+                  <th style="padding:2px 6px;text-align:right;color:#808090;font-weight:600;">Prima</th>
+                  <th style="padding:2px 6px;text-align:right;color:#f59e0b;font-weight:600;">VI</th>
+                  <th style="padding:2px 6px;text-align:right;color:#a0c4ff;font-weight:600;">Δ</th>
+                </tr>
+              </thead>
+              <tbody id="pos-puts"></tbody>
+            </table>
+
+            <!-- Acciones -->
+            <div style="font-size:10px;font-weight:700;color:#f59e0b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;font-family:'Calibri',sans-serif;">Acciones</div>
+            <table style="width:100%;border-collapse:collapse;font-size:13px;font-family:'Calibri',sans-serif;margin-bottom:12px;">
+              <thead>
+                <tr style="border-bottom:1px solid #2a2a3e;">
+                  <th style="padding:2px 6px;text-align:left;color:#808090;font-weight:600;">Precio cpa.</th>
+                  <th style="padding:2px 6px;text-align:right;color:#808090;font-weight:600;">Cant.</th>
+                  <th style="padding:2px 6px;text-align:right;color:#808090;font-weight:600;">Last</th>
+                  <th style="padding:2px 6px;text-align:right;color:#808090;font-weight:600;">—</th>
+                  <th style="padding:2px 6px;text-align:right;color:#a0c4ff;font-weight:600;">Δ</th>
+                </tr>
+              </thead>
+              <tbody id="pos-acc"></tbody>
+            </table>
+
+            <!-- Comisiones y derechos -->
+            <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Costos operativos</div>
+            <div style="background:#111122;border-radius:8px;padding:10px 12px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
+                <div>
+                  <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:2px;">Comisión ALYC (%)</div>
+                  <input type="number" id="com-alyc" value="0.5" step="0.1" min="0" oninput="recalcularCostos()" style="font-size:13px;font-family:'Calibri',sans-serif;background:#1a1a2e;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:4px 7px;width:100%;">
+                </div>
+                <div>
+                  <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:2px;">Otros (%)</div>
+                  <input type="number" id="com-otros" value="0" step="0.1" min="0" oninput="recalcularCostos()" style="font-size:13px;font-family:'Calibri',sans-serif;background:#1a1a2e;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:4px 7px;width:100%;">
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;border-top:1px solid #2a2a3e;padding-top:8px;">
+                <div style="text-align:center;">
+                  <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">D. Mercado</div>
+                  <div id="costo-derechos" style="font-size:13px;font-weight:700;color:#ef4444;font-family:'Calibri',sans-serif;">—</div>
+                </div>
+                <div style="text-align:center;">
+                  <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Comisión</div>
+                  <div id="costo-comision" style="font-size:13px;font-weight:700;color:#ef4444;font-family:'Calibri',sans-serif;">—</div>
+                </div>
+                <div style="text-align:center;">
+                  <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Total costos</div>
+                  <div id="costo-total" style="font-size:13px;font-weight:700;color:#ef4444;font-family:'Calibri',sans-serif;">—</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT3WNyHxyaxw15sycBbuKe1REh28RHytoNGw9y4No3-CbbtrvZUPpLJG7IU_D0ZYe5qrFzDU5RFAEhu/pub?gid=137375925&single=true&output=csv';
+let spotGGAL = null;
+let strikesDisponibles = [];
+let strikeLast = {};    // strike → { call: last, put: last }
+let diasVto = 37;
+
+function showTab(name, btn) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+function parseCSV(text) {
+  return text.split('\n').map(line => {
+    const cols = []; let cur = '', inQ = false;
+    for (let c of line) {
+      if (c === '"') inQ = !inQ;
+      else if (c === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+      else cur += c;
+    }
+    cols.push(cur.trim());
+    return cols;
+  });
+}
+
+function fmtNum(val) {
+  if (!val || val === '-' || val === '') return '<span class="empty">—</span>';
+  const n = parseFloat(val);
+  if (isNaN(n)) return val;
+  return n.toFixed(2);
+}
+
+function colorNum(val) {
+  if (!val || val === '-' || val === '') return '<span class="empty">—</span>';
+  const n = parseFloat(val.toString().replace('%',''));
+  if (isNaN(n)) return `<span class="neu">${val}</span>`;
+  const cls = n > 0 ? 'pos' : n < 0 ? 'neg' : 'neu';
+  return `<span class="${cls}">${n.toFixed(2)}</span>`;
+}
+
+function colorPct(val) {
+  if (!val || val === '-' || val === '') return '<span class="empty">—</span>';
+  const s = val.toString();
+  const n = parseFloat(s.replace('%',''));
+  if (isNaN(n)) return `<span class="neu">${val}</span>`;
+  const cls = n > 0 ? 'pos' : n < 0 ? 'neg' : 'neu';
+  return `<span class="${cls}">${s.includes('%') ? s : n.toFixed(2)+'%'}</span>`;
+}
+
+function isATM(strike) {
+  if (!spotGGAL || !strike) return false;
+  return Math.abs(parseFloat(strike) - spotGGAL) < 150;
+}
+
+async function fetchData() {
+  try {
+    const res = await fetch(CSV_URL + '&t=' + Date.now());
+    const text = await res.text();
+    const rows = parseCSV(text);
+    render(rows);
+    document.getElementById('loader').style.display = 'none';
+    if (!document.querySelector('.tab-content.active')) {
+      document.getElementById('tab-plaza').classList.add('active');
+    }
+    document.getElementById('update-time').textContent = 'Act. ' + new Date().toLocaleTimeString('es-AR');
+  } catch(e) {
+    document.getElementById('loader').innerHTML = '<div class="loader-text" style="color:#dc2626">Error al cargar. Reintentando...</div>';
+  }
+}
+
+function render(rows) {
+  // Fila 2 = GGAL (index 1): D=3 Last, M=12 días
+  const ggal = rows[1];
+  if (ggal) {
+    const last = parseFloat(ggal[3]);
+    if (!isNaN(last)) {
+      spotGGAL = last;
+      document.getElementById('spot-val').textContent = last.toLocaleString('es-AR', {minimumFractionDigits:2, maximumFractionDigits:2});
+    }
+    if (ggal[12]) {
+      document.getElementById('dias-val').textContent = ggal[12];
+      diasVto = parseInt(ggal[12]) || 37;
+    }
+  }
+
+  // PLAZA: filas 3-31 (index 2-30)
+  const strikeMap = {};
+  let callsH = '', putsH = '';
+  strikesDisponibles = [];
+  strikeLast = {};
+
+  for (let i = 2; i <= 30; i++) {
+    const r = rows[i];
+    if (!r || !r[0]) continue;
+    const strike = r[6] || '';
+    if (r[0] && strike) strikeMap[r[0]] = strike;
+    if (r[7] && strike) strikeMap[r[7]] = strike;
+    if (strike && !strikesDisponibles.includes(parseFloat(strike))) {
+      strikesDisponibles.push(parseFloat(strike));
+      const parseVI = s => {
+        if (!s || s.trim() === '' || s.trim() === '-') return null;
+        const n = parseFloat(s.replace('%','').replace(',','.').trim());
+        if (isNaN(n) || n <= 0) return null;
+        // Si viene como 40.23 (porcentaje) → dividir por 100. Si ya fuera decimal < 1 no dividir
+        return n > 1 ? n / 100 : n;
+      };
+      strikeLast[parseFloat(strike)] = {
+        call:   parseFloat(r[3])  || null,
+        put:    parseFloat(r[10]) || null,
+        viCall: parseVI(r[1]),
+        viPut:  parseVI(r[8])
+      };
+    }
+    const atm = isATM(strike) ? ' class="atm"' : '';
+
+    callsH += `<tr${atm}>
+      <td>${r[0]}</td><td>${strike}</td>
+      <td class="bid">${fmtNum(r[2])}</td>
+      <td class="last-val">${fmtNum(r[3])}</td>
+      <td class="ask">${fmtNum(r[4])}</td>
+      <td class="neu">${r[1] || '<span class="empty">—</span>'}</td>
+    </tr>`;
+
+    if (r[7]) {
+      putsH += `<tr${atm}>
+        <td>${r[7]}</td><td>${strike}</td>
+        <td class="bid">${fmtNum(r[9])}</td>
+        <td class="last-val">${fmtNum(r[10])}</td>
+        <td class="ask">${fmtNum(r[11])}</td>
+        <td class="neu">${r[8] || '<span class="empty">—</span>'}</td>
+      </tr>`;
+    }
+  }
+  document.getElementById('calls-body').innerHTML = callsH;
+  document.getElementById('puts-body').innerHTML = putsH;
+
+  // ESTRATEGIAS: filas 34-62 (index 33-61)
+  // A=0  ticker CALL
+  // B=1  Bull, C=2 Ratio, D=3 Ratio+2, E=4 Ratio+3
+  // F=5  Mariposa, G=6 Mariposa+1, H=7 Mariposa+2
+  // I=8  LC TNA, J=9 LC Cobertura
+  // K=10 ticker PUT
+  // L=11 Bear, M=12 Ratio Put, N=13 Ratio+2 Put, O=14 Ratio+3 Put
+  // P=15 Mariposa Put, Q=16 Mariposa+1 Put, R=17 Mariposa+2 Put
+  // S=18 Tasa Sintética
+
+  let bull='',ratio='',ratio2='',ratio3='',mar='',mar1='',mar2='';
+  let bear='',pr='',pr2='',pr3='',pm='',pm1='',pm2='';
+  let lanz='',sint='';
+
+  for (let i = 33; i <= 61; i++) {
+    const r = rows[i];
+    if (!r || !r[0]) continue;
+    const strike = strikeMap[r[0]] || '';
+
+    bull  += `<tr><td>${strike}</td><td>${colorNum(r[1])}</td></tr>`;
+    ratio += `<tr><td>${strike}</td><td>${colorNum(r[2])}</td></tr>`;
+    ratio2+= `<tr><td>${strike}</td><td>${colorNum(r[3])}</td></tr>`;
+    ratio3+= `<tr><td>${strike}</td><td>${colorNum(r[4])}</td></tr>`;
+    mar   += `<tr><td>${strike}</td><td>${colorNum(r[5])}</td></tr>`;
+    mar1  += `<tr><td>${strike}</td><td>${colorNum(r[6])}</td></tr>`;
+    mar2  += `<tr><td>${strike}</td><td>${colorNum(r[7])}</td></tr>`;
+    lanz  += `<tr><td>${strike}</td><td>${colorPct(r[8])}</td><td>${colorPct(r[9])}</td></tr>`;
+    // r[10] = ticker PUT, lo saltamos
+    bear  += `<tr><td>${strike}</td><td>${colorNum(r[11])}</td></tr>`;
+    pr    += `<tr><td>${strike}</td><td>${colorNum(r[12])}</td></tr>`;
+    pr2   += `<tr><td>${strike}</td><td>${colorNum(r[13])}</td></tr>`;
+    pr3   += `<tr><td>${strike}</td><td>${colorNum(r[14])}</td></tr>`;
+    pm    += `<tr><td>${strike}</td><td>${colorNum(r[15])}</td></tr>`;
+    pm1   += `<tr><td>${strike}</td><td>${colorNum(r[16])}</td></tr>`;
+    pm2   += `<tr><td>${strike}</td><td>${colorNum(r[17])}</td></tr>`;
+    sint  += `<tr><td>${strike}</td><td>${colorPct(r[18])}</td></tr>`;
+  }
+
+  document.getElementById('bull-body').innerHTML = bull;
+  document.getElementById('ratio-body').innerHTML = ratio;
+  document.getElementById('ratio2-body').innerHTML = ratio2;
+  document.getElementById('ratio3-body').innerHTML = ratio3;
+  document.getElementById('mariposa-body').innerHTML = mar;
+  document.getElementById('mariposa1-body').innerHTML = mar1;
+  document.getElementById('mariposa2-body').innerHTML = mar2;
+  document.getElementById('bear-body').innerHTML = bear;
+  document.getElementById('pratio-body').innerHTML = pr;
+  document.getElementById('pratio2-body').innerHTML = pr2;
+  document.getElementById('pratio3-body').innerHTML = pr3;
+  document.getElementById('pmariposa-body').innerHTML = pm;
+  document.getElementById('pmariposa1-body').innerHTML = pm1;
+  document.getElementById('pmariposa2-body').innerHTML = pm2;
+  document.getElementById('lanz-body').innerHTML = lanz;
+  document.getElementById('sint-body').innerHTML = sint;
+}
+
+fetchData();
+setInterval(fetchData, 15000);
+
+// ─── PAYOFF BUILDER ───────────────────────────────────────────────────────────
+let patas = [];
+let tipoDefault = 'C';
+let payoffChart = null;
+let pataId = 0;
+let operaciones = JSON.parse(localStorage.getItem('pb_operaciones') || '[]');
+
+function fmtARS(n) {
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  return n.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+// Últimos lasts del CSV para PnL en vivo — { ticker: last }
+let lastPrices = {};
+
+function setTipoDefault(tipo, btn) {
+  tipoDefault = tipo;
+  document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active-call','active-put'));
+  btn.classList.add(tipo === 'C' ? 'active-call' : 'active-put');
+}
+
+function agregarPata() {
+  const id = pataId++;
+  patas.push({ id, tipo: tipoDefault, strike: '', prima: '', cant: 1, last: '' });
+  renderPatas();
+}
+
+function eliminarPata(id) {
+  patas = patas.filter(p => p.id !== id);
+  renderPatas();
+}
+
+function renderPatas() {
+  const c = document.getElementById('patas-container');
+  c.innerHTML = patas.map(p => {
+    const esAccion = p.tipo === 'S';
+
+    const strikeField = esAccion
+      ? `<input type="number" placeholder="Precio compra" value="${p.strike}" oninput="updatePata(${p.id},'strike',this.value)">`
+      : strikesDisponibles.length
+        ? `<select onchange="updatePataStrike(${p.id},this.value)">
+             <option value="">-- Strike --</option>
+             ${strikesDisponibles.sort((a,b)=>a-b).map(s=>`<option value="${s}" ${parseFloat(p.strike)===s?'selected':''}>${s.toLocaleString('es-AR')}</option>`).join('')}
+           </select>`
+        : `<input type="number" placeholder="Strike" value="${p.strike}" oninput="updatePata(${p.id},'strike',this.value)">`;
+
+    const primaField = esAccion
+      ? `<input type="number" disabled placeholder="—" style="background:#f0f0f4;color:#bbb;">`
+      : `<input type="number" placeholder="Prima" value="${p.prima}" oninput="updatePata(${p.id},'prima',this.value)">`;
+
+    return `
+    <div class="pata-row" id="pata-${p.id}">
+      <select onchange="updatePata(${p.id},'tipo',this.value)" style="font-weight:700;">
+        <option value="C" ${p.tipo==='C'?'selected':''}>CALL</option>
+        <option value="P" ${p.tipo==='P'?'selected':''}>PUT</option>
+        <option value="S" ${p.tipo==='S'?'selected':''}>ACC</option>
+      </select>
+      ${strikeField}
+      ${primaField}
+      <input type="number" placeholder="Last" value="${p.last}" oninput="updatePata(${p.id},'last',this.value)" style="background:#1a1a2e;color:#a0c4ff;">
+      <input type="number" class="cant-input" placeholder="1" value="${p.cant}" oninput="updatePata(${p.id},'cant',this.value)" step="1">
+      <button class="btn-remove" onclick="eliminarPata(${p.id})">×</button>
+    </div>`
+  }).join('');
+  recalcular();
+}
+
+function updatePataStrike(id, val) {
+  const p = patas.find(x => x.id === id);
+  if (!p) return;
+  p.strike = parseFloat(val) || '';
+  if (p.strike && strikeLast[p.strike]) {
+    const ld = strikeLast[p.strike];
+    if (p.tipo === 'C' && ld.call) p.last = ld.call;
+    else if (p.tipo === 'P' && ld.put) p.last = ld.put;
+  }
+  renderPatas();
+}
+
+function updatePata(id, campo, valor) {
+  const p = patas.find(x => x.id === id);
+  if (!p) return;
+  if (campo === 'cant') p.cant = parseInt(valor) || 1;
+  else if (campo === 'tipo') {
+    p.tipo = valor;
+    // Re-sincronizar last según el nuevo tipo
+    if (p.strike && strikeLast[p.strike]) {
+      const ld = strikeLast[p.strike];
+      if (valor === 'C' && ld.call) p.last = ld.call;
+      else if (valor === 'P' && ld.put) p.last = ld.put;
+      else if (valor === 'S') p.last = '';
+    }
+    renderPatas();
+    return;
+  }
+  else p[campo] = parseFloat(valor) === 0 ? 0 : (parseFloat(valor) || '');
+  recalcular();
+}
+
+function calcularPayoff(S, patas, optSize, undSize) {
+  return patas.reduce((total, p) => {
+    const K = parseFloat(p.strike);
+    const prima = parseFloat(p.prima) || 0;
+    const cant = parseInt(p.cant) || 1;
+    const sz = p.tipo === 'S' ? undSize : optSize;
+    let pnl = 0;
+    if (p.tipo === 'C')      pnl = (Math.max(S - K, 0) - prima) * cant * sz;
+    else if (p.tipo === 'P') pnl = (Math.max(K - S, 0) - prima) * cant * sz;
+    else                     pnl = (S - K) * cant * sz; // acción: PnL = precio actual - precio compra
+    return total + pnl;
+  }, 0);
+}
+
+function calcularPnlVivo(patas, optSize, undSize) {
+  return patas.reduce((total, p) => {
+    const prima = parseFloat(p.prima);
+    const last  = parseFloat(p.last);
+    const cant  = parseInt(p.cant) || 1;
+    const sz = p.tipo === 'S' ? undSize : optSize;
+    // Para acción: prima es el precio de compra, last es precio actual
+    const costoBase = p.tipo === 'S' ? parseFloat(p.strike) : prima;
+    if (isNaN(costoBase) || isNaN(last)) return total;
+    return total + (last - costoBase) * cant * sz;
+  }, 0);
+}
+
+function recalcularCF() {
+  const capitalEl = document.getElementById('stat-costo');
+  // Parsear el capital del stat (puede tener puntos de miles y coma decimal)
+  const capitalStr = capitalEl ? capitalEl.textContent.replace(/\./g,'').replace(',','.') : '';
+  const capital = parseFloat(capitalStr) || 0;
+  const tasa = parseFloat(document.getElementById('cf-tasa')?.value) / 100 || 0.40;
+  const dias = diasVto || 37;
+  document.getElementById('cf-dias').textContent = dias;
+  if (capital !== 0) {
+    const cf = capital * (Math.pow(1 + tasa/365, dias) - 1);
+    // cf positivo = costo (pagaste prima, acarreás costo financiero) → ROJO
+    // cf negativo = ingreso (cobraste prima, el dinero rinde) → VERDE
+    const cfEl = document.getElementById('cf-valor');
+    cfEl.textContent = fmtARS(cf);
+    cfEl.style.color = cf > 0 ? 'var(--negative)' : 'var(--positive)';
+  } else {
+    const cfEl = document.getElementById('cf-valor');
+    cfEl.textContent = '—';
+    cfEl.style.color = 'var(--muted)';
+  }
+}
+
+function detectarEstrategia(patas) {
+  // Acción no requiere prima para ser válida
+  const v = patas.filter(p => p.strike !== '' && (p.tipo === 'S' || p.prima !== ''));
+  if (!v.length) return 'Ingresá las patas';
+  if (v.length === 1) {
+    const p = v[0];
+    return `${p.cant > 0 ? 'Compra' : 'Venta'} de ${p.tipo === 'C' ? 'Call' : p.tipo === 'P' ? 'Put' : 'Acción'}`;
+  }
+  const calls = v.filter(p => p.tipo === 'C').sort((a,b) => a.strike - b.strike);
+  const puts  = v.filter(p => p.tipo === 'P').sort((a,b) => a.strike - b.strike);
+  const acc   = v.filter(p => p.tipo === 'S');
+
+  // Normalizar cantidades a signos para detección
+  const cSigns = calls.map(c => Math.sign(c.cant));
+  const pSigns = puts.map(p => Math.sign(p.cant));
+
+  if (calls.length === 2 && !puts.length && !acc.length) {
+    if (cSigns[0] === 1 && cSigns[1] === -1) return '📈 Bull Spread (Call)';
+    if (cSigns[0] === -1 && cSigns[1] === 1) return '📉 Bear Spread (Call)';
+    // ratio: distintas cantidades absolutas
+    const r = Math.abs(calls[1].cant) / Math.abs(calls[0].cant);
+    if (cSigns[0] === 1 && cSigns[1] === -1) return `⚡ Ratio Call 1×${Math.abs(calls[1].cant)}`;
+    return `⚡ Ratio Call`;
+  }
+  if (puts.length === 2 && !calls.length && !acc.length) {
+    if (pSigns[0] === -1 && pSigns[1] === 1) return '📉 Bear Spread (Put)';
+    if (pSigns[0] === 1 && pSigns[1] === -1) return '📈 Bull Spread (Put)';
+    return '⚡ Ratio Put';
+  }
+  if (calls.length === 3 && !puts.length) {
+    if (cSigns[0]===1 && cSigns[1]===-1 && cSigns[2]===1) return '🦋 Mariposa (Call)';
+  }
+  if (puts.length === 3 && !calls.length) {
+    if (pSigns[0]===1 && pSigns[1]===-1 && pSigns[2]===1) return '🦋 Mariposa (Put)';
+  }
+  if (acc.length===1 && calls.length===1 && acc[0].cant>0 && calls[0].cant<0) return '📋 Lanzamiento Cubierto';
+  if (calls.length===1 && puts.length===1 && !acc.length) {
+    const sameCant = Math.abs(calls[0].cant) === Math.abs(puts[0].cant);
+    if (calls[0].cant>0 && puts[0].cant>0) return sameCant ? '🔔 Straddle Comprador' : 'Strangle Comprador';
+    if (calls[0].cant<0 && puts[0].cant<0) return sameCant ? '🔕 Straddle Vendedor' : 'Strangle Vendedor';
+    if (calls[0].cant>0 && puts[0].cant<0) return '🔗 Sintética Larga';
+    if (calls[0].cant<0 && puts[0].cant>0) return '🔗 Sintética Corta';
+  }
+  return `Estrategia personalizada (${v.length} patas)`;
+}
+
+// ─── BLACK-SCHOLES GRIEGAS ────────────────────────────────────────────────────
+function normCDF(x) {
+  const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
+  const sign = x < 0 ? -1 : 1;
+  x = Math.abs(x)/Math.SQRT2;
+  const t = 1/(1+p*x);
+  const y = 1-(((((a5*t+a4)*t+a3)*t+a2)*t+a1)*t)*Math.exp(-x*x);
+  return 0.5*(1+sign*y);
+}
+function normPDF(x) { return Math.exp(-0.5*x*x)/Math.sqrt(2*Math.PI); }
+
+function bsGreeks(S, K, T, r, sigma, tipo) {
+  if (T <= 0 || sigma <= 0 || S <= 0 || K <= 0) return null;
+  const d1 = (Math.log(S/K) + (r + 0.5*sigma*sigma)*T) / (sigma*Math.sqrt(T));
+  const d2 = d1 - sigma*Math.sqrt(T);
+  const Nd1 = normCDF(d1), Nd2 = normCDF(d2);
+  const nd1 = normPDF(d1);
+  const eRT = Math.exp(-r*T);
+  const isCall = tipo === 'C';
+  const delta = isCall ? Nd1 : Nd1 - 1;
+  const gamma = nd1 / (S * sigma * Math.sqrt(T));
+  const vega  = S * nd1 * Math.sqrt(T) / 100; // por 1% de vol
+  const theta = isCall
+    ? (-(S*nd1*sigma)/(2*Math.sqrt(T)) - r*K*eRT*Nd2) / 365
+    : (-(S*nd1*sigma)/(2*Math.sqrt(T)) + r*K*eRT*(1-Nd2)) / 365;
+  const rho = isCall
+    ? K*T*eRT*Nd2 / 100
+    : -K*T*eRT*(1-Nd2) / 100;
+  const prob = isCall ? Nd2 : 1-Nd2; // probabilidad de terminar ITM
+  return { delta, gamma, vega, theta, rho, prob };
+}
+
+function calcularGriegas(v, S, r, T, optSize, undSize) {
+  let totDelta=0, totGamma=0, totVega=0, totTheta=0, totRho=0;
+  let probExito = null;
+
+  v.forEach(p => {
+    if (p.tipo === 'S') {
+      totDelta += parseInt(p.cant) * undSize;
+      return;
+    }
+    const K    = parseFloat(p.strike);
+    const cant = parseInt(p.cant);
+    const sz   = optSize;
+    if (!K || !S || !T) return;
+    const vi = getVI(K, p.tipo);   // VI real de mercado
+    const g  = bsGreeks(S, K, T, r, vi, p.tipo);
+    if (!g) return;
+    totDelta += g.delta * cant * sz;
+    totGamma += g.gamma * cant * sz;
+    totVega  += g.vega  * cant * sz;
+    totTheta += g.theta * cant * sz;
+    totRho   += g.rho   * cant * sz;
+  });
+
+  // Prob de éxito: N(d2) de la pata más ATM
+  const atmPata = v.filter(p=>p.tipo!=='S').sort((a,b)=>Math.abs(parseFloat(a.strike)-S)-Math.abs(parseFloat(b.strike)-S))[0];
+  if (atmPata) {
+    const vi = getVI(parseFloat(atmPata.strike), atmPata.tipo);
+    const g  = bsGreeks(S, parseFloat(atmPata.strike), T, r, vi, atmPata.tipo);
+    if (g) probExito = atmPata.cant > 0 ? g.prob : 1 - g.prob;
+  }
+
+  return { delta:totDelta, gamma:totGamma, vega:totVega, theta:totTheta, rho:totRho, prob:probExito };
+}
+
+function fmtG(n, dec=3) {
+  if (n===null||n===undefined||isNaN(n)) return '—';
+  return n.toLocaleString('es-AR',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+}
+
+// Devuelve la VI de mercado para un strike y tipo, con fallback a VI_DEFAULT
+function getVI(strike, tipo) {
+  const K = parseFloat(strike);
+  const ld = strikeLast[K];
+  if (!ld) return 0.60;
+  if (tipo === 'C' && ld.viCall && ld.viCall > 0.01) return ld.viCall;
+  if (tipo === 'P' && ld.viPut  && ld.viPut  > 0.01) return ld.viPut;
+  // Fallback: usar la del otro tipo si existe
+  if (ld.viCall && ld.viCall > 0.01) return ld.viCall;
+  if (ld.viPut  && ld.viPut  > 0.01) return ld.viPut;
+  return 0.60;
+}
+
+// Precio BS de una opción dada VI real
+function bsPrice(S, K, T, r, sigma, tipo) {
+  if (T <= 0 || sigma <= 0) return 0;
+  const d1 = (Math.log(S/K) + (r + 0.5*sigma*sigma)*T) / (sigma*Math.sqrt(T));
+  const d2 = d1 - sigma*Math.sqrt(T);
+  const eRT = Math.exp(-r*T);
+  if (tipo === 'C') return S*normCDF(d1) - K*eRT*normCDF(d2);
+  return K*eRT*normCDF(-d2) - S*normCDF(-d1);
+}
+
+// Payoff teórico al vencimiento: usa BS para interpolar el valor de la opción
+// a un precio S dado, descontando la prima pagada
+function calcularPayoffTeorico(S, v, optSize, undSize, spotActual, T, r) {
+  return v.reduce((total, p) => {
+    const K    = parseFloat(p.strike);
+    const cant = parseInt(p.cant) || 1;
+    const sz   = p.tipo === 'S' ? undSize : optSize;
+    if (p.tipo === 'S') {
+      // Acción: PnL lineal vs precio de compra
+      return total + (S - K) * cant * sz;
+    }
+    // Para opciones: valor BS al nuevo spot S con VI de mercado
+    const vi     = getVI(K, p.tipo);
+    const T_rest = T; // días restantes sin cambio (asumimos mismo momento)
+    const prima  = parseFloat(p.prima) || 0;
+    const valorBS = T_rest > 0 ? bsPrice(S, K, T_rest, r, vi, p.tipo) : Math.max(p.tipo==='C'?S-K:K-S, 0);
+    return total + (valorBS - prima) * cant * sz;
+  }, 0);
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
+function recalcular() {
+  const v = patas.filter(p => p.strike !== '' && (p.tipo === 'S' || p.prima !== ''));
+  const optSize = parseFloat(document.getElementById('opt-size')?.value) || 100;
+  const undSize = parseFloat(document.getElementById('und-size')?.value) || 1;
+
+  if (!v.length) {
+    ['estrategia-label','stat-costo','stat-maxgan','stat-maxper','stat-pnl','breakevens']
+      .forEach(id => { const el = document.getElementById(id); if(el) el.textContent = '—'; });
+    if (payoffChart) { payoffChart.destroy(); payoffChart = null; }
+    return;
+  }
+
+  document.getElementById('estrategia-label').textContent = detectarEstrategia(patas);
+
+  // ── CAPITAL: prima * cant * size (lo que efectivamente ponés o cobrás) ───────
+  const costoNeto = v.reduce((t, p) => {
+    const prima = parseFloat(p.prima) || 0;
+    const cant  = parseInt(p.cant) || 1;
+    const sz    = p.tipo === 'S' ? undSize : optSize;
+    return t + prima * cant * sz;
+  }, 0);
+  const costoEl = document.getElementById('stat-costo');
+  costoEl.textContent = fmtARS(costoNeto);
+  // Positivo = pagás (rojo), Negativo = cobrás (verde)
+  costoEl.style.color = costoNeto > 0 ? 'var(--negative)' : costoNeto < 0 ? 'var(--positive)' : 'var(--muted)';
+
+  // ── Costos operativos (se calculan aquí para usarlos en PnL y tabla) ─────────
+  const comAlyc2  = parseFloat(document.getElementById('com-alyc')?.value)  / 100 || 0;
+  const comOtros2 = parseFloat(document.getElementById('com-otros')?.value) / 100 || 0;
+  function costosPataLocal(p) {
+    const prima = parseFloat(p.prima) || 0;
+    const K     = parseFloat(p.strike) || 0;
+    const cant  = Math.abs(parseInt(p.cant) || 1);
+    if (p.tipo === 'C' || p.tipo === 'P') {
+      const noc = prima * cant * optSize;
+      return noc * 0.0024 + noc * (comAlyc2 + comOtros2);
+    } else {
+      const noc = K * cant * undSize;
+      return noc * 0.0008 + noc * (comAlyc2 + comOtros2);
+    }
+  }
+  const costosTotalesPos = v.reduce((t, p) => t + costosPataLocal(p), 0);
+
+  // PnL = (last - prima) × cant × size − costos operativos
+  const tienenLast = v.some(p => p.last !== '' && !isNaN(parseFloat(p.last)));
+  const pnlEl = document.getElementById('stat-pnl');
+  if (tienenLast) {
+    const pnlBruto = calcularPnlVivo(v, optSize, undSize);
+    const pnlNeto  = pnlBruto - costosTotalesPos;
+    pnlEl.textContent = fmtARS(pnlNeto);
+    pnlEl.style.color = pnlNeto >= 0 ? 'var(--positive)' : 'var(--negative)';
+  } else {
+    pnlEl.textContent = '—';
+    pnlEl.style.color = 'var(--muted)';
+  }
+
+  // Rango del gráfico
+  const strikes = v.map(p => parseFloat(p.strike));
+  const minK = Math.min(...strikes);
+  const maxK = Math.max(...strikes);
+  const spotInput = parseFloat(document.getElementById('spot-input').value) || spotGGAL || minK;
+  const rangoEl = document.getElementById('rango-pct');
+  const rangoPct = parseFloat(rangoEl?.value) || 30;
+  const centro = strikes.reduce((a,b) => a+b, 0) / strikes.length;
+  const sMin = Math.max(centro * (1 - rangoPct/100), 0);
+  const sMax = centro * (1 + rangoPct/100);
+
+  const steps = 300;
+  const precios = [], payoffs = [];
+  for (let i = 0; i <= steps; i++) {
+    const S = sMin + (sMax - sMin) * i / steps;
+    precios.push(S.toFixed(0));
+    payoffs.push(calcularPayoff(S, v, optSize, undSize));
+  }
+
+  // Máx gan/per en el rango visible
+  const maxGan = Math.max(...payoffs);
+  const maxPer = Math.min(...payoffs);
+  const maxGanEl = document.getElementById('stat-maxgan');
+  const maxPerEl = document.getElementById('stat-maxper');
+  maxGanEl.textContent = maxGan < 1e9  ? fmtARS(maxGan) : '∞';
+  maxPerEl.textContent = maxPer > -1e9 ? fmtARS(maxPer) : '-∞';
+  maxGanEl.style.color = maxGan >= 0 ? 'var(--positive)' : 'var(--negative)';
+  maxPerEl.style.color = 'var(--negative)';
+
+  // Break-evens
+  const bes = [];
+  for (let i = 1; i < payoffs.length; i++) {
+    if ((payoffs[i-1] < 0) !== (payoffs[i] < 0)) {
+      const t = -payoffs[i-1] / (payoffs[i] - payoffs[i-1]);
+      const S = (sMin + (sMax-sMin)*(i-1)/steps) + t*(sMax-sMin)/steps;
+      bes.push(`$${fmtARS(S)}`);
+    }
+  }
+  document.getElementById('breakevens').textContent = bes.length ? bes.join(' · ') : '—';
+
+  // Segmentar la línea en tramos positivos/negativos
+  const posData = payoffs.map(v => v >= 0 ? v : null);
+  const negData = payoffs.map(v => v < 0  ? v : null);
+
+  if (payoffChart) payoffChart.destroy();
+  const ctx = document.getElementById('payoff-chart').getContext('2d');
+
+  // Línea vertical del spot actual
+  const spotIdx = precios.findIndex(p => parseFloat(p) >= spotInput);
+
+  const spotLinePlugin = {
+    id: 'spotLine',
+    afterDraw(chart) {
+      if (spotIdx < 0) return;
+      const {ctx, chartArea, scales} = chart;
+      const x = scales.x.getPixelForValue(spotIdx);
+      ctx.save();
+      ctx.setLineDash([4,4]);
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(x, chartArea.top);
+      ctx.lineTo(x, chartArea.bottom);
+      ctx.stroke();
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = '10px Inter';
+      ctx.fillText(`Spot $${spotInput.toFixed(0)}`, x+4, chartArea.top+12);
+      ctx.restore();
+    }
+  };
+
+  payoffChart = new Chart(ctx, {
+    type: 'line',
+    plugins: [spotLinePlugin],
+    data: {
+      labels: precios,
+      datasets: [
+        {
+          label: 'Ganancia',
+          data: posData,
+          borderColor: '#22c55e',
+          backgroundColor: 'rgba(34,197,94,0.12)',
+          fill: true,
+          tension: 0.1,
+          pointRadius: 0,
+          borderWidth: 2,
+          spanGaps: false,
+        },
+        {
+          label: 'Pérdida',
+          data: negData,
+          borderColor: '#ef4444',
+          backgroundColor: 'rgba(239,68,68,0.12)',
+          fill: true,
+          tension: 0.1,
+          pointRadius: 0,
+          borderWidth: 2,
+          spanGaps: false,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      animation: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          mode: 'index',
+          intersect: false,
+          backgroundColor: '#1a1a2e',
+          titleColor: '#a0a0c0',
+          bodyColor: '#ffffff',
+          callbacks: {
+            title: c => `GGAL: $${c[0].label}`,
+            label: c => c.raw !== null ? `P&L: $${fmtARS(c.raw)}` : null,
+            filter: i => i.raw !== null
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { maxTicksLimit: 10, font: { family: 'DM Mono', size: 10 }, color: '#606080' },
+          grid: { color: '#2a2a3e' },
+          border: { color: '#2a2a3e' }
+        },
+        y: {
+          ticks: { font: { family: 'DM Mono', size: 10 }, color: '#606080' },
+          grid: { color: '#2a2a3e' },
+          border: { color: '#2a2a3e' }
+        }
+      }
+    }
+  });
+
+  // ── Griegas ──────────────────────────────────────────────────────────────────
+  const T = diasVto / 365;
+  const r = Math.log(1 + 0.40); // tasa fija 40% TNA como default
+  const grk = calcularGriegas(v, spotInput, r, T, optSize, undSize);
+  if (grk) {
+    document.getElementById('gr-delta').textContent = fmtG(grk.delta, 2);
+    document.getElementById('gr-gamma').textContent = fmtG(grk.gamma, 4);
+    document.getElementById('gr-vega').textContent  = fmtG(grk.vega, 2);
+    document.getElementById('gr-theta').textContent = fmtG(grk.theta, 2);
+    document.getElementById('gr-rho').textContent   = fmtG(grk.rho, 2);
+    document.getElementById('gr-prob').textContent  = grk.prob !== null ? (grk.prob*100).toFixed(1)+'%' : '—';
+    const dEl = document.getElementById('gr-delta');
+    dEl.style.color = grk.delta > 0 ? '#22c55e' : grk.delta < 0 ? '#ef4444' : '#a0c4ff';
+    const tEl = document.getElementById('gr-theta');
+    tEl.style.color = grk.theta < 0 ? '#ef4444' : '#22c55e';
+  }
+
+  // ── Costo financiero + historial ─────────────────────────────────────────────
+  const tasa_cf  = parseFloat(document.getElementById('cf-tasa')?.value) / 100 || 0.40;
+  const cf_monto = Math.abs(costoNeto) > 0 ? costoNeto * (Math.pow(1 + tasa_cf/365, diasVto) - 1) : 0;
+  const pnlHistorial = operaciones.reduce((sum, op) => sum + (op.pnlCierre || 0), 0);
+
+  // ── Tabla de escenarios — mismo rango que el gráfico ────────────────────────
+  const pasoTabla = 2;
+  const varMin = -Math.round(rangoPct / pasoTabla) * pasoTabla;
+  const varMax =  Math.round(rangoPct / pasoTabla) * pasoTabla;
+  const variaciones = [];
+  for (let p = varMin; p <= varMax; p += pasoTabla) variaciones.push(p);
+  const tienenLast2 = v.some(p => p.last !== '' && !isNaN(parseFloat(p.last)));
+  let tablaHTML = '';
+  variaciones.forEach(pct => {
+    const precio   = spotInput * (1 + pct/100);
+    // P&L Vto: payoff al vencimiento neto de costos operativos y costo financiero
+    const pnlBruto = calcularPayoff(precio, v, optSize, undSize);
+    const pnlNeto  = pnlBruto - costosTotalesPos - cf_monto + pnlHistorial;
+
+    // Teórico: precio BS de cada opción al precio S del escenario usando VI real
+    // → cuánto valdría la posición HOY si el subyacente estuviera en ese precio
+    let pnlTeorico = null;
+    if (T > 0) {
+      const pnlBrutoTeo = calcularPayoffTeorico(precio, v, optSize, undSize, spotInput, T, r);
+      // Costo operativo sobre prima original (lo que ya pagaste al entrar)
+      const costosTeo = costosTotalesPos;
+      const cfTeo     = cf_monto;
+      pnlTeorico = pnlBrutoTeo - costosTeo - cfTeo + pnlHistorial;
+    }
+
+    const esHoy = pct === 0;
+    const cVto  = pnlNeto  >= 0 ? '#22c55e' : '#ef4444';
+    const cTeo  = pnlTeorico !== null ? (pnlTeorico >= 0 ? '#22c55e' : '#ef4444') : '#606080';
+    const bg    = esHoy ? 'background:#0d1f0d;' : '';
+    const bld   = esHoy ? 'font-weight:700;' : 'font-weight:400;';
+    tablaHTML += `<tr style="${bg}${bld}border-bottom:1px solid #16162a;">
+      <td style="padding:2px 8px;font-family:'Calibri',sans-serif;font-size:13px;color:${pct<0?'#ef4444':pct>0?'#22c55e':'#a0c4ff'};white-space:nowrap;">${pct>0?'+':''}${pct}%</td>
+      <td style="padding:2px 8px;font-family:'Calibri',sans-serif;font-size:13px;text-align:right;color:#c0c0d0;white-space:nowrap;">${fmtARS(precio)}</td>
+      <td style="padding:2px 8px;font-family:'Calibri',sans-serif;font-size:13px;text-align:right;color:${cVto};white-space:nowrap;">${fmtARS(pnlNeto)}</td>
+      <td style="padding:2px 8px;font-family:'Calibri',sans-serif;font-size:13px;text-align:right;color:${cTeo};white-space:nowrap;">${pnlTeorico!==null ? fmtARS(pnlTeorico) : '—'}</td>
+    </tr>`;
+  });
+  document.getElementById('payoff-tabla-body').innerHTML = tablaHTML;
+
+  // ── Posición total ───────────────────────────────────────────────────────────
+  renderPosicion(v, spotInput, T, r, optSize, undSize);
+  recalcularCostos();
+  neutralizarGriegas(grk, spotInput, T, r, optSize);
+
+  // llamar CF
+  setTimeout(recalcularCF, 0);
+}
+
+function renderPosicion(v, S, T, r, optSize, undSize) {
+  const calls = v.filter(p => p.tipo === 'C');
+  const puts  = v.filter(p => p.tipo === 'P');
+  const accs  = v.filter(p => p.tipo === 'S');
+
+  function fila(p, tipo) {
+    const K     = parseFloat(p.strike);
+    const vi    = tipo !== 'S' ? getVI(K, tipo) : 0;
+    const g     = tipo !== 'S' ? bsGreeks(S, K, T, r, vi, tipo) : null;
+    const delta = g ? (g.delta * parseInt(p.cant)).toFixed(2) : (parseInt(p.cant)).toFixed(2);
+    const dColor    = parseFloat(delta) > 0 ? '#22c55e' : '#ef4444';
+    const cantColor = parseInt(p.cant)  > 0 ? '#22c55e' : '#ef4444';
+    const prima = tipo === 'S' ? (parseFloat(p.last)||'—') : (parseFloat(p.prima)||'—');
+    const viStr = tipo !== 'S' ? (vi*100).toFixed(1)+'%' : '—';
+    if (tipo === 'S') {
+      // Acción: 5 columnas (Strike, Cant, Last, —, Δ)
+      return `<tr style="border-bottom:1px solid #16162a;">
+        <td style="padding:2px 6px;color:#c0c0d0;font-family:'Calibri',sans-serif;">${K||'—'}</td>
+        <td style="padding:2px 6px;text-align:right;color:${cantColor};font-family:'Calibri',sans-serif;font-weight:700;">${parseInt(p.cant)>0?'+':''}${p.cant}</td>
+        <td style="padding:2px 6px;text-align:right;color:#a0a0c0;font-family:'Calibri',sans-serif;">${typeof prima === 'number' ? fmtARS(prima) : prima}</td>
+        <td style="padding:2px 6px;text-align:right;color:#606080;font-family:'Calibri',sans-serif;">—</td>
+        <td style="padding:2px 6px;text-align:right;color:${dColor};font-family:'Calibri',sans-serif;">${delta}</td>
+      </tr>`;
+    }
+    return `<tr style="border-bottom:1px solid #16162a;">
+      <td style="padding:2px 6px;color:#c0c0d0;font-family:'Calibri',sans-serif;">${K||'—'}</td>
+      <td style="padding:2px 6px;text-align:right;color:${cantColor};font-family:'Calibri',sans-serif;font-weight:700;">${parseInt(p.cant)>0?'+':''}${p.cant}</td>
+      <td style="padding:2px 6px;text-align:right;color:#a0a0c0;font-family:'Calibri',sans-serif;">${typeof prima === 'number' ? fmtARS(prima) : prima}</td>
+      <td style="padding:2px 6px;text-align:right;color:#f59e0b;font-family:'Calibri',sans-serif;">${viStr}</td>
+      <td style="padding:2px 6px;text-align:right;color:${dColor};font-family:'Calibri',sans-serif;">${delta}</td>
+    </tr>`;
+  }
+
+  const emptyRow = '<tr><td colspan="4" style="padding:4px 6px;color:#404060;font-size:11px;font-family:Calibri,sans-serif;">—</td></tr>';
+  document.getElementById('pos-calls').innerHTML = calls.length ? calls.map(p=>fila(p,'C')).join('') : emptyRow;
+  document.getElementById('pos-puts').innerHTML  = puts.length  ? puts.map(p=>fila(p,'P')).join('') : emptyRow;
+  document.getElementById('pos-acc').innerHTML   = accs.length  ? accs.map(p=>fila(p,'S')).join('') : emptyRow;
+}
+
+function neutralizarGriegas(grk, S, T, r, optSize) {
+  const panel = document.getElementById('neutralizador-panel');
+  if (!grk || !S || !T) { panel.innerHTML = '<span style="color:#404060;">Cargá una posición para ver sugerencias.</span>'; return; }
+
+  // Strike ATM más cercano al spot
+  const K_atm = strikesDisponibles.length
+    ? strikesDisponibles.sort((a,b) => Math.abs(a-S)-Math.abs(b-S))[0]
+    : S;
+
+  // VI real de mercado para el ATM
+  const vi_c = getVI(K_atm, 'C');
+  const vi_p = getVI(K_atm, 'P');
+
+  const gC = bsGreeks(S, K_atm, T, r, vi_c, 'C');
+  const gP = bsGreeks(S, K_atm, T, r, vi_p, 'P');
+  if (!gC || !gP) { panel.innerHTML = '<span style="color:#404060;">No hay datos suficientes.</span>'; return; }
+
+  const viC_pct = (vi_c * 100).toFixed(1);
+  const viP_pct = (vi_p * 100).toFixed(1);
+  const UMBRAL = 0.05;
+  const sugerencias = [];
+
+  // ── Delta ─────────────────────────────────────────────────────────────────
+  if (Math.abs(grk.delta) > UMBRAL * optSize) {
+    const cantC = -(grk.delta / (gC.delta * optSize));
+    const cantP = -(grk.delta / (gP.delta * optSize));
+    const dirC  = cantC > 0 ? 'Comprá' : 'Vendé';
+    const dirP  = cantP > 0 ? 'Comprá' : 'Vendé';
+    sugerencias.push({
+      griega: 'Δ Delta', valor: fmtG(grk.delta, 2),
+      color: grk.delta > 0 ? '#22c55e' : '#ef4444',
+      opciones: [
+        `${dirC} <b>${Math.abs(cantC).toFixed(1)} CALL ${K_atm.toLocaleString('es-AR')}</b> — VI ${viC_pct}%, Δ unit.: ${fmtG(gC.delta*optSize,2)}`,
+        `${dirP} <b>${Math.abs(cantP).toFixed(1)} PUT ${K_atm.toLocaleString('es-AR')}</b> — VI ${viP_pct}%, Δ unit.: ${fmtG(gP.delta*optSize,2)}`,
+        grk.delta > 0
+          ? `Vendé <b>${(grk.delta/optSize).toFixed(1)} ACC</b> (delta -1 por acción)`
+          : `Comprá <b>${Math.abs(grk.delta/optSize).toFixed(1)} ACC</b>`
+      ]
+    });
+  }
+
+  // ── Gamma ─────────────────────────────────────────────────────────────────
+  if (Math.abs(grk.gamma) > 0.0001) {
+    const cantC = -(grk.gamma / (gC.gamma * optSize));
+    const dirC  = cantC > 0 ? 'Comprá' : 'Vendé';
+    sugerencias.push({
+      griega: 'Γ Gamma', valor: fmtG(grk.gamma, 4),
+      color: grk.gamma > 0 ? '#22c55e' : '#ef4444',
+      opciones: [
+        `${dirC} <b>${Math.abs(cantC).toFixed(1)} CALL ${K_atm.toLocaleString('es-AR')}</b> — VI ${viC_pct}%, Γ unit.: ${fmtG(gC.gamma*optSize,4)}`
+      ]
+    });
+  }
+
+  // ── Vega ──────────────────────────────────────────────────────────────────
+  if (Math.abs(grk.vega) > 0.5) {
+    const cantC = -(grk.vega / (gC.vega * optSize));
+    const dirC  = cantC > 0 ? 'Comprá' : 'Vendé';
+    sugerencias.push({
+      griega: 'ν Vega', valor: fmtG(grk.vega, 2),
+      color: grk.vega > 0 ? '#22c55e' : '#ef4444',
+      opciones: [
+        `${dirC} <b>${Math.abs(cantC).toFixed(1)} CALL ${K_atm.toLocaleString('es-AR')}</b> — VI ${viC_pct}%, ν unit.: ${fmtG(gC.vega*optSize,2)}`
+      ]
+    });
+  }
+
+  // ── Theta ─────────────────────────────────────────────────────────────────
+  if (Math.abs(grk.theta) > 1) {
+    const cantC = -(grk.theta / (gC.theta * optSize));
+    const dirC  = cantC > 0 ? 'Comprá' : 'Vendé';
+    sugerencias.push({
+      griega: 'Θ Theta', valor: fmtG(grk.theta, 2) + '/día',
+      color: grk.theta < 0 ? '#ef4444' : '#22c55e',
+      opciones: [
+        `${dirC} <b>${Math.abs(cantC).toFixed(1)} CALL ${K_atm.toLocaleString('es-AR')}</b> — VI ${viC_pct}%, Θ unit.: ${fmtG(gC.theta*optSize,2)}/día`
+      ]
+    });
+  }
+
+  if (!sugerencias.length) {
+    panel.innerHTML = '<span style="color:#22c55e;font-weight:700;">✓ Posición neutralizada en todas las griegas.</span>';
+    return;
+  }
+
+  panel.innerHTML = `<div style="font-size:11px;color:#606080;margin-bottom:8px;font-family:'Calibri',sans-serif;">Strike ATM: <b style="color:#a0c4ff;">${K_atm.toLocaleString('es-AR')}</b> · VI Call: <b>${viC_pct}%</b> · VI Put: <b>${viP_pct}%</b></div>`
+    + sugerencias.map(s => `
+    <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #1e1e30;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+        <span style="font-size:13px;font-weight:700;color:${s.color};font-family:'Calibri',sans-serif;">${s.griega}: ${s.valor}</span>
+        <span style="font-size:11px;color:#606080;font-family:'Calibri',sans-serif;">→ Para neutralizar:</span>
+      </div>
+      <ul style="margin:0;padding-left:16px;list-style:disc;">
+        ${s.opciones.map(o => `<li style="color:#c0c0d0;font-size:12px;margin-bottom:2px;line-height:1.5;font-family:'Calibri',sans-serif;">${o}</li>`).join('')}
+      </ul>
+    </div>`).join('');
+}
+
+function recalcularCostos() {
+  const v = patas.filter(p => p.strike !== '' && (p.tipo === 'S' || p.prima !== ''));
+  const optSize = parseFloat(document.getElementById('opt-size')?.value) || 100;
+  const undSize = parseFloat(document.getElementById('und-size')?.value) || 1;
+  const comAlyc = parseFloat(document.getElementById('com-alyc')?.value) / 100 || 0;
+  const comOtros = parseFloat(document.getElementById('com-otros')?.value) / 100 || 0;
+
+  // Derechos de mercado: opciones 0.24%, acciones 0.08% sobre nocional
+  let derechos = 0, nocionalComision = 0;
+  v.forEach(p => {
+    const K = parseFloat(p.strike) || 0;
+    const prima = parseFloat(p.prima) || 0;
+    const cant = Math.abs(parseInt(p.cant) || 1);
+    if (p.tipo === 'C' || p.tipo === 'P') {
+      const nocional = prima * cant * optSize;
+      derechos += nocional * 0.0024;
+      nocionalComision += nocional;
+    } else {
+      const nocional = K * cant * undSize;
+      derechos += nocional * 0.0008;
+      nocionalComision += nocional;
+    }
+  });
+
+  const comision = nocionalComision * (comAlyc + comOtros);
+  const total = derechos + comision;
+
+  document.getElementById('costo-derechos').textContent = fmtARS(derechos);
+  document.getElementById('costo-comision').textContent = fmtARS(comision);
+  document.getElementById('costo-total').textContent    = fmtARS(total);
+}
+
+// ─── OPERACIONES ──────────────────────────────────────────────────────────────
+function calcularCostoOp(patas, optSize, undSize, comAlyc, comOtros) {
+  return patas.reduce((t, p) => {
+    const prima = parseFloat(p.prima) || 0;
+    const K     = parseFloat(p.strike) || 0;
+    const cant  = Math.abs(parseInt(p.cant) || 1);
+    if (p.tipo === 'C' || p.tipo === 'P') {
+      const noc = prima * cant * optSize;
+      return t + noc * 0.0024 + noc * (comAlyc + comOtros);
+    } else {
+      const noc = K * cant * undSize;
+      return t + noc * 0.0008 + noc * (comAlyc + comOtros);
+    }
+  }, 0);
+}
+
+function guardarOperacion() {
+  const v = patas.filter(p => p.strike !== '' && (p.tipo === 'S' || p.prima !== ''));
+  if (!v.length) return alert('Ingresá al menos una pata válida');
+  const fecha    = document.getElementById('op-fecha').value;
+  const nota     = document.getElementById('op-nota').value;
+  const optSize  = parseFloat(document.getElementById('opt-size').value) || 100;
+  const undSize  = parseFloat(document.getElementById('und-size').value) || 1;
+  const comAlyc  = parseFloat(document.getElementById('com-alyc')?.value)  / 100 || 0;
+  const comOtros = parseFloat(document.getElementById('com-otros')?.value) / 100 || 0;
+  const spot     = parseFloat(document.getElementById('spot-input').value) || spotGGAL || 0;
+
+  // PnL realizado: last vs prima, neto de costos (solo si tienen last)
+  const tienenLast = v.some(p => p.last !== '' && !isNaN(parseFloat(p.last)));
+  let pnlCierre = null;
+  if (tienenLast) {
+    const pnlBruto = calcularPnlVivo(v, optSize, undSize);
+    const costos   = calcularCostoOp(v, optSize, undSize, comAlyc, comOtros);
+    pnlCierre = pnlBruto - costos;
+  }
+
+  const op = {
+    id: Date.now(), fecha, nota,
+    estrategia: detectarEstrategia(patas),
+    patas: JSON.parse(JSON.stringify(v)),
+    optSize, undSize, pnlCierre
+  };
+  operaciones.unshift(op);
+  localStorage.setItem('pb_operaciones', JSON.stringify(operaciones));
+  renderOperaciones();
+  alert('✅ Operación guardada' + (pnlCierre !== null ? `\nPnL neto registrado: ${fmtARS(pnlCierre)}` : ''));
+}
+
+function eliminarOp(id) {
+  operaciones = operaciones.filter(o => o.id !== id);
+  localStorage.setItem('pb_operaciones', JSON.stringify(operaciones));
+  renderOperaciones();
+}
+
+function cargarOp(id) {
+  const op = operaciones.find(o => o.id === id);
+  if (!op) return;
+  patas = op.patas.map(p => ({...p, id: pataId++}));
+  document.getElementById('opt-size').value = op.optSize;
+  document.getElementById('und-size').value = op.undSize;
+  document.getElementById('op-nota').value  = op.nota || '';
+  renderPatas();
+}
+
+function renderOperaciones() {
+  const c = document.getElementById('op-lista');
+  // PnL acumulado
+  const pnlAcum = operaciones.reduce((s, o) => s + (o.pnlCierre || 0), 0);
+  const hayPnl  = operaciones.some(o => o.pnlCierre !== null && o.pnlCierre !== undefined);
+
+  let header = '';
+  if (hayPnl) {
+    const col = pnlAcum >= 0 ? '#22c55e' : '#ef4444';
+    header = `<div style="padding:8px 14px;border-bottom:1px solid var(--border);background:#f9f9fb;display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-size:11px;font-weight:600;color:#606060;font-family:'Calibri',sans-serif;text-transform:uppercase;letter-spacing:0.4px;">PnL acumulado cerrado</span>
+      <span style="font-size:15px;font-weight:800;color:${col};font-family:'Calibri',sans-serif;">${fmtARS(pnlAcum)}</span>
+    </div>`;
+  }
+
+  if (!operaciones.length) {
+    c.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:10px;">Sin operaciones guardadas.</div>';
+    return;
+  }
+
+  c.innerHTML = header + operaciones.map(op => {
+    const pnlStr = op.pnlCierre !== null && op.pnlCierre !== undefined
+      ? `<span style="font-weight:700;color:${op.pnlCierre>=0?'#22c55e':'#ef4444'};font-family:'Calibri',sans-serif;"> · PnL: ${fmtARS(op.pnlCierre)}</span>`
+      : '';
+    return `
+    <div style="padding:9px 14px;border-bottom:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center;gap:8px;">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:12px;font-weight:600;font-family:'Calibri',sans-serif;">${op.estrategia}${pnlStr}</div>
+        <div style="font-size:10px;color:var(--muted);font-family:'Calibri',sans-serif;">${op.fecha||'Sin fecha'} · ${op.nota||''}</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px;font-family:'Calibri',sans-serif;">${op.patas.map(p=>`${p.cant>0?'+':''}${p.cant} ${p.tipo}@${p.strike}${p.prima?` p:${p.prima}`:''}`).join(' | ')}</div>
+      </div>
+      <div style="display:flex;gap:6px;flex-shrink:0;">
+        <button onclick="cargarOp(${op.id})" style="padding:4px 8px;font-size:11px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:none;font-family:'Calibri',sans-serif;">Cargar</button>
+        <button onclick="eliminarOp(${op.id})" style="padding:4px 8px;font-size:11px;border:1px solid #fee2e2;border-radius:4px;cursor:pointer;background:none;color:var(--negative);font-family:'Calibri',sans-serif;">×</button>
+      </div>
+    </div>`
+  }).join('');
+}
+
+// Inicializar
+agregarPata();
+agregarPata();
+renderOperaciones();
+
+</script>
+</body>
+</html>
