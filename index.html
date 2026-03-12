@@ -605,11 +605,84 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-</div>
+        <!-- ── PnL POR PATA ──────────────────────────────────────────────── -->
+        <div style="margin-top:16px;">
+          <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">PnL por pata</div>
+          <div id="pnl-patas-panel" style="background:#111122;border-radius:8px;padding:10px 14px;">
+            <span style="color:#404060;font-family:'Calibri',sans-serif;font-size:13px;">Cargá prima y last para ver PnL por pata.</span>
+          </div>
+        </div>
+
+        <!-- ── SIMULADOR DE TIEMPO ──────────────────────────────────────── -->
+        <div style="margin-top:16px;">
+          <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Simulador de tiempo (días a vencimiento)</div>
+          <div style="background:#111122;border-radius:8px;padding:12px 14px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+              <span style="font-size:12px;color:#a0a0c0;font-family:'Calibri',sans-serif;">Hoy</span>
+              <input type="range" id="sim-dias" min="1" max="365" value="37" style="flex:1;accent-color:#a0c4ff;" oninput="actualizarSimulador()">
+              <span style="font-size:12px;color:#a0a0c0;font-family:'Calibri',sans-serif;">Vto.</span>
+              <span id="sim-dias-label" style="font-size:13px;font-weight:700;color:#a0c4ff;font-family:'Calibri',sans-serif;min-width:60px;text-align:right;">37 días</span>
+            </div>
+            <canvas id="sim-chart" height="120" style="width:100%;"></canvas>
+          </div>
+        </div>
+
+        <!-- ── SENSIBILIDAD DE VI ───────────────────────────────────────── -->
+        <div style="margin-top:16px;">
+          <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Sensibilidad de volatilidad implícita</div>
+          <div style="background:#111122;border-radius:8px;padding:12px 14px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+              <span style="font-size:12px;color:#a0a0c0;font-family:'Calibri',sans-serif;">VI base</span>
+              <input type="range" id="vi-slider" min="-50" max="50" value="0" step="5" style="flex:1;accent-color:#f59e0b;" oninput="actualizarSensVI()">
+              <span id="vi-slider-label" style="font-size:13px;font-weight:700;color:#f59e0b;font-family:'Calibri',sans-serif;min-width:60px;text-align:right;">±0%</span>
+            </div>
+            <div id="vi-sens-tabla" style="overflow-x:auto;"></div>
+          </div>
+        </div>
+
+        <!-- ── KELLY + SIZING ───────────────────────────────────────────── -->
+        <div style="margin-top:16px;">
+          <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Kelly & Sizing</div>
+          <div style="background:#111122;border-radius:8px;padding:12px 14px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+              <div>
+                <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:2px;">Capital total ($)</div>
+                <input type="number" id="kelly-capital" value="1000000" step="10000" oninput="calcularKelly()" style="font-size:13px;font-family:'Calibri',sans-serif;background:#1a1a2e;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:4px 7px;width:100%;">
+              </div>
+              <div>
+                <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:2px;">Fracción Kelly</div>
+                <select id="kelly-frac" onchange="calcularKelly()" style="font-size:13px;font-family:'Calibri',sans-serif;background:#1a1a2e;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:4px 7px;width:100%;">
+                  <option value="1">Full Kelly</option>
+                  <option value="0.5" selected>Half Kelly</option>
+                  <option value="0.25">Quarter Kelly</option>
+                </select>
+              </div>
+            </div>
+            <div id="kelly-resultado" style="font-family:'Calibri',sans-serif;font-size:13px;color:#a0a0c0;">
+              Cargá una posición para ver el sizing sugerido.
+            </div>
+          </div>
+        </div>
+
+        <!-- ── VOLATILITY SMILE ─────────────────────────────────────────── -->
+        <div style="margin-top:16px;">
+          <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Volatility Smile</div>
+          <div style="background:#111122;border-radius:8px;padding:12px 14px;">
+            <canvas id="smile-chart" height="140" style="width:100%;"></canvas>
+            <div id="smile-skew" style="margin-top:8px;font-family:'Calibri',sans-serif;font-size:12px;color:#a0a0c0;"></div>
+          </div>
+        </div>
+
+        <!-- ── ZONA DE MÁXIMA PROBABILIDAD ─────────────────────────────── -->
+        <div style="margin-top:16px;margin-bottom:24px;">
+          <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Cono de volatilidad & Zona de probabilidad</div>
+          <div style="background:#111122;border-radius:8px;padding:12px 14px;">
+            <div id="cono-info" style="font-family:'Calibri',sans-serif;font-size:13px;color:#a0a0c0;">
+              Cargá una posición para ver el cono de volatilidad.
+            </div>
+          </div>
+        </div>
 
 <script>
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT3WNyHxyaxw15sycBbuKe1REh28RHytoNGw9y4No3-CbbtrvZUPpLJG7IU_D0ZYe5qrFzDU5RFAEhu/pub?gid=137375925&single=true&output=csv';
@@ -748,6 +821,7 @@ function render(rows) {
   }
   document.getElementById('calls-body').innerHTML = callsH;
   document.getElementById('puts-body').innerHTML = putsH;
+  renderSmile();
 
   // ESTRATEGIAS: filas 34-62 (index 33-61)
   // A=0  ticker CALL
@@ -957,49 +1031,114 @@ function recalcularCF() {
 }
 
 function detectarEstrategia(patas) {
-  // Acción no requiere prima para ser válida
   const v = patas.filter(p => p.strike !== '' && (p.tipo === 'S' || p.prima !== ''));
   if (!v.length) return 'Ingresá las patas';
-  if (v.length === 1) {
-    const p = v[0];
-    return `${p.cant > 0 ? 'Compra' : 'Venta'} de ${p.tipo === 'C' ? 'Call' : p.tipo === 'P' ? 'Put' : 'Acción'}`;
-  }
-  const calls = v.filter(p => p.tipo === 'C').sort((a,b) => a.strike - b.strike);
-  const puts  = v.filter(p => p.tipo === 'P').sort((a,b) => a.strike - b.strike);
+
+  const calls = v.filter(p => p.tipo === 'C').sort((a,b) => parseFloat(a.strike)-parseFloat(b.strike));
+  const puts  = v.filter(p => p.tipo === 'P').sort((a,b) => parseFloat(a.strike)-parseFloat(b.strike));
   const acc   = v.filter(p => p.tipo === 'S');
 
-  // Normalizar cantidades a signos para detección
-  const cSigns = calls.map(c => Math.sign(c.cant));
-  const pSigns = puts.map(p => Math.sign(p.cant));
+  const totalLegs = v.length;
 
-  if (calls.length === 2 && !puts.length && !acc.length) {
-    if (cSigns[0] === 1 && cSigns[1] === -1) return '📈 Bull Spread (Call)';
-    if (cSigns[0] === -1 && cSigns[1] === 1) return '📉 Bear Spread (Call)';
-    // ratio: distintas cantidades absolutas
-    const r = Math.abs(calls[1].cant) / Math.abs(calls[0].cant);
-    if (cSigns[0] === 1 && cSigns[1] === -1) return `⚡ Ratio Call 1×${Math.abs(calls[1].cant)}`;
-    return `⚡ Ratio Call`;
+  // ── 1 pata ────────────────────────────────────────────────────────────────
+  if (totalLegs === 1) {
+    const p = v[0];
+    const dir = parseInt(p.cant) > 0 ? 'Compra' : 'Venta';
+    const tipo = p.tipo==='C' ? 'Call' : p.tipo==='P' ? 'Put' : 'Acción';
+    return `${dir} de ${tipo}`;
   }
-  if (puts.length === 2 && !calls.length && !acc.length) {
-    if (pSigns[0] === -1 && pSigns[1] === 1) return '📉 Bear Spread (Put)';
-    if (pSigns[0] === 1 && pSigns[1] === -1) return '📈 Bull Spread (Put)';
-    return '⚡ Ratio Put';
+
+  // ── 2 patas calls ─────────────────────────────────────────────────────────
+  if (calls.length===2 && !puts.length && !acc.length) {
+    const c0 = parseInt(calls[0].cant), c1 = parseInt(calls[1].cant);
+    const a0 = Math.abs(c0), a1 = Math.abs(c1);
+    const s0 = Math.sign(c0), s1 = Math.sign(c1);
+    // Spread: mismas cantidades, distintos signos
+    if (a0===a1 && s0===1 && s1===-1) return '📈 Bull Spread Call';
+    if (a0===a1 && s0===-1 && s1===1) return '📉 Bear Spread Call';
+    // Ratio: distintas cantidades
+    if (s0===1 && s1===-1) return `⚡ Ratio Call ${a0}×${a1}`;
+    if (s0===-1 && s1===1) return `⚡ Ratio Call inverso ${a1}×${a0}`;
+    // Mismo signo
+    if (s0===1 && s1===1) return '📈 Compra de Calls escalonada';
+    if (s0===-1 && s1===-1) return '📉 Venta de Calls escalonada';
   }
-  if (calls.length === 3 && !puts.length) {
-    if (cSigns[0]===1 && cSigns[1]===-1 && cSigns[2]===1) return '🦋 Mariposa (Call)';
+
+  // ── 2 patas puts ──────────────────────────────────────────────────────────
+  if (puts.length===2 && !calls.length && !acc.length) {
+    const p0 = parseInt(puts[0].cant), p1 = parseInt(puts[1].cant);
+    const a0 = Math.abs(p0), a1 = Math.abs(p1);
+    const s0 = Math.sign(p0), s1 = Math.sign(p1);
+    if (a0===a1 && s0===-1 && s1===1) return '📉 Bear Spread Put';
+    if (a0===a1 && s0===1 && s1===-1) return '📈 Bull Spread Put';
+    if (s0===-1 && s1===1) return `⚡ Ratio Put ${a1}×${a0}`;
+    if (s0===1 && s1===-1) return `⚡ Ratio Put inverso ${a0}×${a1}`;
+    if (s0===1 && s1===1) return '📉 Compra de Puts escalonada';
+    if (s0===-1 && s1===-1) return '📈 Venta de Puts escalonada';
   }
-  if (puts.length === 3 && !calls.length) {
-    if (pSigns[0]===1 && pSigns[1]===-1 && pSigns[2]===1) return '🦋 Mariposa (Put)';
-  }
-  if (acc.length===1 && calls.length===1 && acc[0].cant>0 && calls[0].cant<0) return '📋 Lanzamiento Cubierto';
+
+  // ── 1 call + 1 put ────────────────────────────────────────────────────────
   if (calls.length===1 && puts.length===1 && !acc.length) {
-    const sameCant = Math.abs(calls[0].cant) === Math.abs(puts[0].cant);
-    if (calls[0].cant>0 && puts[0].cant>0) return sameCant ? '🔔 Straddle Comprador' : 'Strangle Comprador';
-    if (calls[0].cant<0 && puts[0].cant<0) return sameCant ? '🔕 Straddle Vendedor' : 'Strangle Vendedor';
-    if (calls[0].cant>0 && puts[0].cant<0) return '🔗 Sintética Larga';
-    if (calls[0].cant<0 && puts[0].cant>0) return '🔗 Sintética Corta';
+    const cc = parseInt(calls[0].cant), pc = parseInt(puts[0].cant);
+    const ac = Math.abs(cc), ap = Math.abs(pc);
+    const sameStrike = parseFloat(calls[0].strike) === parseFloat(puts[0].strike);
+    if (cc>0 && pc>0) {
+      if (sameStrike && ac===ap) return '🔔 Straddle Comprador';
+      return '🔔 Strangle Comprador';
+    }
+    if (cc<0 && pc<0) {
+      if (sameStrike && ac===ap) return '🔕 Straddle Vendedor';
+      return '🔕 Strangle Vendedor';
+    }
+    if (cc>0 && pc<0) return '🔗 Sintética Larga';
+    if (cc<0 && pc>0) return '🔗 Sintética Corta';
   }
-  return `Estrategia personalizada (${v.length} patas)`;
+
+  // ── 3 patas calls (mariposa) ──────────────────────────────────────────────
+  if (calls.length===3 && !puts.length && !acc.length) {
+    const [c0,c1,c2] = calls.map(c=>parseInt(c.cant));
+    if (c0>0 && c1<0 && c2>0 && Math.abs(c1)===Math.abs(c0)+Math.abs(c2)) return '🦋 Mariposa Call';
+    if (c0<0 && c1>0 && c2<0) return '🦋 Mariposa Call Inversa';
+    return `⚡ Estrategia Call 3 patas`;
+  }
+
+  // ── 3 patas puts (mariposa) ───────────────────────────────────────────────
+  if (puts.length===3 && !calls.length && !acc.length) {
+    const [p0,p1,p2] = puts.map(p=>parseInt(p.cant));
+    if (p0>0 && p1<0 && p2>0 && Math.abs(p1)===Math.abs(p0)+Math.abs(p2)) return '🦋 Mariposa Put';
+    if (p0<0 && p1>0 && p2<0) return '🦋 Mariposa Put Inversa';
+    return `⚡ Estrategia Put 3 patas`;
+  }
+
+  // ── Lanzamiento cubierto ──────────────────────────────────────────────────
+  if (acc.length===1 && calls.length===1 && !puts.length) {
+    if (parseInt(acc[0].cant)>0 && parseInt(calls[0].cant)<0) return '📋 Lanzamiento Cubierto';
+    if (parseInt(acc[0].cant)<0 && parseInt(calls[0].cant)>0) return '📋 Lanzamiento Cubierto Inverso';
+  }
+
+  // ── Put protector ─────────────────────────────────────────────────────────
+  if (acc.length===1 && puts.length===1 && !calls.length) {
+    if (parseInt(acc[0].cant)>0 && parseInt(puts[0].cant)>0) return '🛡️ Put Protector';
+  }
+
+  // ── Collar ────────────────────────────────────────────────────────────────
+  if (acc.length===1 && calls.length===1 && puts.length===1) {
+    if (parseInt(acc[0].cant)>0 && parseInt(calls[0].cant)<0 && parseInt(puts[0].cant)>0) return '🔰 Collar';
+  }
+
+  // ── 4 patas condor / iron condor ─────────────────────────────────────────
+  if (calls.length===2 && puts.length===2 && !acc.length) {
+    const cc = calls.map(c=>Math.sign(parseInt(c.cant)));
+    const pp = puts.map(p=>Math.sign(parseInt(p.cant)));
+    if (pp[0]===1&&pp[1]===-1&&cc[0]===-1&&cc[1]===1) return '🦅 Iron Condor';
+    if (pp[0]===-1&&pp[1]===1&&cc[0]===1&&cc[1]===-1) return '🦅 Iron Condor Comprador';
+  }
+  if (calls.length===4 && !puts.length && !acc.length) {
+    const s = calls.map(c=>Math.sign(parseInt(c.cant)));
+    if (s[0]===1&&s[1]===-1&&s[2]===-1&&s[3]===1) return '🦅 Condor Call';
+  }
+
+  return `🎯 Estrategia personalizada (${totalLegs} patas)`;
 }
 
 // ─── BLACK-SCHOLES GRIEGAS ────────────────────────────────────────────────────
@@ -1375,6 +1514,19 @@ function recalcular() {
 
   // llamar CF
   setTimeout(recalcularCF, 0);
+
+  // ── Nuevas features ───────────────────────────────────────────────────────────
+  renderPnlPatas(v, optSize, undSize);
+  calcularKelly();
+  actualizarSensVI();
+  renderCono(spotInput, T, optSize);
+  // Simulador: actualizar max del slider con diasVto
+  const simSlider = document.getElementById('sim-dias');
+  if (simSlider) {
+    simSlider.max = diasVto || 365;
+    simSlider.value = Math.min(parseInt(simSlider.value), diasVto || 365);
+    actualizarSimulador();
+  }
 }
 
 function renderPosicion(v, S, T, r, optSize, undSize) {
@@ -1653,6 +1805,340 @@ function renderOperaciones() {
 agregarPata();
 agregarPata();
 renderOperaciones();
+
+// ─── PnL POR PATA ────────────────────────────────────────────────────────────
+function renderPnlPatas(v, optSize, undSize) {
+  const panel = document.getElementById('pnl-patas-panel');
+  if (!panel) return;
+  const conLast = v.filter(p => p.last !== '' && !isNaN(parseFloat(p.last)));
+  if (!conLast.length) {
+    panel.innerHTML = '<span style="color:#404060;font-family:\'Calibri\',sans-serif;font-size:13px;">Cargá prima y last para ver PnL por pata.</span>';
+    return;
+  }
+  const comAlyc  = parseFloat(document.getElementById('com-alyc')?.value)  / 100 || 0;
+  const comOtros = parseFloat(document.getElementById('com-otros')?.value) / 100 || 0;
+
+  let html = `<table style="width:100%;border-collapse:collapse;font-family:'Calibri',sans-serif;font-size:13px;">
+    <thead><tr style="border-bottom:1px solid #2a2a3e;">
+      <th style="padding:3px 8px;text-align:left;color:#808090;font-weight:600;">Pata</th>
+      <th style="padding:3px 8px;text-align:right;color:#808090;font-weight:600;">Cant.</th>
+      <th style="padding:3px 8px;text-align:right;color:#808090;font-weight:600;">Prima</th>
+      <th style="padding:3px 8px;text-align:right;color:#808090;font-weight:600;">Last</th>
+      <th style="padding:3px 8px;text-align:right;color:#808090;font-weight:600;">PnL bruto</th>
+      <th style="padding:3px 8px;text-align:right;color:#808090;font-weight:600;">Costos</th>
+      <th style="padding:3px 8px;text-align:right;color:#a0c4ff;font-weight:600;">PnL neto</th>
+    </tr></thead><tbody>`;
+
+  let totalNeto = 0;
+  v.forEach(p => {
+    const prima = parseFloat(p.prima) || 0;
+    const last  = parseFloat(p.last);
+    const cant  = parseInt(p.cant) || 1;
+    const sz    = p.tipo === 'S' ? undSize : optSize;
+    const costoBase = p.tipo === 'S' ? parseFloat(p.strike) : prima;
+    const tieneL = !isNaN(last) && p.last !== '';
+    const pnlBruto = tieneL ? (last - costoBase) * cant * sz : null;
+
+    let costos = 0;
+    if (p.tipo === 'C' || p.tipo === 'P') {
+      const noc = prima * Math.abs(cant) * optSize;
+      costos = noc * 0.0024 + noc * (comAlyc + comOtros);
+    } else {
+      const noc = (parseFloat(p.strike)||0) * Math.abs(cant) * undSize;
+      costos = noc * 0.0008 + noc * (comAlyc + comOtros);
+    }
+    const pnlNeto = pnlBruto !== null ? pnlBruto - costos : null;
+    if (pnlNeto !== null) totalNeto += pnlNeto;
+
+    const label = p.tipo === 'S' ? `ACC @${p.strike}` : `${p.tipo==='C'?'CALL':'PUT'} ${parseFloat(p.strike).toLocaleString('es-AR')}`;
+    const cPnl  = pnlNeto !== null ? (pnlNeto >= 0 ? '#22c55e' : '#ef4444') : '#606080';
+    const cCant = cant > 0 ? '#22c55e' : '#ef4444';
+
+    html += `<tr style="border-bottom:1px solid #16162a;">
+      <td style="padding:3px 8px;color:#c0c0d0;">${label}</td>
+      <td style="padding:3px 8px;text-align:right;color:${cCant};font-weight:700;">${cant>0?'+':''}${cant}</td>
+      <td style="padding:3px 8px;text-align:right;color:#a0a0c0;">${fmtARS(prima)}</td>
+      <td style="padding:3px 8px;text-align:right;color:#a0c4ff;">${tieneL ? fmtARS(last) : '—'}</td>
+      <td style="padding:3px 8px;text-align:right;color:${cPnl};">${pnlBruto !== null ? fmtARS(pnlBruto) : '—'}</td>
+      <td style="padding:3px 8px;text-align:right;color:#ef4444;">-${fmtARS(costos)}</td>
+      <td style="padding:3px 8px;text-align:right;color:${cPnl};font-weight:700;">${pnlNeto !== null ? fmtARS(pnlNeto) : '—'}</td>
+    </tr>`;
+  });
+
+  const cTotal = totalNeto >= 0 ? '#22c55e' : '#ef4444';
+  html += `<tr style="border-top:2px solid #2a2a3e;font-weight:700;">
+    <td colspan="6" style="padding:4px 8px;color:#a0a0c0;font-family:'Calibri',sans-serif;">Total</td>
+    <td style="padding:4px 8px;text-align:right;color:${cTotal};font-family:'Calibri',sans-serif;">${fmtARS(totalNeto)}</td>
+  </tr></tbody></table>`;
+  panel.innerHTML = html;
+}
+
+// ─── SIMULADOR DE TIEMPO ──────────────────────────────────────────────────────
+let simChart = null;
+function actualizarSimulador() {
+  const slider = document.getElementById('sim-dias');
+  const label  = document.getElementById('sim-dias-label');
+  if (!slider) return;
+  const dias = parseInt(slider.value);
+  label.textContent = `${dias} días`;
+
+  const v = patas.filter(p => p.strike !== '' && (p.tipo === 'S' || p.prima !== ''));
+  if (!v.length) return;
+
+  const optSize  = parseFloat(document.getElementById('opt-size')?.value)  || 100;
+  const undSize  = parseFloat(document.getElementById('und-size')?.value)  || 1;
+  const spotInput = parseFloat(document.getElementById('spot-input')?.value) || spotGGAL || 6600;
+  const r = Math.log(1 + 0.40);
+  const T = dias / 365;
+
+  const rangoPct = parseFloat(document.getElementById('rango-pct')?.value) || 30;
+  const sMin = spotInput * (1 - rangoPct/100);
+  const sMax = spotInput * (1 + rangoPct/100);
+  const steps = 60;
+  const precios = [], payoffs = [];
+  for (let i = 0; i <= steps; i++) {
+    const S = sMin + (sMax - sMin) * i / steps;
+    precios.push(S.toFixed(0));
+    payoffs.push(calcularPayoffTeorico(S, v, optSize, undSize, spotInput, T, r));
+  }
+
+  const posData = payoffs.map(v => v >= 0 ? v : null);
+  const negData = payoffs.map(v => v < 0  ? v : null);
+  const ctx = document.getElementById('sim-chart')?.getContext('2d');
+  if (!ctx) return;
+  if (simChart) simChart.destroy();
+  simChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: precios,
+      datasets: [
+        { label: 'Ganancia', data: posData, borderColor: '#22c55e', backgroundColor: 'rgba(34,197,94,0.1)', fill: true, tension: 0.3, pointRadius: 0, borderWidth: 2, spanGaps: false },
+        { label: 'Pérdida',  data: negData, borderColor: '#ef4444', backgroundColor: 'rgba(239,68,68,0.1)',  fill: true, tension: 0.3, pointRadius: 0, borderWidth: 2, spanGaps: false }
+      ]
+    },
+    options: {
+      responsive: true, animation: false,
+      plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false, backgroundColor: '#1a1a2e', bodyColor: '#fff', callbacks: { title: c => `GGAL: $${c[0].label}`, label: c => c.raw !== null ? `P&L: $${fmtARS(c.raw)}` : null, filter: i => i.raw !== null } } },
+      scales: {
+        x: { ticks: { maxTicksLimit: 7, color: '#606080', font: { family: 'Calibri', size: 11 } }, grid: { color: '#1a1a2e' } },
+        y: { ticks: { color: '#606080', font: { family: 'Calibri', size: 11 }, callback: v => '$'+fmtARS(v) }, grid: { color: '#1a1a2e' } }
+      }
+    }
+  });
+}
+
+// ─── SENSIBILIDAD DE VI ───────────────────────────────────────────────────────
+function actualizarSensVI() {
+  const slider = document.getElementById('vi-slider');
+  const label  = document.getElementById('vi-slider-label');
+  const tabla  = document.getElementById('vi-sens-tabla');
+  if (!slider || !tabla) return;
+  const deltVI = parseInt(slider.value);
+  label.textContent = `${deltVI >= 0 ? '+' : ''}${deltVI}%`;
+  label.style.color = deltVI > 0 ? '#22c55e' : deltVI < 0 ? '#ef4444' : '#f59e0b';
+
+  const v = patas.filter(p => p.strike !== '' && (p.tipo === 'S' || p.prima !== ''));
+  if (!v.length) { tabla.innerHTML = ''; return; }
+
+  const optSize   = parseFloat(document.getElementById('opt-size')?.value)  || 100;
+  const undSize   = parseFloat(document.getElementById('und-size')?.value)  || 1;
+  const spotInput = parseFloat(document.getElementById('spot-input')?.value) || spotGGAL || 6600;
+  const r = Math.log(1 + 0.40);
+  const T = (diasVto || 37) / 365;
+
+  const variaciones = [-30, -20, -10, -5, 0, 5, 10, 20, 30];
+  let html = `<table style="width:100%;border-collapse:collapse;font-family:'Calibri',sans-serif;font-size:12px;">
+    <thead><tr style="border-bottom:1px solid #2a2a3e;">
+      <th style="padding:2px 6px;text-align:left;color:#808090;">Precio GGAL</th>
+      <th style="padding:2px 6px;text-align:right;color:#808090;">P&L base</th>
+      <th style="padding:2px 6px;text-align:right;color:#f59e0b;">P&L VI ${deltVI>=0?'+':''}${deltVI}%</th>
+      <th style="padding:2px 6px;text-align:right;color:#a0c4ff;">Diferencia</th>
+    </tr></thead><tbody>`;
+
+  variaciones.forEach(pct => {
+    const S = spotInput * (1 + pct/100);
+    const pnlBase = calcularPayoffTeorico(S, v, optSize, undSize, spotInput, T, r);
+
+    // VI modificada
+    const vMod = v.map(p => ({
+      ...p,
+      _viOverride: p.tipo !== 'S' ? Math.max(0.01, getVI(parseFloat(p.strike), p.tipo) + deltVI/100) : 0
+    }));
+    const pnlMod = vMod.reduce((total, p) => {
+      if (p.tipo === 'S') return total + (S - parseFloat(p.strike)) * parseInt(p.cant) * undSize;
+      const K = parseFloat(p.strike), cant = parseInt(p.cant);
+      const prima = parseFloat(p.prima) || 0;
+      const valorBS = T > 0 ? bsPrice(S, K, T, r, p._viOverride, p.tipo) : Math.max(p.tipo==='C'?S-K:K-S,0);
+      return total + (valorBS - prima) * cant * optSize;
+    }, 0);
+
+    const diff = pnlMod - pnlBase;
+    const esHoy = pct === 0;
+    const bg = esHoy ? 'background:#0d1f0d;' : '';
+    html += `<tr style="${bg}border-bottom:1px solid #16162a;">
+      <td style="padding:2px 6px;color:${pct<0?'#ef4444':pct>0?'#22c55e':'#a0c4ff'};">${pct>0?'+':''}${pct}% · ${fmtARS(S)}</td>
+      <td style="padding:2px 6px;text-align:right;color:${pnlBase>=0?'#22c55e':'#ef4444'};">${fmtARS(pnlBase)}</td>
+      <td style="padding:2px 6px;text-align:right;color:${pnlMod>=0?'#22c55e':'#ef4444'};">${fmtARS(pnlMod)}</td>
+      <td style="padding:2px 6px;text-align:right;color:${diff>=0?'#22c55e':'#ef4444'};">${diff>=0?'+':''}${fmtARS(diff)}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  tabla.innerHTML = html;
+}
+
+// ─── KELLY & SIZING ───────────────────────────────────────────────────────────
+function calcularKelly() {
+  const panel = document.getElementById('kelly-resultado');
+  if (!panel) return;
+  const v = patas.filter(p => p.strike !== '' && (p.tipo === 'S' || p.prima !== ''));
+  if (!v.length) { panel.innerHTML = '<span style="color:#404060;">Cargá una posición para ver el sizing.</span>'; return; }
+
+  const capitalTotal = parseFloat(document.getElementById('kelly-capital')?.value) || 1000000;
+  const fraccion     = parseFloat(document.getElementById('kelly-frac')?.value) || 0.5;
+  const optSize      = parseFloat(document.getElementById('opt-size')?.value)  || 100;
+  const spotInput    = parseFloat(document.getElementById('spot-input')?.value) || spotGGAL || 6600;
+  const T = (diasVto || 37) / 365;
+  const r = Math.log(1 + 0.40);
+
+  // Prob de éxito desde la pata más ATM
+  const atmPata = v.filter(p=>p.tipo!=='S').sort((a,b)=>Math.abs(parseFloat(a.strike)-spotInput)-Math.abs(parseFloat(b.strike)-spotInput))[0];
+  let prob = 0.5;
+  if (atmPata) {
+    const vi = getVI(parseFloat(atmPata.strike), atmPata.tipo);
+    const g  = bsGreeks(spotInput, parseFloat(atmPata.strike), T, r, vi, atmPata.tipo);
+    if (g) prob = parseInt(atmPata.cant) > 0 ? g.prob : 1 - g.prob;
+  }
+
+  // Máx gan y máx per en rango ±50%
+  const steps = 200;
+  const sMin = spotInput * 0.5, sMax = spotInput * 1.5;
+  let maxGan = -Infinity, maxPer = Infinity;
+  for (let i = 0; i <= steps; i++) {
+    const S = sMin + (sMax-sMin)*i/steps;
+    const pnl = calcularPayoff(S, v, optSize, 1);
+    if (pnl > maxGan) maxGan = pnl;
+    if (pnl < maxPer) maxPer = pnl;
+  }
+  maxGan = Math.max(maxGan, 0);
+  const maxPer_abs = Math.abs(Math.min(maxPer, 0));
+
+  if (maxPer_abs === 0) { panel.innerHTML = '<span style="color:#22c55e;">Riesgo ilimitado — Kelly no aplica directamente.</span>'; return; }
+
+  const b = maxGan / maxPer_abs;
+  const q = 1 - prob;
+  const kellyFull = Math.max(0, (prob * b - q) / b);
+  const kellyFrac = kellyFull * fraccion;
+
+  const capitalSugerido = capitalTotal * kellyFrac;
+  const contratosMax = maxPer_abs > 0 ? Math.floor(capitalSugerido / maxPer_abs) : 0;
+
+  panel.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-family:'Calibri',sans-serif;">
+      <div style="background:#0d0d1a;border-radius:6px;padding:8px;text-align:center;">
+        <div style="font-size:10px;color:#606080;">P. Éxito BS</div>
+        <div style="font-size:16px;font-weight:700;color:#22c55e;">${(prob*100).toFixed(1)}%</div>
+      </div>
+      <div style="background:#0d0d1a;border-radius:6px;padding:8px;text-align:center;">
+        <div style="font-size:10px;color:#606080;">Kelly ${fraccion===1?'Full':fraccion===0.5?'Half':'Quarter'}</div>
+        <div style="font-size:16px;font-weight:700;color:#f59e0b;">${(kellyFrac*100).toFixed(1)}%</div>
+      </div>
+      <div style="background:#0d0d1a;border-radius:6px;padding:8px;text-align:center;">
+        <div style="font-size:10px;color:#606080;">Capital sugerido</div>
+        <div style="font-size:16px;font-weight:700;color:#a0c4ff;">$${fmtARS(capitalSugerido)}</div>
+      </div>
+    </div>
+    <div style="margin-top:8px;padding:8px;background:#0d0d1a;border-radius:6px;font-size:12px;color:#a0a0c0;">
+      Ratio B: <b style="color:#fff;">${b.toFixed(2)}</b> · 
+      Máx gan: <b style="color:#22c55e;">$${fmtARS(maxGan)}</b> · 
+      Máx per: <b style="color:#ef4444;">$${fmtARS(maxPer_abs)}</b> · 
+      Contratos sugeridos: <b style="color:#a0c4ff;">${contratosMax}</b>
+    </div>`;
+}
+
+// ─── VOLATILITY SMILE ─────────────────────────────────────────────────────────
+let smileChart = null;
+function renderSmile() {
+  const ctx = document.getElementById('smile-chart')?.getContext('2d');
+  const skewEl = document.getElementById('smile-skew');
+  if (!ctx || !strikesDisponibles.length) return;
+
+  const strikes = [...strikesDisponibles].sort((a,b) => a-b);
+  const viCalls = strikes.map(k => { const vi = strikeLast[k]?.viCall; return vi ? vi*100 : null; });
+  const viPuts  = strikes.map(k => { const vi = strikeLast[k]?.viPut;  return vi ? vi*100 : null; });
+
+  if (smileChart) smileChart.destroy();
+  smileChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: strikes.map(k => k.toLocaleString('es-AR')),
+      datasets: [
+        { label: 'VI Calls', data: viCalls, borderColor: '#22c55e', backgroundColor: 'rgba(34,197,94,0.1)', tension: 0.3, pointRadius: 3, borderWidth: 2, spanGaps: false },
+        { label: 'VI Puts',  data: viPuts,  borderColor: '#ef4444', backgroundColor: 'rgba(239,68,68,0.1)',  tension: 0.3, pointRadius: 3, borderWidth: 2, spanGaps: false }
+      ]
+    },
+    options: {
+      responsive: true, animation: false,
+      plugins: {
+        legend: { display: true, labels: { color: '#a0a0c0', font: { family: 'Calibri', size: 11 } } },
+        tooltip: { backgroundColor: '#1a1a2e', bodyColor: '#fff', callbacks: { label: c => `${c.dataset.label}: ${c.raw?.toFixed(1)}%` } }
+      },
+      scales: {
+        x: { ticks: { maxTicksLimit: 8, color: '#606080', font: { family: 'Calibri', size: 10 } }, grid: { color: '#1a1a2e' } },
+        y: { ticks: { color: '#606080', font: { family: 'Calibri', size: 10 }, callback: v => v+'%' }, grid: { color: '#1a1a2e' } }
+      }
+    }
+  });
+
+  // Skew info
+  if (skewEl) {
+    const atmK = strikesDisponibles.length ? strikesDisponibles.sort((a,b)=>Math.abs(a-(spotGGAL||6600))-Math.abs(b-(spotGGAL||6600)))[0] : null;
+    const viC_atm = atmK ? (strikeLast[atmK]?.viCall || 0) * 100 : 0;
+    const viP_atm = atmK ? (strikeLast[atmK]?.viPut  || 0) * 100 : 0;
+    const skew = viP_atm - viC_atm;
+    skewEl.innerHTML = `ATM ${atmK?.toLocaleString('es-AR')} · VI Call: <b style="color:#22c55e">${viC_atm.toFixed(1)}%</b> · VI Put: <b style="color:#ef4444">${viP_atm.toFixed(1)}%</b> · Skew: <b style="color:${skew>0?'#ef4444':'#22c55e'}">${skew>=0?'+':''}${skew.toFixed(1)}%</b>`;
+  }
+}
+
+// ─── CONO DE VOLATILIDAD ──────────────────────────────────────────────────────
+function renderCono(spotInput, T, optSize) {
+  const el = document.getElementById('cono-info');
+  if (!el || !spotInput || !T) return;
+
+  const atmK = strikesDisponibles.length ? strikesDisponibles.sort((a,b)=>Math.abs(a-spotInput)-Math.abs(b-spotInput))[0] : null;
+  const vi = atmK ? getVI(atmK, 'C') : 0.60;
+
+  const sigma1 = spotInput * vi * Math.sqrt(T);
+  const sigma2 = spotInput * vi * Math.sqrt(T) * 2;
+
+  const s1U = spotInput + sigma1, s1D = spotInput - sigma1;
+  const s2U = spotInput + sigma2, s2D = spotInput - sigma2;
+  const p1U = ((s1U/spotInput-1)*100).toFixed(1), p1D = ((s1D/spotInput-1)*100).toFixed(1);
+  const p2U = ((s2U/spotInput-1)*100).toFixed(1), p2D = ((s2D/spotInput-1)*100).toFixed(1);
+
+  el.innerHTML = `
+    <div style="font-family:'Calibri',sans-serif;font-size:12px;color:#a0a0c0;margin-bottom:8px;">
+      VI ATM: <b style="color:#f59e0b">${(vi*100).toFixed(1)}%</b> · Spot: <b style="color:#a0c4ff">$${fmtARS(spotInput)}</b> · Días: <b style="color:#a0c4ff">${Math.round(T*365)}</b>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-family:'Calibri',sans-serif;">
+      <div style="background:#0d0d1a;border-radius:6px;padding:8px;text-align:center;">
+        <div style="font-size:10px;color:#606080;">1σ (68%)</div>
+        <div style="font-size:13px;font-weight:700;color:#22c55e;">+${p1U}% · $${fmtARS(s1U)}</div>
+        <div style="font-size:13px;font-weight:700;color:#ef4444;">${p1D}% · $${fmtARS(s1D)}</div>
+      </div>
+      <div style="background:#0d0d1a;border-radius:6px;padding:8px;text-align:center;">
+        <div style="font-size:10px;color:#606080;">2σ (95%)</div>
+        <div style="font-size:13px;font-weight:700;color:#22c55e;">+${p2U}% · $${fmtARS(s2U)}</div>
+        <div style="font-size:13px;font-weight:700;color:#ef4444;">${p2D}% · $${fmtARS(s2D)}</div>
+      </div>
+      <div style="background:#0d0d1a;border-radius:6px;padding:8px;text-align:center;">
+        <div style="font-size:10px;color:#606080;">Mov. diario 1σ</div>
+        <div style="font-size:13px;font-weight:700;color:#a0c4ff;">±$${fmtARS(spotInput*vi/Math.sqrt(365))}</div>
+        <div style="font-size:11px;color:#606080;">±${(vi/Math.sqrt(365)*100).toFixed(2)}%/día</div>
+      </div>
+    </div>`;
+}
+
+
 
 </script>
 </body>
