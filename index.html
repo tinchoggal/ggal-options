@@ -1039,49 +1039,19 @@ function isATM(strike) {
   return Math.abs(parseFloat(strike) - spotGGAL) < 150;
 }
 
-let fetchIntentos = 0;
-const FETCH_MAX_INTENTOS = 3;
-
 async function fetchData() {
-  fetchIntentos++;
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 8000); // 8s timeout
-
-    const res = await fetch(CSV_URL + '&t=' + Date.now(), { signal: controller.signal });
-    clearTimeout(timeout);
-
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const res = await fetch(CSV_URL + '&t=' + Date.now());
     const text = await res.text();
     const rows = parseCSV(text);
-
-    // Siempre ocultar loader y mostrar app, independientemente de errores en render
+    render(rows);
     document.getElementById('loader').style.display = 'none';
     if (!document.querySelector('.tab-content.active')) {
       document.getElementById('tab-plaza').classList.add('active');
     }
     document.getElementById('update-time').textContent = 'Act. ' + new Date().toLocaleTimeString('es-AR');
-    fetchIntentos = 0;
-
-    try { render(rows); } catch(renderErr) { console.warn('render error:', renderErr); }
   } catch(e) {
-    const loaderEl = document.getElementById('loader');
-    if (fetchIntentos >= FETCH_MAX_INTENTOS) {
-      // Después de 3 intentos: mostrar la app igual, sin datos de mercado
-      loaderEl.style.display = 'none';
-      if (!document.querySelector('.tab-content.active')) {
-        document.getElementById('tab-plaza').classList.add('active');
-      }
-      const toast = document.createElement('div');
-      toast.innerHTML = `⚠️ Sin datos de mercado · <span style="font-size:11px;opacity:0.8;">El CSV de Google Sheets no responde. Verificá que el Sheet esté publicado.</span>`;
-      toast.style.cssText = 'position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#7c3aed;color:#fff;padding:10px 18px;border-radius:8px;font-family:Calibri,sans-serif;font-size:13px;font-weight:600;z-index:9999;max-width:90vw;text-align:center;';
-      document.body.appendChild(toast);
-      // No hacer más retries automáticos — el setInterval sigue corriendo cada 15s
-      fetchIntentos = 0;
-    } else {
-      loaderEl.innerHTML = `<div class="loader-bar"><div class="loader-fill"></div></div><div class="loader-text" style="color:#dc2626">Reintentando (${fetchIntentos}/${FETCH_MAX_INTENTOS})...</div>`;
-      setTimeout(fetchData, 3000);
-    }
+    document.getElementById('loader').innerHTML = '<div class="loader-text" style="color:#dc2626">Error al cargar. Reintentando...</div>';
   }
 }
 
@@ -1131,11 +1101,11 @@ function render(rows) {
     const atm = isATM(strike);
     const K = parseFloat(strike);
     const T = (diasVto||37)/365;
-    const rf = Math.log(1+0.40);
+    const r = Math.log(1+0.40);
     const viC = strikeLast[K]?.viCall || 0.60;
     const viP = strikeLast[K]?.viPut  || 0.60;
-    const gC  = spotGGAL ? bsGreeks(spotGGAL, K, T, rf, viC, 'C') : null;
-    const gP  = spotGGAL ? bsGreeks(spotGGAL, K, T, rf, viP, 'P') : null;
+    const gC  = spotGGAL ? bsGreeks(spotGGAL, K, T, r, viC, 'C') : null;
+    const gP  = spotGGAL ? bsGreeks(spotGGAL, K, T, r, viP, 'P') : null;
 
     // Colorimetría ITM/ATM/OTM
     let rowBgC = '', rowBgP = '';
