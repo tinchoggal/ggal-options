@@ -2532,21 +2532,16 @@ function renderAnalytics() {
 }
 
 // Enganchar analytics y posicion al cambio de tab
-const origShowTab = showTab;
 function showTab(name, btn) {
-  origShowTab(name, btn);
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
   if (name==='analytics') renderAnalytics();
   if (name==='posicion')  { renderPosicionesAbiertas(); recalcularGraficoPosicion(); }
   if (name==='volatility') renderVolatilityDashboard();
 }
 
-// Actualizar posicion abierta en cada refresh de datos
-const origRender = render;
-function render(rows) {
-  origRender(rows);
-  renderVolatilityDashboard();
-  if (document.getElementById('tab-posicion')?.classList.contains('active')) renderPosicionesAbiertas();
-}
 
 
 
