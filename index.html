@@ -1474,23 +1474,62 @@ function recalcularCostos() {
 
 // ─── OPERACIONES ──────────────────────────────────────────────────────────────
 function guardarOperacion() {
-  const v=patas.filter(p=>p.strike!==''&&(p.tipo==='S'||p.prima!==''));
+  const v = patas.filter(p => p.strike !== '' && (p.tipo === 'S' || p.prima !== ''));
   if(!v.length) return alert('Ingresá al menos una pata válida');
-  const fecha=document.getElementById('op-fecha').value;
-  const nota=document.getElementById('op-nota').value;
-  const optSize=parseFloat(document.getElementById('opt-size').value)||100;
-  const undSize=parseFloat(document.getElementById('und-size').value)||1;
-  const tienenLast=v.some(p=>p.last!==''&&!isNaN(parseFloat(p.last)));
-  let pnlCierre=null;
-  if(tienenLast){
-    const pnlBruto=calcularPnlVivo(v,optSize,undSize);
-    pnlCierre=pnlBruto;
-  }
-  const op={id:Date.now(),fecha,nota,estrategia:detectarEstrategia(patas),patas:JSON.parse(JSON.stringify(v)),optSize,undSize,pnlCierre};
+  const fecha = document.getElementById('op-fecha').value;
+  const nota = document.getElementById('op-nota').value;
+  const optSize = parseFloat(document.getElementById('opt-size').value)||100;
+  const undSize = parseFloat(document.getElementById('und-size').value)||1;
+  const tienenLast = v.some(p => p.last !== '' && !isNaN(parseFloat(p.last)));
+  let pnlCierre = null;
+  if(tienenLast){ pnlCierre = calcularPnlVivo(v, optSize, undSize); }
+
+  // Detectar netting con posiciones abiertas existentes
+  let msgCierre = '';
+  posicionesAbiertas.forEach((pos, posIdx) => {
+    pos.patas.forEach((pp, pataIdx) => {
+      v.forEach(np => {
+        if(pp.tipo === np.tipo && parseFloat(pp.strike) === parseFloat(np.strike)) {
+          const cantExis = parseInt(pp.cant), cantNueva = parseInt(np.cant);
+          if(Math.sign(cantExis) !== Math.sign(cantNueva)) {
+            const nuevaCant = cantExis + cantNueva;
+            msgCierre += `\n⚠️ Netting: ${np.tipo==='C'?'CALL':'PUT'} ${parseFloat(np.strike).toLocaleString('es-AR')} → ${cantExis>0?'+':''}${cantExis} + (${cantNueva>0?'+':''}${cantNueva}) = ${nuevaCant>0?'+':''}${nuevaCant||'CERRADO'}`;
+            if(nuevaCant === 0){
+              posicionesAbiertas[posIdx].patas.splice(pataIdx, 1);
+              if(posicionesAbiertas[posIdx].patas.length === 0){
+                posicionesAbiertas.splice(posIdx, 1);
+                msgCierre += ' ✅ Posición cerrada';
+              }
+            } else {
+              posicionesAbiertas[posIdx].patas[pataIdx].cant = nuevaCant;
+              msgCierre += ' (parcial)';
+            }
+          }
+        }
+      });
+    });
+  });
+  localStorage.setItem('posiciones_abiertas', JSON.stringify(posicionesAbiertas));
+
+  // Agregar como nueva posición abierta
+  const nueva = {id:Date.now(), fecha, nota, optSize, undSize,
+    patas: JSON.parse(JSON.stringify(v)),
+    estrategia: detectarEstrategia(patas),
+    snapshotPnl: [{fecha: new Date().toISOString(), pnl: 0}]};
+  posicionesAbiertas.push(nueva);
+  localStorage.setItem('posiciones_abiertas', JSON.stringify(posicionesAbiertas));
+
+  const op = {id:Date.now(), fecha, nota, estrategia:detectarEstrategia(patas),
+    patas: JSON.parse(JSON.stringify(v)), optSize, undSize, pnlCierre};
   operaciones.unshift(op);
-  localStorage.setItem('pb_operaciones',JSON.stringify(operaciones));
+  localStorage.setItem('pb_operaciones', JSON.stringify(operaciones));
   renderOperaciones();
-  alert('✅ Operación guardada'+(pnlCierre!==null?`\nPnL: ${fmtARS(pnlCierre)}`:''));
+
+  alert('✅ Operación guardada' + (pnlCierre!==null ? `\nPnL: $${fmtARS(pnlCierre)}` : '') + msgCierre);
+
+  // Redirigir a Mi Posición
+  const btnPos = document.querySelector('.nav-tab[onclick*="posicion"]');
+  showTab('posicion', btnPos);
 }
 
 function eliminarOp(id){operaciones=operaciones.filter(o=>o.id!==id);localStorage.setItem('pb_operaciones',JSON.stringify(operaciones));renderOperaciones();}
