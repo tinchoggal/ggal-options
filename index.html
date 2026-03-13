@@ -570,6 +570,25 @@
           <tbody id="posiciones-body"></tbody>
         </table>
       </div>
+     <div class="card" style="padding:14px;margin-bottom:12px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+    <div class="chart-title" style="margin-bottom:0;">Historial de posiciones cerradas</div>
+    <button onclick="limpiarCerradas()" style="padding:3px 8px;font-size:10px;border:1px solid #3a0a0a;border-radius:3px;cursor:pointer;background:none;color:#ef4444;font-family:var(--font);">Limpiar historial</button>
+  </div>
+  <div id="historial-cerradas-resumen" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;"></div>
+  <table style="width:100%;border-collapse:collapse;">
+    <thead><tr style="border-bottom:1px solid var(--border);">
+      <th style="padding:5px 8px;text-align:left;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Apertura</th>
+      <th style="padding:5px 8px;text-align:left;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Cierre</th>
+      <th style="padding:5px 8px;text-align:left;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Estrategia</th>
+      <th style="padding:5px 8px;text-align:left;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Patas</th>
+      <th style="padding:5px 8px;text-align:right;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Costos</th>
+      <th style="padding:5px 8px;text-align:right;font-size:10px;color:#a0c4ff;font-family:var(--font);font-weight:700;">PnL neto</th>
+      <th style="padding:5px 8px;text-align:center;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Acc.</th>
+    </tr></thead>
+    <tbody id="historial-cerradas-body"></tbody>
+  </table>
+</div>
       <div class="card" style="padding:14px;margin-bottom:12px;">
         <div class="chart-title">Evolución P&L posición abierta</div>
         <canvas id="pos-pnl-chart" height="120"></canvas>
@@ -588,6 +607,35 @@
     </div>
 
     <!-- Modal -->
+    <!-- Modal Cierre -->
+    <div id="modal-cierre" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;align-items:center;justify-content:center;">
+      <div style="background:#111;border:1px solid var(--border);border-radius:8px;padding:22px;width:540px;max-width:95vw;max-height:90vh;overflow-y:auto;">
+        <div style="font-size:14px;font-weight:700;color:var(--text);font-family:var(--font);margin-bottom:4px;">Cerrar posición</div>
+        <div id="modal-cierre-estrategia" style="font-size:11px;color:#606070;font-family:var(--font);margin-bottom:14px;"></div>
+        <table style="width:100%;border-collapse:collapse;margin-bottom:12px;">
+          <thead><tr style="border-bottom:1px solid var(--border);">
+            <th style="padding:5px 8px;text-align:left;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Tipo</th>
+            <th style="padding:5px 8px;text-align:right;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Strike</th>
+            <th style="padding:5px 8px;text-align:right;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Entrada</th>
+            <th style="padding:5px 8px;text-align:right;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Cant. abierta</th>
+            <th style="padding:5px 8px;text-align:right;font-size:10px;color:#a0c4ff;font-family:var(--font);font-weight:700;">Precio salida</th>
+            <th style="padding:5px 8px;text-align:right;font-size:10px;color:#f59e0b;font-family:var(--font);font-weight:700;">Cant. cerrar</th>
+          </tr></thead>
+          <tbody id="modal-cierre-patas"></tbody>
+        </table>
+        <div style="background:#0d0d18;border-radius:4px;padding:8px 12px;margin-bottom:12px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
+            <div style="text-align:center;"><div style="font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">Costos apertura</div><div id="cierre-costo-apertura" style="font-size:13px;font-weight:700;color:#ef4444;font-family:var(--font);">—</div></div>
+            <div style="text-align:center;"><div style="font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">Costos cierre</div><div id="cierre-costo-cierre" style="font-size:13px;font-weight:700;color:#ef4444;font-family:var(--font);">—</div></div>
+            <div style="text-align:center;"><div style="font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">PnL neto estimado</div><div id="cierre-pnl-estimado" style="font-size:15px;font-weight:700;font-family:var(--font);">—</div></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button onclick="confirmarCierre()" style="flex:1;padding:9px;background:var(--accent);color:white;border:none;border-radius:4px;font-weight:700;font-family:var(--font);cursor:pointer;font-size:12px;">Confirmar cierre</button>
+          <button onclick="document.getElementById('modal-cierre').style.display='none'" style="padding:9px 14px;background:none;border:1px solid var(--border2);border-radius:4px;color:#a0a0c0;font-family:var(--font);cursor:pointer;font-size:12px;">Cancelar</button>
+        </div>
+      </div>
+    </div>
     <div id="modal-posicion" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;align-items:center;justify-content:center;">
       <div style="background:#111;border:1px solid var(--border);border-radius:8px;padding:22px;width:480px;max-width:95vw;max-height:90vh;overflow-y:auto;">
         <div style="font-size:14px;font-weight:700;color:var(--text);font-family:var(--font);margin-bottom:14px;">Nueva posición abierta</div>
@@ -1759,7 +1807,143 @@ function guardarPosicionModal(){
   posicionesAbiertas.push(nueva);localStorage.setItem('posiciones_abiertas',JSON.stringify(posicionesAbiertas));
   cerrarModal();renderPosicionesAbiertas();
 }
-function cerrarPosicion(id){posicionesAbiertas=posicionesAbiertas.filter(p=>p.id!==id);localStorage.setItem('posiciones_abiertas',JSON.stringify(posicionesAbiertas));renderPosicionesAbiertas();}
+function cerrarPosicion(id){
+  if(!confirm('¿Eliminar posición sin registrar PnL?')) return;
+  posicionesAbiertas=posicionesAbiertas.filter(p=>p.id!==id);
+  localStorage.setItem('posiciones_abiertas',JSON.stringify(posicionesAbiertas));
+  renderPosicionesAbiertas();
+}
+
+let posicionCierreActual=null;
+
+function calcCostosPos(patas, optSize, undSize, comAlyc){
+  let d=0,c=0;
+  patas.forEach(p=>{
+    const prima=parseFloat(p.prima)||0, K=parseFloat(p.strike)||0, cant=Math.abs(parseInt(p.cant)||1);
+    if(p.tipo==='C'||p.tipo==='P'){const noc=prima*cant*optSize; d+=noc*0.0024; c+=noc*comAlyc;}
+    else{const noc=K*cant*undSize; d+=noc*0.0008; c+=noc*comAlyc;}
+  });
+  return d+c;
+}
+
+function abrirModalCierre(id){
+  const pos=posicionesAbiertas.find(p=>p.id===id);
+  if(!pos) return;
+  posicionCierreActual=id;
+  document.getElementById('modal-cierre-estrategia').textContent=pos.estrategia+' · '+pos.fecha+(pos.nota?' · '+pos.nota:'');
+  const comAlyc=(parseFloat(document.getElementById('com-alyc')?.value)||0)/100;
+  const optSize=pos.optSize||100, undSize=pos.undSize||1;
+  const costosApertura=calcCostosPos(pos.patas, optSize, undSize, comAlyc);
+  document.getElementById('cierre-costo-apertura').textContent=fmtARS(costosApertura);
+
+  let html='';
+  pos.patas.forEach((p,i)=>{
+    const lastVal=p.tipo==='C'?(strikeLast[parseFloat(p.strike)]?.call||''):(p.tipo==='P'?(strikeLast[parseFloat(p.strike)]?.put||''):'');
+    html+=`<tr style="border-bottom:1px solid #1a1a1a;">
+      <td style="padding:5px 8px;font-family:Calibri,Arial;font-size:12px;color:${p.tipo==='C'?'#22c55e':p.tipo==='P'?'#ef4444':'#f59e0b'};">${p.tipo==='C'?'CALL':p.tipo==='P'?'PUT':'ACC'}</td>
+      <td style="padding:5px 8px;text-align:right;font-family:Calibri,Arial;font-size:12px;color:#c0c0d0;">${parseFloat(p.strike).toLocaleString('es-AR')}</td>
+      <td style="padding:5px 8px;text-align:right;font-family:Calibri,Arial;font-size:12px;color:#a0a0c0;">${fmtARS(parseFloat(p.prima)||0)}</td>
+      <td style="padding:5px 8px;text-align:right;font-family:Calibri,Arial;font-size:12px;color:${parseInt(p.cant)>0?'#22c55e':'#ef4444'};font-weight:700;">${parseInt(p.cant)>0?'+':''}${p.cant}</td>
+      <td style="padding:5px 8px;text-align:right;"><input type="number" id="cierre-salida-${i}" placeholder="Precio salida" value="${lastVal}" oninput="recalcularModalCierre()" style="width:100px;background:#0d0d18;color:#a0c4ff;border:1px solid var(--border2);border-radius:3px;padding:4px;font-family:Calibri,Arial;font-size:12px;"></td>
+      <td style="padding:5px 8px;text-align:right;"><input type="number" id="cierre-cant-${i}" value="${Math.abs(parseInt(p.cant))}" min="0" max="${Math.abs(parseInt(p.cant))}" oninput="recalcularModalCierre()" style="width:60px;background:#0d0d18;color:#f59e0b;border:1px solid var(--border2);border-radius:3px;padding:4px;font-family:Calibri,Arial;font-size:12px;"></td>
+    </tr>`;
+  });
+  document.getElementById('modal-cierre-patas').innerHTML=html;
+  document.getElementById('cierre-costo-cierre').textContent='—';
+  document.getElementById('cierre-pnl-estimado').textContent='—';
+  document.getElementById('modal-cierre').style.display='flex';
+  recalcularModalCierre();
+}
+
+function recalcularModalCierre(){
+  const pos=posicionesAbiertas.find(p=>p.id===posicionCierreActual);
+  if(!pos) return;
+  const comAlyc=(parseFloat(document.getElementById('com-alyc')?.value)||0)/100;
+  const optSize=pos.optSize||100, undSize=pos.undSize||1;
+  const costosApertura=calcCostosPos(pos.patas, optSize, undSize, comAlyc);
+  let pnlBruto=0, costosCierre=0;
+  pos.patas.forEach((p,i)=>{
+    const salida=parseFloat(document.getElementById(`cierre-salida-${i}`)?.value);
+    const cantCerrar=parseInt(document.getElementById(`cierre-cant-${i}`)?.value)||0;
+    if(isNaN(salida)||cantCerrar===0) return;
+    const entrada=parseFloat(p.prima)||0;
+    const sz=p.tipo==='S'?undSize:optSize;
+    const cantSign=parseInt(p.cant)>0?1:-1;
+    pnlBruto+=(salida-entrada)*cantSign*cantCerrar*sz;
+    // costos cierre
+    if(p.tipo==='C'||p.tipo==='P'){const noc=salida*cantCerrar*optSize; costosCierre+=noc*0.0024+noc*comAlyc;}
+    else{const noc=parseFloat(p.strike)*cantCerrar*undSize; costosCierre+=noc*0.0008+noc*comAlyc;}
+  });
+  // costos apertura proporcionales a lo que se cierra
+  let fraccionCierre=0, totalCant=0;
+  pos.patas.forEach((p,i)=>{
+    const cantCerrar=parseInt(document.getElementById(`cierre-cant-${i}`)?.value)||0;
+    fraccionCierre+=cantCerrar; totalCant+=Math.abs(parseInt(p.cant)||1);
+  });
+  const fraccion=totalCant>0?fraccionCierre/totalCant:1;
+  const costosAperturaProporcion=costosApertura*fraccion;
+  const pnlNeto=pnlBruto-costosCierre-costosAperturaProporcion;
+  document.getElementById('cierre-costo-cierre').textContent=fmtARS(costosCierre+costosAperturaProporcion);
+  const el=document.getElementById('cierre-pnl-estimado');
+  el.textContent=fmtARS(pnlNeto);
+  el.style.color=pnlNeto>=0?'#22c55e':'#ef4444';
+}
+
+function confirmarCierre(){
+  const pos=posicionesAbiertas.find(p=>p.id===posicionCierreActual);
+  if(!pos) return;
+  const comAlyc=(parseFloat(document.getElementById('com-alyc')?.value)||0)/100;
+  const optSize=pos.optSize||100, undSize=pos.undSize||1;
+  const costosApertura=calcCostosPos(pos.patas, optSize, undSize, comAlyc);
+  let pnlBruto=0, costosCierre=0, patasRestantes=[], huboAlgunCierre=false;
+  pos.patas.forEach((p,i)=>{
+    const salida=parseFloat(document.getElementById(`cierre-salida-${i}`)?.value);
+    const cantCerrar=parseInt(document.getElementById(`cierre-cant-${i}`)?.value)||0;
+    const cantTotal=Math.abs(parseInt(p.cant));
+    const cantSign=parseInt(p.cant)>0?1:-1;
+    if(!isNaN(salida)&&cantCerrar>0){
+      huboAlgunCierre=true;
+      const sz=p.tipo==='S'?undSize:optSize;
+      pnlBruto+=(salida-parseFloat(p.prima)||0)*cantSign*cantCerrar*sz;
+      if(p.tipo==='C'||p.tipo==='P'){const noc=salida*cantCerrar*optSize; costosCierre+=noc*0.0024+noc*comAlyc;}
+      else{const noc=parseFloat(p.strike)*cantCerrar*undSize; costosCierre+=noc*0.0008+noc*comAlyc;}
+    }
+    const cantRestante=cantTotal-cantCerrar;
+    if(cantRestante>0) patasRestantes.push({...p, cant:cantSign*cantRestante});
+  });
+  if(!huboAlgunCierre){alert('Ingresá al menos un precio de salida y cantidad.');return;}
+  let fraccionCierre=0, totalCant=0;
+  pos.patas.forEach((p,i)=>{
+    const cantCerrar=parseInt(document.getElementById(`cierre-cant-${i}`)?.value)||0;
+    fraccionCierre+=cantCerrar; totalCant+=Math.abs(parseInt(p.cant)||1);
+  });
+  const fraccion=totalCant>0?fraccionCierre/totalCant:1;
+  const costosAperturaProporcion=costosApertura*fraccion;
+  const pnlNeto=pnlBruto-costosCierre-costosAperturaProporcion;
+
+  // Guardar en historial de cerradas
+  let cerradas=JSON.parse(localStorage.getItem('posiciones_cerradas')||'[]');
+  cerradas.unshift({
+    id:Date.now(), idPosicion:pos.id, fecha:pos.fecha,
+    fechaCierre:new Date().toISOString().split('T')[0],
+    estrategia:pos.estrategia, nota:pos.nota||'',
+    patas:pos.patas, optSize, undSize, pnlNeto,
+    costosTotales:costosCierre+costosAperturaProporcion
+  });
+  localStorage.setItem('posiciones_cerradas',JSON.stringify(cerradas));
+
+  // Actualizar posición abierta
+  if(patasRestantes.length>0){
+    const idx=posicionesAbiertas.findIndex(p=>p.id===posicionCierreActual);
+    posicionesAbiertas[idx].patas=patasRestantes;
+  } else {
+    posicionesAbiertas=posicionesAbiertas.filter(p=>p.id!==posicionCierreActual);
+  }
+  localStorage.setItem('posiciones_abiertas',JSON.stringify(posicionesAbiertas));
+  document.getElementById('modal-cierre').style.display='none';
+  renderPosicionesAbiertas();
+  alert(`✅ Cierre registrado\nPnL neto: $${fmtARS(pnlNeto)}`);
+}
 function cerrarTodasPosiciones(){if(confirm('¿Cerrar todas las posiciones?')){posicionesAbiertas=[];localStorage.setItem('posiciones_abiertas',JSON.stringify(posicionesAbiertas));renderPosicionesAbiertas();}}
 
 function renderPosicionesAbiertas(){
