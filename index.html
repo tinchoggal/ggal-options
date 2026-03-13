@@ -486,30 +486,9 @@
           <div id="pnl-patas-panel" style="background:#0d0d18;border-radius:4px;padding:10px 12px;"><span style="color:#303050;font-family:var(--font);font-size:12px;">Cargá prima y last para ver PnL por pata.</span></div>
         </div>
 
-        <div style="margin-top:14px;">
-          <div class="chart-title">Simulador de tiempo</div>
-          <div style="background:#0d0d18;border-radius:4px;padding:10px 12px;">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-              <span style="font-size:11px;color:#606080;font-family:var(--font);">Hoy</span>
-              <input type="range" id="sim-dias" min="1" max="365" value="37" style="flex:1;accent-color:#a0c4ff;" oninput="actualizarSimulador()">
-              <span style="font-size:11px;color:#606080;font-family:var(--font);">Vto.</span>
-              <span id="sim-dias-label" style="font-size:12px;font-weight:700;color:#a0c4ff;font-family:var(--font);min-width:55px;text-align:right;">37 días</span>
-            </div>
-            <canvas id="sim-chart" height="110" style="width:100%;"></canvas>
-          </div>
-        </div>
+  
 
-        <div style="margin-top:14px;">
-          <div class="chart-title">Sensibilidad de volatilidad implícita</div>
-          <div style="background:#0d0d18;border-radius:4px;padding:10px 12px;">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-              <span style="font-size:11px;color:#606080;font-family:var(--font);">VI base</span>
-              <input type="range" id="vi-slider" min="-50" max="50" value="0" step="5" style="flex:1;accent-color:#f59e0b;" oninput="actualizarSensVI()">
-              <span id="vi-slider-label" style="font-size:12px;font-weight:700;color:#f59e0b;font-family:var(--font);min-width:55px;text-align:right;">±0%</span>
-            </div>
-            <div id="vi-sens-tabla" style="overflow-x:auto;"></div>
-          </div>
-        </div>
+ 
 
         <div style="margin-top:14px;">
           <div class="chart-title">Kelly & Sizing</div>
@@ -522,13 +501,6 @@
           </div>
         </div>
 
-        <div style="margin-top:14px;">
-          <div class="chart-title">Volatility Smile</div>
-          <div style="background:#0d0d18;border-radius:4px;padding:10px 12px;">
-            <canvas id="smile-chart" height="130" style="width:100%;"></canvas>
-            <div id="smile-skew" style="margin-top:6px;font-family:var(--font);font-size:11px;color:#606080;"></div>
-          </div>
-        </div>
 
         <div style="margin-top:14px;margin-bottom:20px;">
           <div class="chart-title">Cono de volatilidad</div>
