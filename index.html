@@ -541,71 +541,100 @@
   </div>
 
   <!-- ══ TAB MI POSICIÓN ════════════════════════════════════════════════════ -->
+ <!-- ══ TAB MI POSICIÓN ════════════════════════════════════════════════════ -->
   <div id="tab-posicion" class="tab-content">
     <div style="padding:4px;">
-      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
-        <button onclick="abrirModalPosicion()" style="padding:7px 14px;background:var(--accent);color:white;border:none;border-radius:4px;font-weight:700;font-family:var(--font);cursor:pointer;font-size:12px;">+ Agregar posición</button>
-        <button onclick="cerrarTodasPosiciones()" style="padding:7px 14px;background:none;color:#ef4444;border:1px solid #ef4444;border-radius:4px;font-family:var(--font);cursor:pointer;font-size:12px;">Cerrar todas</button>
-        <div style="font-size:11px;color:#606080;font-family:var(--font);">Las posiciones abiertas se siguen en tiempo real.</div>
+      <!-- Botones + totales en una fila -->
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center;margin-bottom:8px;">
+        <div style="display:flex;gap:6px;">
+          <button onclick="abrirModalPosicion()" style="padding:5px 10px;background:var(--accent);color:white;border:none;border-radius:4px;font-weight:700;font-family:var(--font);cursor:pointer;font-size:11px;">+ Agregar</button>
+          <button onclick="cerrarTodasPosiciones()" style="padding:5px 10px;background:none;color:#ef4444;border:1px solid #ef4444;border-radius:4px;font-family:var(--font);cursor:pointer;font-size:11px;">Cerrar todas</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;">
+          <div style="background:var(--bg3);border-radius:3px;padding:4px 6px;text-align:center;"><div style="font-size:8px;color:var(--muted);font-family:var(--font);font-weight:700;text-transform:uppercase;">P&L Día</div><div id="pos-pnl-dia" style="font-size:12px;font-weight:700;font-family:var(--font);color:#a0c4ff;">—</div></div>
+          <div style="background:var(--bg3);border-radius:3px;padding:4px 6px;text-align:center;"><div style="font-size:8px;color:var(--muted);font-family:var(--font);font-weight:700;text-transform:uppercase;">P&L Total</div><div id="pos-pnl-total" style="font-size:12px;font-weight:700;font-family:var(--font);">—</div></div>
+          <div style="background:var(--bg3);border-radius:3px;padding:4px 6px;text-align:center;"><div style="font-size:8px;color:var(--muted);font-family:var(--font);font-weight:700;text-transform:uppercase;">Δ Delta</div><div id="pos-delta-total" style="font-size:12px;font-weight:700;font-family:var(--font);color:#a0c4ff;">—</div></div>
+          <div style="background:var(--bg3);border-radius:3px;padding:4px 6px;text-align:center;"><div style="font-size:8px;color:var(--muted);font-family:var(--font);font-weight:700;text-transform:uppercase;">Γ Gamma</div><div id="pos-gamma-total" style="font-size:12px;font-weight:700;font-family:var(--font);color:#a0c4ff;">—</div></div>
+          <div style="background:var(--bg3);border-radius:3px;padding:4px 6px;text-align:center;"><div style="font-size:8px;color:var(--muted);font-family:var(--font);font-weight:700;text-transform:uppercase;">Θ Theta</div><div id="pos-theta-total" style="font-size:12px;font-weight:700;font-family:var(--font);">—</div></div>
+          <div style="background:var(--bg3);border-radius:3px;padding:4px 6px;text-align:center;"><div style="font-size:8px;color:var(--muted);font-family:var(--font);font-weight:700;text-transform:uppercase;">ν Vega</div><div id="pos-vega-total" style="font-size:12px;font-weight:700;font-family:var(--font);color:#a0c4ff;">—</div></div>
+          <div style="background:var(--bg3);border-radius:3px;padding:4px 6px;text-align:center;"><div style="font-size:8px;color:var(--muted);font-family:var(--font);font-weight:700;text-transform:uppercase;">Capital</div><div id="pos-capital-total" style="font-size:12px;font-weight:700;font-family:var(--font);color:#f59e0b;">—</div></div>
+        </div>
       </div>
-      <!-- Totales -->
-      <div style="background:#0d0d18;border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:12px;display:grid;grid-template-columns:repeat(7,1fr);gap:6px;">
-        <div class="mini-stat"><div class="mini-stat-label">P&L Día</div><div id="pos-pnl-dia" class="mini-stat-val" style="color:#a0c4ff;">—</div></div>
-        <div class="mini-stat"><div class="mini-stat-label">P&L Total</div><div id="pos-pnl-total" class="mini-stat-val">—</div></div>
-        <div class="mini-stat"><div class="mini-stat-label">Δ Delta</div><div id="pos-delta-total" class="mini-stat-val" style="color:#a0c4ff;">—</div></div>
-        <div class="mini-stat"><div class="mini-stat-label">Γ Gamma</div><div id="pos-gamma-total" class="mini-stat-val" style="color:#a0c4ff;">—</div></div>
-        <div class="mini-stat"><div class="mini-stat-label">Θ Theta</div><div id="pos-theta-total" class="mini-stat-val">—</div></div>
-        <div class="mini-stat"><div class="mini-stat-label">ν Vega</div><div id="pos-vega-total" class="mini-stat-val" style="color:#a0c4ff;">—</div></div>
-        <div class="mini-stat"><div class="mini-stat-label">Capital</div><div id="pos-capital-total" class="mini-stat-val" style="color:#f59e0b;">—</div></div>
-      </div>
-      <div class="pos-table" style="margin-bottom:12px;">
+
+      <!-- Tabla posiciones abiertas compacta -->
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:8px;">
         <table style="width:100%;border-collapse:collapse;">
-          <thead><tr>
-            <th>Fecha</th><th>Estrategia</th><th>Patas</th>
-            <th style="text-align:right;">Prima entrada</th><th style="text-align:right;">Valor actual</th>
-            <th style="text-align:right;">P&L</th><th style="text-align:right;">Δ</th>
-            <th style="text-align:right;">Θ/día</th><th style="text-align:right;">ν Vega</th>
-            <th style="text-align:right;">Días</th><th style="text-align:center;">Acc.</th>
+          <thead><tr style="background:var(--bg3);border-bottom:1px solid var(--border);">
+            <th style="padding:4px 8px;text-align:left;font-size:10px;color:var(--muted);font-family:var(--font);font-weight:700;">Fecha</th>
+            <th style="padding:4px 8px;text-align:left;font-size:10px;color:var(--muted);font-family:var(--font);font-weight:700;">Estrategia</th>
+            <th style="padding:4px 8px;text-align:left;font-size:10px;color:var(--muted);font-family:var(--font);font-weight:700;">Patas</th>
+            <th style="padding:4px 8px;text-align:right;font-size:10px;color:var(--muted);font-family:var(--font);font-weight:700;">Entrada</th>
+            <th style="padding:4px 8px;text-align:right;font-size:10px;color:var(--muted);font-family:var(--font);font-weight:700;">Actual</th>
+            <th style="padding:4px 8px;text-align:right;font-size:10px;color:var(--muted);font-family:var(--font);font-weight:700;">P&L</th>
+            <th style="padding:4px 8px;text-align:right;font-size:10px;color:var(--muted);font-family:var(--font);font-weight:700;">Δ</th>
+            <th style="padding:4px 8px;text-align:right;font-size:10px;color:var(--muted);font-family:var(--font);font-weight:700;">Θ</th>
+            <th style="padding:4px 8px;text-align:center;font-size:10px;color:var(--muted);font-family:var(--font);font-weight:700;">Acc.</th>
           </tr></thead>
           <tbody id="posiciones-body"></tbody>
         </table>
       </div>
-     <div class="card" style="padding:14px;margin-bottom:12px;">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-    <div class="chart-title" style="margin-bottom:0;">Historial de posiciones cerradas</div>
-    <button onclick="limpiarCerradas()" style="padding:3px 8px;font-size:10px;border:1px solid #3a0a0a;border-radius:3px;cursor:pointer;background:none;color:#ef4444;font-family:var(--font);">Limpiar historial</button>
-  </div>
-  <div id="historial-cerradas-resumen" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;"></div>
-  <table style="width:100%;border-collapse:collapse;">
-    <thead><tr style="border-bottom:1px solid var(--border);">
-      <th style="padding:5px 8px;text-align:left;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Apertura</th>
-      <th style="padding:5px 8px;text-align:left;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Cierre</th>
-      <th style="padding:5px 8px;text-align:left;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Estrategia</th>
-      <th style="padding:5px 8px;text-align:left;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Patas</th>
-      <th style="padding:5px 8px;text-align:right;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Costos</th>
-      <th style="padding:5px 8px;text-align:right;font-size:10px;color:#a0c4ff;font-family:var(--font);font-weight:700;">PnL neto</th>
-      <th style="padding:5px 8px;text-align:center;font-size:10px;color:#505060;font-family:var(--font);font-weight:700;">Acc.</th>
-    </tr></thead>
-    <tbody id="historial-cerradas-body"></tbody>
-  </table>
-</div>
-      <div class="card" style="padding:14px;margin-bottom:12px;">
-        <div class="chart-title">Evolución P&L posición abierta</div>
-        <canvas id="pos-pnl-chart" height="120"></canvas>
-      </div>
-      <div class="dark-panel">
-        <div class="chart-title">Payoff & Teórico — Posición abierta</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:12px;padding:8px 10px;background:#0d0d18;border-radius:4px;">
-          <div><div style="font-size:9px;color:#505060;font-family:var(--font);margin-bottom:3px;font-weight:700;">Spot GGAL</div><input type="number" id="pos-spot-input" placeholder="6600" oninput="recalcularGraficoPosicion()"></div>
-          <div><div style="font-size:9px;color:#505060;font-family:var(--font);margin-bottom:3px;font-weight:700;">Rango (%)</div><input type="number" id="pos-rango-pct" value="30" min="5" max="100" oninput="recalcularGraficoPosicion()"></div>
-          <div><div style="display:flex;justify-content:space-between;"><span style="font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">⏱ Días</span><span id="pos-dias-label" style="font-size:10px;font-weight:700;color:#a0c4ff;font-family:var(--font);"></span></div><input type="range" id="pos-dias" min="1" max="365" value="37" style="width:100%;accent-color:#a0c4ff;margin-top:5px;" oninput="onPosDiasChange(this.value)"></div>
-          <div><div style="display:flex;justify-content:space-between;"><span style="font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">📊 VI</span><span id="pos-vi-label" style="font-size:10px;font-weight:700;color:#f59e0b;font-family:var(--font);">±0%</span></div><input type="range" id="pos-vi" min="-50" max="50" value="0" step="5" style="width:100%;accent-color:#f59e0b;margin-top:5px;" oninput="onPosVIChange(this.value)"></div>
+
+      <!-- Layout 2 columnas: izquierda historial + grafico | derecha payoff + tabla -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start;">
+
+        <!-- Columna izquierda -->
+        <div>
+          <!-- Historial cerradas compacto -->
+          <div class="card" style="padding:10px;margin-bottom:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <div class="chart-title" style="margin-bottom:0;">Cerradas</div>
+              <button onclick="limpiarCerradas()" style="padding:2px 7px;font-size:10px;border:1px solid #3a0a0a;border-radius:3px;cursor:pointer;background:none;color:#ef4444;font-family:var(--font);">Limpiar</button>
+            </div>
+            <div id="historial-cerradas-resumen" style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:6px;"></div>
+            <table style="width:100%;border-collapse:collapse;">
+              <thead><tr style="border-bottom:1px solid var(--border);">
+                <th style="padding:3px 5px;text-align:left;font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">Apertura</th>
+                <th style="padding:3px 5px;text-align:left;font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">Cierre</th>
+                <th style="padding:3px 5px;text-align:left;font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">Estrategia</th>
+                <th style="padding:3px 5px;text-align:right;font-size:9px;color:#a0c4ff;font-family:var(--font);font-weight:700;">PnL neto</th>
+                <th style="padding:3px 5px;text-align:center;font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">×</th>
+              </tr></thead>
+              <tbody id="historial-cerradas-body"></tbody>
+            </table>
+          </div>
+          <!-- Gráfico P&L evolución -->
+          <div class="card" style="padding:10px;">
+            <div class="chart-title">Evolución P&L total</div>
+            <canvas id="pos-pnl-chart" height="100"></canvas>
+          </div>
         </div>
-        <canvas id="pos-payoff-chart" height="200"></canvas>
-        <div style="margin-top:6px;font-family:var(--font);font-size:11px;color:#606080;" id="pos-payoff-stats"></div>
+
+        <!-- Columna derecha -->
+        <div class="dark-panel" style="padding:10px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:8px;">
+            <div><div style="font-size:9px;color:#505060;font-family:var(--font);margin-bottom:2px;font-weight:700;">Spot GGAL</div><input type="number" id="pos-spot-input" placeholder="6600" oninput="recalcularGraficoPosicion()"></div>
+            <div><div style="font-size:9px;color:#505060;font-family:var(--font);margin-bottom:2px;font-weight:700;">Rango (%)</div><input type="number" id="pos-rango-pct" value="30" min="5" max="100" oninput="recalcularGraficoPosicion()"></div>
+            <div><div style="display:flex;justify-content:space-between;"><span style="font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">⏱ Días</span><span id="pos-dias-label" style="font-size:9px;font-weight:700;color:#a0c4ff;font-family:var(--font);"></span></div><input type="range" id="pos-dias" min="1" max="365" value="37" style="width:100%;accent-color:#a0c4ff;margin-top:4px;" oninput="onPosDiasChange(this.value)"></div>
+            <div><div style="display:flex;justify-content:space-between;"><span style="font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">📊 VI</span><span id="pos-vi-label" style="font-size:9px;font-weight:700;color:#f59e0b;font-family:var(--font);">±0%</span></div><input type="range" id="pos-vi" min="-50" max="50" value="0" step="5" style="width:100%;accent-color:#f59e0b;margin-top:4px;" oninput="onPosVIChange(this.value)"></div>
+          </div>
+          <canvas id="pos-payoff-chart" height="160"></canvas>
+          <div style="margin-top:4px;font-family:var(--font);font-size:10px;color:#606080;" id="pos-payoff-stats"></div>
+          <div style="margin-top:10px;">
+            <div class="chart-title">Escenarios — Abierta + Realizadas</div>
+            <table style="width:100%;border-collapse:collapse;font-size:11px;font-family:var(--font);">
+              <thead><tr style="border-bottom:1px solid #1a1a2a;">
+                <th style="padding:2px 5px;text-align:left;color:#505060;font-weight:700;">Var.</th>
+                <th style="padding:2px 5px;text-align:right;color:#505060;font-weight:700;">GGAL</th>
+                <th style="padding:2px 5px;text-align:right;color:#f59e0b;font-weight:700;">Abierta</th>
+                <th style="padding:2px 5px;text-align:right;color:#22c55e;font-weight:700;">Cerradas</th>
+                <th style="padding:2px 5px;text-align:right;color:#a0c4ff;font-weight:700;">Total</th>
+              </tr></thead>
+              <tbody id="pos-escenarios-body"></tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
-
     <!-- Modal -->
     <!-- Modal Cierre -->
     <div id="modal-cierre" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;align-items:center;justify-content:center;">
@@ -1671,7 +1700,32 @@ function recalcularGraficoPosicion() {
       scales:{x:{ticks:{maxTicksLimit:10,color:'#505060',font:{family:'Calibri,Arial',size:10}},grid:{color:'#0d0d18'}},
               y:{ticks:{color:'#505060',font:{family:'Calibri,Arial',size:10},callback:v=>'$'+fmtARS(v)},grid:{color:'#0d0d18'}}}}
   });
-}
+// Tabla de escenarios Mi Posición
+  const pnlAcumCerradas=JSON.parse(localStorage.getItem('posiciones_cerradas')||'[]')
+    .reduce((s,c)=>s+c.pnlNeto,0);
+  const pasoPos=rangoPct/15;
+  let tablaPos='';
+  for(let idx=0;idx<31;idx++){
+    const pct=-rangoPct+idx*pasoPos;
+    const precioS=spotInput*(1+pct/100);
+    const pnlAbierta=calcPnl(precioS,diasSlider);
+    const pnlTotal=pnlAbierta+pnlAcumCerradas;
+    const esHoy=Math.abs(pct)<pasoPos/2;
+    const bg=esHoy?'background:#0d1800;':'';
+    const bld=esHoy?'font-weight:700;':'';
+    const cA=pnlAbierta>=0?'#22c55e':'#ef4444';
+    const cC=pnlAcumCerradas>=0?'#22c55e':'#ef4444';
+    const cT=pnlTotal>=0?'#22c55e':'#ef4444';
+    tablaPos+=`<tr style="${bg}${bld}border-bottom:1px solid #12121e;">
+      <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;color:${pct<0?'#ef4444':pct>0?'#22c55e':'#a0c4ff'};">${pct>=0?'+':''}${pct.toFixed(1)}%</td>
+      <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:#c0c0d0;">${fmtARS(precioS)}</td>
+      <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:${cA};">${fmtARS(pnlAbierta)}</td>
+      <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:${cC};">${fmtARS(pnlAcumCerradas)}</td>
+      <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:${cT};font-weight:700;">${fmtARS(pnlTotal)}</td>
+    </tr>`;
+  }
+  const tablaEl=document.getElementById('pos-escenarios-body');
+  if(tablaEl) tablaEl.innerHTML=tablaPos;}
 
 function agregarDesdeChain(tipo,strike,last) {
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
@@ -1839,13 +1893,19 @@ function abrirModalCierre(id){
   let html='';
   pos.patas.forEach((p,i)=>{
     const lastVal=p.tipo==='C'?(strikeLast[parseFloat(p.strike)]?.call||''):(p.tipo==='P'?(strikeLast[parseFloat(p.strike)]?.put||''):'');
-    html+=`<tr style="border-bottom:1px solid #1a1a1a;">
-      <td style="padding:5px 8px;font-family:Calibri,Arial;font-size:12px;color:${p.tipo==='C'?'#22c55e':p.tipo==='P'?'#ef4444':'#f59e0b'};">${p.tipo==='C'?'CALL':p.tipo==='P'?'PUT':'ACC'}</td>
-      <td style="padding:5px 8px;text-align:right;font-family:Calibri,Arial;font-size:12px;color:#c0c0d0;">${parseFloat(p.strike).toLocaleString('es-AR')}</td>
-      <td style="padding:5px 8px;text-align:right;font-family:Calibri,Arial;font-size:12px;color:#a0a0c0;">${fmtARS(parseFloat(p.prima)||0)}</td>
-      <td style="padding:5px 8px;text-align:right;font-family:Calibri,Arial;font-size:12px;color:${parseInt(p.cant)>0?'#22c55e':'#ef4444'};font-weight:700;">${parseInt(p.cant)>0?'+':''}${p.cant}</td>
-      <td style="padding:5px 8px;text-align:right;"><input type="number" id="cierre-salida-${i}" placeholder="Precio salida" value="${lastVal}" oninput="recalcularModalCierre()" style="width:100px;background:#0d0d18;color:#a0c4ff;border:1px solid var(--border2);border-radius:3px;padding:4px;font-family:Calibri,Arial;font-size:12px;"></td>
-      <td style="padding:5px 8px;text-align:right;"><input type="number" id="cierre-cant-${i}" value="${Math.abs(parseInt(p.cant))}" min="0" max="${Math.abs(parseInt(p.cant))}" oninput="recalcularModalCierre()" style="width:60px;background:#0d0d18;color:#f59e0b;border:1px solid var(--border2);border-radius:3px;padding:4px;font-family:Calibri,Arial;font-size:12px;"></td>
+  html+=`<tr style="border-bottom:1px solid #1a1a1a;">
+      <td style="font-family:Calibri,Arial;font-size:11px;color:#606070;padding:4px 8px;">${pos.fecha}</td>
+      <td style="font-family:Calibri,Arial;font-size:11px;font-weight:700;padding:4px 8px;">${pos.estrategia}</td>
+      <td style="font-family:Calibri,Arial;font-size:10px;color:#606070;padding:4px 8px;">${pos.patas.map(p=>`${p.cant>0?'+':''}${p.cant} ${p.tipo}@${p.strike}`).join(' | ')}</td>
+      <td style="font-family:Calibri,Arial;font-size:11px;text-align:right;padding:4px 8px;">${fmtARS(valorEntrada)}</td>
+      <td style="font-family:Calibri,Arial;font-size:11px;text-align:right;color:#a0c4ff;padding:4px 8px;">${fmtARS(valorActual)}</td>
+      <td style="font-family:Calibri,Arial;font-size:11px;text-align:right;font-weight:700;color:${cPnl};padding:4px 8px;">${fmtARS(pnl)}</td>
+      <td style="font-family:Calibri,Arial;font-size:11px;text-align:right;color:${delta>0?'#22c55e':'#ef4444'};padding:4px 8px;">${delta.toFixed(2)}</td>
+      <td style="font-family:Calibri,Arial;font-size:11px;text-align:right;color:${theta<0?'#ef4444':'#22c55e'};padding:4px 8px;">${theta.toFixed(2)}</td>
+      <td style="text-align:center;padding:4px 8px;display:flex;gap:4px;justify-content:center;">
+        <button onclick="abrirModalCierre(${pos.id})" style="padding:2px 6px;font-size:10px;border:1px solid #f59e0b;border-radius:3px;cursor:pointer;background:none;color:#f59e0b;font-family:Calibri,Arial;">Cerrar</button>
+        <button onclick="cerrarPosicion(${pos.id})" style="padding:2px 6px;font-size:10px;border:1px solid #3a0a0a;border-radius:3px;cursor:pointer;background:none;color:#ef4444;font-family:Calibri,Arial;">×</button>
+      </td>
     </tr>`;
   });
   document.getElementById('modal-cierre-patas').innerHTML=html;
@@ -2033,16 +2093,13 @@ function renderHistorialCerradas(){
 
   tbody.innerHTML=cerradas.map(c=>{
     const cPnl=c.pnlNeto>=0?'#22c55e':'#ef4444';
-    const patas=c.patas.map(p=>`${parseInt(p.cant)>0?'+':''}${p.cant} ${p.tipo}@${p.strike}`).join(' | ');
     return `<tr style="border-bottom:1px solid #1a1a1a;">
-      <td style="padding:5px 8px;font-family:Calibri,Arial;font-size:11px;color:#606070;">${c.fecha}</td>
-      <td style="padding:5px 8px;font-family:Calibri,Arial;font-size:11px;color:#606070;">${c.fechaCierre}</td>
-      <td style="padding:5px 8px;font-family:Calibri,Arial;font-size:12px;font-weight:700;">${c.estrategia}</td>
-      <td style="padding:5px 8px;font-family:Calibri,Arial;font-size:11px;color:#505060;">${patas}</td>
-      <td style="padding:5px 8px;text-align:right;font-family:Calibri,Arial;font-size:11px;color:#ef4444;">-$${fmtARS(c.costosTotales)}</td>
-      <td style="padding:5px 8px;text-align:right;font-family:Calibri,Arial;font-size:12px;font-weight:700;color:${cPnl};">${c.pnlNeto>=0?'+':''}$${fmtARS(c.pnlNeto)}</td>
-      <td style="padding:5px 8px;text-align:center;">
-        <button onclick="eliminarCerrada(${c.id})" style="padding:2px 7px;font-size:10px;border:1px solid #3a0a0a;border-radius:3px;cursor:pointer;background:none;color:#ef4444;font-family:Calibri,Arial;">×</button>
+      <td style="padding:3px 5px;font-family:Calibri,Arial;font-size:10px;color:#606070;">${c.fecha}</td>
+      <td style="padding:3px 5px;font-family:Calibri,Arial;font-size:10px;color:#606070;">${c.fechaCierre}</td>
+      <td style="padding:3px 5px;font-family:Calibri,Arial;font-size:11px;font-weight:700;">${c.estrategia}</td>
+      <td style="padding:3px 5px;text-align:right;font-family:Calibri,Arial;font-size:11px;font-weight:700;color:${cPnl};">${c.pnlNeto>=0?'+':''}$${fmtARS(c.pnlNeto)}</td>
+      <td style="padding:3px 5px;text-align:center;">
+        <button onclick="eliminarCerrada(${c.id})" style="padding:1px 5px;font-size:10px;border:1px solid #3a0a0a;border-radius:3px;cursor:pointer;background:none;color:#ef4444;font-family:Calibri,Arial;">×</button>
       </td>
     </tr>`;
   }).join('');
@@ -2055,16 +2112,51 @@ function eliminarCerrada(id){
   renderHistorialCerradas();
 }
   function renderPosPnlChart(){
-  const ctx=document.getElementById('pos-pnl-chart')?.getContext('2d');if(!ctx||!posicionesAbiertas.length) return;
+  const ctx=document.getElementById('pos-pnl-chart')?.getContext('2d');
+  if(!ctx) return;
+
+  // PnL flotante de abiertas por fecha
   const fechaMap={};
-  posicionesAbiertas.forEach(pos=>pos.snapshotPnl?.forEach(s=>{fechaMap[s.fecha]=(fechaMap[s.fecha]||0)+s.pnl;}));
-  const fechas=Object.keys(fechaMap).sort(),vals=fechas.map(f=>fechaMap[f]);
+  posicionesAbiertas.forEach(pos=>pos.snapshotPnl?.forEach(s=>{
+    fechaMap[s.fecha]=(fechaMap[s.fecha]||0)+s.pnl;
+  }));
+
+  // PnL realizado acumulado de cerradas
+  const cerradas=JSON.parse(localStorage.getItem('posiciones_cerradas')||'[]');
+  let acumCerradas=0;
+  const cerradasPorFecha={};
+  [...cerradas].reverse().forEach(c=>{
+    acumCerradas+=c.pnlNeto;
+    cerradasPorFecha[c.fechaCierre]=(cerradasPorFecha[c.fechaCierre]||0)+c.pnlNeto;
+  });
+
+  // Merge de fechas
+  const todasFechas=[...new Set([...Object.keys(fechaMap),...Object.keys(cerradasPorFecha)])].sort();
+  if(!todasFechas.length){if(posPnlChart){posPnlChart.destroy();posPnlChart=null;}return;}
+
+  let acumC=0;
+  const datosAbierta=[], datosCerradas=[], datosTotal=[];
+  todasFechas.forEach(f=>{
+    const flotante=fechaMap[f]||0;
+    if(cerradasPorFecha[f]) acumC+=cerradasPorFecha[f];
+    datosAbierta.push(flotante);
+    datosCerradas.push(acumC);
+    datosTotal.push(flotante+acumC);
+  });
+
   if(posPnlChart) posPnlChart.destroy();
   posPnlChart=new Chart(ctx,{type:'line',
-    data:{labels:fechas,datasets:[{label:'P&L Total',data:vals,borderColor:'#a0c4ff',backgroundColor:'rgba(160,196,255,0.08)',tension:0.3,pointRadius:3,borderWidth:2,fill:true}]},
-    options:{responsive:true,animation:false,plugins:{legend:{display:false}},
-      scales:{x:{ticks:{maxTicksLimit:8,color:'#606070',font:{family:'Calibri,Arial',size:10}},grid:{color:'#1a1a1a'}},
-              y:{ticks:{color:'#606070',font:{family:'Calibri,Arial',size:10},callback:v=>'$'+fmtARS(v)},grid:{color:'#1a1a1a'}}}}
+    data:{labels:todasFechas.map(f=>f.slice(5)),datasets:[
+      {label:'Total',data:datosTotal,borderColor:'#a0c4ff',backgroundColor:'rgba(160,196,255,0.08)',tension:0.3,pointRadius:2,borderWidth:2.5,fill:true,spanGaps:true},
+      {label:'Abiertas',data:datosAbierta,borderColor:'#f59e0b',backgroundColor:'transparent',tension:0.3,pointRadius:0,borderWidth:1.5,borderDash:[4,3],spanGaps:true},
+      {label:'Cerradas',data:datosCerradas,borderColor:'#22c55e',backgroundColor:'transparent',tension:0.3,pointRadius:0,borderWidth:1.5,borderDash:[4,3],spanGaps:true},
+    ]},
+    options:{responsive:true,animation:false,
+      plugins:{legend:{display:true,position:'top',labels:{color:'#606070',font:{family:'Calibri,Arial',size:10},boxWidth:14,padding:8}}},
+      scales:{
+        x:{ticks:{maxTicksLimit:8,color:'#505060',font:{family:'Calibri,Arial',size:10}},grid:{color:'#1a1a1a'}},
+        y:{ticks:{color:'#505060',font:{family:'Calibri,Arial',size:10},callback:v=>'$'+fmtARS(v)},grid:{color:'#1a1a1a'}}
+      }}
   });
 }
 
