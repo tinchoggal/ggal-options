@@ -1337,31 +1337,32 @@ function recalcular() {
 
   // Tabla de escenarios
 const paso = rangoPct / 15;
-let tablaHTML = '';
-for(let idx = 0; idx < 31; idx++){
-  const p = -rangoPct + idx * paso;
-  const precio = spotInput * (1 + p/100);
-  const pnlBruto = calcularPayoff(precio, v, optSize, undSize);
-  const pnlNeto = pnlBruto - costosTotalesPos - cf_monto + pnlHistorial;
-  let pnlTeorico = null;
-  if(T > 0){
-    const pnlBrutoTeo = calcularPayoffTeorico(precio, v, optSize, undSize, spotInput, T, r);
-    pnlTeorico = pnlBrutoTeo - costosTotalesPos - cf_monto + pnlHistorial;
+  const tasa_cf = parseFloat(document.getElementById('cf-tasa')?.value) / 100 || 0.40;
+  const cf_monto = Math.abs(costoNeto) > 0 ? costoNeto * (Math.pow(1 + tasa_cf/365, diasVto||37) - 1) : 0;
+  let tablaHTML = '';
+  for(let idx = 0; idx < 31; idx++){
+    const p = -rangoPct + idx * paso;
+    const precio = spotInput * (1 + p/100);
+    const pnlBruto = calcularPayoff(precio, v, optSize, undSize);
+    const pnlNeto = pnlBruto - costosTotalesPos - cf_monto;
+    let pnlTeorico = null;
+    if(T > 0){
+      const pnlBrutoTeo = calcularPayoffTeorico(precio, v, optSize, undSize, spotInput, T, r);
+      pnlTeorico = pnlBrutoTeo - costosTotalesPos - cf_monto;
+    }
+    const esHoy = Math.abs(p) < paso / 2;
+    const cVto = pnlNeto>=0?'#22c55e':'#ef4444';
+    const cTeo = pnlTeorico!==null?(pnlTeorico>=0?'#22c55e':'#ef4444'):'#505060';
+    const bg = esHoy ? 'background:#0d1800;' : '';
+    const bld = esHoy ? 'font-weight:700;' : '';
+    tablaHTML += `<tr style="${bg}${bld}border-bottom:1px solid #12121e;">
+      <td style="padding:2px 6px;font-family:Calibri,Arial;font-size:11px;color:${p<0?'#ef4444':p>0?'#22c55e':'#a0c4ff'};">${p>=0?'+':''}${p.toFixed(1)}%</td>
+      <td style="padding:2px 6px;font-family:Calibri,Arial;font-size:11px;text-align:right;color:#c0c0d0;">${fmtARS(precio)}</td>
+      <td style="padding:2px 6px;font-family:Calibri,Arial;font-size:11px;text-align:right;color:${cVto};">${fmtARS(pnlNeto)}</td>
+      <td style="padding:2px 6px;font-family:Calibri,Arial;font-size:11px;text-align:right;color:${cTeo};">${pnlTeorico!==null?fmtARS(pnlTeorico):'—'}</td>
+    </tr>`;
   }
-  const esHoy = Math.abs(p) < paso / 2;
-  const cVto = pnlNeto>=0?'#22c55e':'#ef4444';
-  const cTeo = pnlTeorico!==null?(pnlTeorico>=0?'#22c55e':'#ef4444'):'#505060';
-  const bg = esHoy ? 'background:#0d1800;' : '';
-  const bld = esHoy ? 'font-weight:700;' : '';
-  tablaHTML += `<tr style="${bg}${bld}border-bottom:1px solid #12121e;">
-    <td style="padding:2px 6px;font-family:Calibri,Arial;font-size:11px;color:${p<0?'#ef4444':p>0?'#22c55e':'#a0c4ff'};">${p>=0?'+':''}${p.toFixed(1)}%</td>
-    <td style="padding:2px 6px;font-family:Calibri,Arial;font-size:11px;text-align:right;color:#c0c0d0;">${fmtARS(precio)}</td>
-    <td style="padding:2px 6px;font-family:Calibri,Arial;font-size:11px;text-align:right;color:${cVto};">${fmtARS(pnlNeto)}</td>
-    <td style="padding:2px 6px;font-family:Calibri,Arial;font-size:11px;text-align:right;color:${cTeo};">${pnlTeorico!==null?fmtARS(pnlTeorico):'—'}</td>
-  </tr>`;
-}
-document.getElementById('payoff-tabla-body').innerHTML = tablaHTML;
-
+  document.getElementById('payoff-tabla-body').innerHTML = tablaHTML;
   renderPosicion(v,spotInput,T,r,optSize,undSize);
   recalcularCostos();
   neutralizarGriegas(grk,spotInput,T,r,optSize);
