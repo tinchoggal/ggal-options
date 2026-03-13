@@ -490,17 +490,16 @@
 
  
 
-        <div style="margin-top:14px;">
-          <div class="chart-title">Kelly & Sizing</div>
-          <div style="background:#0d0d18;border-radius:4px;padding:10px 12px;">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-              <div><div style="font-size:9px;color:#505060;font-family:var(--font);margin-bottom:2px;font-weight:700;">Capital total ($)</div><input type="number" id="kelly-capital" value="1000000" step="10000" oninput="calcularKelly()"></div>
-              <div><div style="font-size:9px;color:#505060;font-family:var(--font);margin-bottom:2px;font-weight:700;">Fracción Kelly</div><select id="kelly-frac" onchange="calcularKelly()"><option value="1">Full Kelly</option><option value="0.5" selected>Half Kelly</option><option value="0.25">Quarter Kelly</option></select></div>
-            </div>
-            <div id="kelly-resultado" style="font-family:var(--font);font-size:12px;color:#505060;">Cargá una posición para ver el sizing.</div>
-          </div>
-        </div>
-
+       <div style="margin-top:14px;">
+  <div class="chart-title">Kelly & Sizing</div>
+  <div style="background:#0d0d18;border-radius:4px;padding:10px 12px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+      <div><div style="font-size:9px;color:#505060;font-family:var(--font);margin-bottom:2px;font-weight:700;">Capital total ($)</div><input type="text" id="kelly-capital" value="1.000.000" oninput="calcularKelly()" onblur="formatearKellyCapital(this)"></div>
+      <div><div style="font-size:9px;color:#505060;font-family:var(--font);margin-bottom:2px;font-weight:700;">Fracción Kelly</div><select id="kelly-frac" onchange="calcularKelly()"><option value="1">Full Kelly</option><option value="0.5" selected>Half Kelly</option><option value="0.25">Quarter Kelly</option></select></div>
+    </div>
+    <div id="kelly-resultado" style="font-family:var(--font);font-size:12px;color:#505060;">Cargá una posición para ver el sizing.</div>
+  </div>
+</div>
 
         <div style="margin-top:14px;margin-bottom:20px;">
           <div class="chart-title">Cono de volatilidad</div>
@@ -2000,11 +1999,15 @@ function actualizarSensVI(){
 }
 
 // ─── KELLY ────────────────────────────────────────────────────────────────────
-function calcularKelly(){
+function formatearKellyCapital(el){
+  const n=parseFloat(el.value.replace(/\./g,'').replace(',','.'));
+  if(!isNaN(n)) el.value=Math.round(n).toLocaleString('es-AR').replace(/,\d+$/,'');
+}
+  function calcularKelly(){
   const panel=document.getElementById('kelly-resultado');if(!panel) return;
   const v=patas.filter(p=>p.strike!==''&&(p.tipo==='S'||p.prima!==''));
   if(!v.length){panel.innerHTML='<span style="color:#303050;font-family:Calibri,Arial;font-size:12px;">Cargá una posición.</span>';return;}
-  const capitalTotal=parseFloat(document.getElementById('kelly-capital')?.value)||1000000;
+  const capitalTotal=parseFloat((document.getElementById('kelly-capital')?.value||'').replace(/\./g,'').replace(',','.'))||1000000;
   const fraccion=parseFloat(document.getElementById('kelly-frac')?.value)||0.5;
   const optSize=parseFloat(document.getElementById('opt-size')?.value)||100;
   const spotInput=parseFloat(document.getElementById('spot-input')?.value)||spotGGAL||6600;
