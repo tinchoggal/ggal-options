@@ -698,9 +698,9 @@ function showTab(name, btn) {
   btn.classList.add('active');
   document.getElementById('tab-' + name).classList.add('active');
   if (name==='analytics')  renderAnalytics();
-  if (name==='posicion')   { renderPosicionesAbiertas(); recalcularGraficoPosicion(); }
+  if (name==='posicion')   { renderPosicionesAbiertas(); renderHistorialCerradas(); recalcularGraficoPosicion(); }
   if (name==='volatility') renderVolatilityDashboard();
-}
+renderHistorialCerradas();}
 
 function parseCSV(text) {
   return text.split('\n').map(line => {
@@ -1998,7 +1998,61 @@ function renderPosicionesAbiertas(){
   renderPosPnlChart();
 }
 
-function renderPosPnlChart(){
+function limpiarCerradas(){
+  if(!confirm('¿Eliminar todo el historial de cerradas?')) return;
+  localStorage.removeItem('posiciones_cerradas');
+  renderHistorialCerradas();
+}
+
+function renderHistorialCerradas(){
+  const cerradas=JSON.parse(localStorage.getItem('posiciones_cerradas')||'[]');
+  const tbody=document.getElementById('historial-cerradas-body');
+  const resumen=document.getElementById('historial-cerradas-resumen');
+  if(!tbody) return;
+
+  // Resumen stats
+  if(resumen){
+    const total=cerradas.length;
+    const pnlTotal=cerradas.reduce((s,c)=>s+c.pnlNeto,0);
+    const wins=cerradas.filter(c=>c.pnlNeto>0).length;
+    const winRate=total>0?(wins/total*100).toFixed(0)+'%':'—';
+    resumen.innerHTML=[
+      ['Operaciones',total,'#a0c4ff'],
+      ['Win Rate',winRate,parseFloat(winRate)>=50?'#22c55e':'#ef4444'],
+      ['PnL Total','$'+fmtARS(pnlTotal),pnlTotal>=0?'#22c55e':'#ef4444'],
+      ['Mejor','$'+fmtARS(total?Math.max(...cerradas.map(c=>c.pnlNeto)):0),'#22c55e'],
+    ].map(([l,v,c])=>`<div class="mini-stat"><div class="mini-stat-label">${l}</div><div class="mini-stat-val" style="color:${c};font-size:13px;">${v}</div></div>`).join('');
+  }
+
+  if(!cerradas.length){
+    tbody.innerHTML='<tr><td colspan="7" style="padding:16px;text-align:center;color:#404040;font-family:Calibri,Arial;">Sin operaciones cerradas.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML=cerradas.map(c=>{
+    const cPnl=c.pnlNeto>=0?'#22c55e':'#ef4444';
+    const patas=c.patas.map(p=>`${parseInt(p.cant)>0?'+':''}${p.cant} ${p.tipo}@${p.strike}`).join(' | ');
+    return `<tr style="border-bottom:1px solid #1a1a1a;">
+      <td style="padding:5px 8px;font-family:Calibri,Arial;font-size:11px;color:#606070;">${c.fecha}</td>
+      <td style="padding:5px 8px;font-family:Calibri,Arial;font-size:11px;color:#606070;">${c.fechaCierre}</td>
+      <td style="padding:5px 8px;font-family:Calibri,Arial;font-size:12px;font-weight:700;">${c.estrategia}</td>
+      <td style="padding:5px 8px;font-family:Calibri,Arial;font-size:11px;color:#505060;">${patas}</td>
+      <td style="padding:5px 8px;text-align:right;font-family:Calibri,Arial;font-size:11px;color:#ef4444;">-$${fmtARS(c.costosTotales)}</td>
+      <td style="padding:5px 8px;text-align:right;font-family:Calibri,Arial;font-size:12px;font-weight:700;color:${cPnl};">${c.pnlNeto>=0?'+':''}$${fmtARS(c.pnlNeto)}</td>
+      <td style="padding:5px 8px;text-align:center;">
+        <button onclick="eliminarCerrada(${c.id})" style="padding:2px 7px;font-size:10px;border:1px solid #3a0a0a;border-radius:3px;cursor:pointer;background:none;color:#ef4444;font-family:Calibri,Arial;">×</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function eliminarCerrada(id){
+  let cerradas=JSON.parse(localStorage.getItem('posiciones_cerradas')||'[]');
+  cerradas=cerradas.filter(c=>c.id!==id);
+  localStorage.setItem('posiciones_cerradas',JSON.stringify(cerradas));
+  renderHistorialCerradas();
+}
+  function renderPosPnlChart(){
   const ctx=document.getElementById('pos-pnl-chart')?.getContext('2d');if(!ctx||!posicionesAbiertas.length) return;
   const fechaMap={};
   posicionesAbiertas.forEach(pos=>pos.snapshotPnl?.forEach(s=>{fechaMap[s.fecha]=(fechaMap[s.fecha]||0)+s.pnl;}));
