@@ -51,6 +51,7 @@
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
   .update-time { font-size:9px; color:var(--muted); margin-top:2px; text-align:right; font-family:var(--font); }
 
+  /* ─── CONTAINER ─── */
   .container { max-width:1600px; margin:0 auto; padding:12px 20px; }
   .loader { display:flex; flex-direction:column; align-items:center; padding:80px; gap:14px; }
   .loader-bar { width:180px; height:2px; background:var(--border); border-radius:2px; overflow:hidden; }
@@ -60,6 +61,7 @@
   .tab-content { display:none; }
   .tab-content.active { display:block; }
 
+  /* ─── TABLES ─── */
   .card { background:var(--bg2); border:1px solid var(--border); border-radius:6px; overflow:hidden; box-shadow:var(--shadow); }
   .card-header { padding:8px 14px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background:var(--bg3); }
   .card-title { font-size:11px; font-weight:700; font-family:var(--font); text-transform:uppercase; letter-spacing:0.8px; }
@@ -73,14 +75,18 @@
   td:first-child { text-align:left; }
   tr:hover td { background:#1e1e1e !important; }
 
+  /* ─── PLAZA LAYOUT (3 columns: calls | strike | puts) ─── */
   .plaza-wrap { display:grid; grid-template-columns:1fr auto 1fr; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; background:var(--bg2); }
   .plaza-header-calls { padding:8px 14px; border-bottom:1px solid var(--border); background:rgba(34,197,94,0.08); display:flex; align-items:center; justify-content:space-between; }
   .plaza-header-strike { padding:8px 6px; border-bottom:1px solid var(--border); border-left:1px solid var(--border); border-right:1px solid var(--border); background:var(--bg3); display:flex; align-items:center; justify-content:center; }
   .plaza-header-puts { padding:8px 14px; border-bottom:1px solid var(--border); background:rgba(239,68,68,0.08); display:flex; align-items:center; justify-content:space-between; }
+  .plaza-col-calls table th:last-child, .plaza-col-calls table td:last-child { border-right:none; }
   .plaza-col-strike { border-left:1px solid var(--border); border-right:1px solid var(--border); background:var(--bg3); min-width:80px; }
   .plaza-col-strike table th { text-align:center; background:var(--bg3); }
   .plaza-col-strike table td { text-align:center; font-weight:700; font-size:12px; color:#c0c0c0; background:var(--bg3); }
+  .plaza-col-puts table th:first-child { text-align:left; }
 
+  /* ─── COLOR CELLS ─── */
   .bid { color:var(--blue); }
   .ask { color:var(--negative); }
   .last-val { color:var(--text); font-weight:700; }
@@ -88,16 +94,21 @@
   .pos { color:var(--positive); font-weight:600; }
   .neg { color:var(--negative); font-weight:600; }
   .neu { color:var(--muted); }
+  /* Variación % badge */
   .var-pos { background:#16a34a; color:#fff; padding:1px 5px; border-radius:2px; font-weight:700; font-size:11px; font-family:var(--font); display:inline-block; }
   .var-neg { background:#dc2626; color:#fff; padding:1px 5px; border-radius:2px; font-weight:700; font-size:11px; font-family:var(--font); display:inline-block; }
   .var-neu { background:#333; color:#aaa; padding:1px 5px; border-radius:2px; font-size:11px; font-family:var(--font); display:inline-block; }
+  /* ITM / ATM row highlight */
   .row-itm-call { background:#161616 !important; }
   .row-otm-call { background:#0a0a0a !important; }
   .row-itm-put  { background:#161616 !important; }
   .row-otm-put  { background:#0a0a0a !important; }
   .row-atm      { background:#1e1800 !important; }
 
+  /* ─── SECTION LABEL ─── */
   .section-label { font-size:10px; font-weight:700; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; padding-bottom:10px; margin-bottom:14px; border-bottom:1px solid var(--border); font-family:var(--font); }
+
+  /* ─── ESTRATEGIAS ─── */
   .estrategias-wrap { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:10px; }
   .strat-card { background:var(--bg2); border:1px solid var(--border); border-radius:6px; overflow:hidden; }
   .strat-header { padding:8px 12px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:baseline; background:var(--bg3); }
@@ -107,7 +118,10 @@
   .puts-strat  { border-top:2px solid var(--negative); }
   .mixed-strat { border-top:2px solid var(--blue); }
   .lanz-strat  { border-top:2px solid var(--accent); }
+  .strat-card table td { font-family:var(--font); font-size:12px; }
+  .strat-card table th { font-family:var(--font); }
 
+  /* ─── PAYOFF BUILDER ─── */
   .payoff-wrap { display:grid; grid-template-columns:460px 1fr; gap:14px; align-items:start; }
   .payoff-panel { background:var(--bg2); border:1px solid var(--border); border-radius:6px; overflow:hidden; }
   .payoff-panel-header { padding:10px 14px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:var(--bg3); }
@@ -116,12 +130,14 @@
   .pata-label { font-size:10px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:0.4px; font-family:var(--font); }
   .pata-headers { display:grid; grid-template-columns:65px 1fr 90px 90px 70px 28px; gap:5px; padding:6px 12px; background:var(--bg3); border-bottom:1px solid var(--border); }
 
+  /* ─── INPUTS ─── */
   input[type=number], input[type=text], input[type=date], select {
     width:100%; padding:5px 7px; border:1px solid var(--border2);
     border-radius:3px; font-size:13px; font-family:var(--font);
     color:var(--text); background:var(--bg3); outline:none;
   }
   input[type=number]:focus, select:focus { border-color:var(--accent); }
+  select { font-family:var(--font); }
   .cant-input { font-size:16px !important; font-weight:800 !important; text-align:center; }
   .btn-add { margin:8px 12px; width:calc(100% - 24px); padding:7px; border:1px dashed var(--border2); border-radius:4px; background:none; color:var(--muted); font-size:12px; cursor:pointer; font-family:var(--font); transition:all 0.12s; }
   .btn-add:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-light); }
@@ -138,18 +154,28 @@
   .tipo-btn { padding:4px 10px; font-size:11px; font-weight:700; border-radius:3px; border:1px solid var(--border2); background:none; cursor:pointer; font-family:var(--font); transition:all 0.12s; color:var(--muted); }
   .tipo-btn.active-call { background:rgba(34,197,94,0.2); color:var(--positive); border-color:var(--positive); }
   .tipo-btn.active-put  { background:rgba(239,68,68,0.2); color:var(--negative); border-color:var(--negative); }
+
+  /* ─── DARK CHART PANEL ─── */
   .dark-panel { background:#080808; border:1px solid var(--border); border-radius:6px; padding:14px; }
   .dark-panel .chart-title { color:#505060; }
+
+  /* ─── GREEK BOXES ─── */
   .greek-box { background:#0d0d18; border-radius:4px; padding:7px 8px; text-align:center; }
   .greek-label { font-size:9px; color:#505060; font-family:var(--font); font-weight:700; text-transform:uppercase; letter-spacing:0.4px; }
   .greek-val { font-size:14px; font-weight:700; font-family:var(--font); color:#a0c4ff; margin-top:1px; }
+
+  /* ─── STAT MINI BOXES ─── */
   .mini-stat { background:var(--bg3); border-radius:4px; padding:8px 10px; text-align:center; }
   .mini-stat-label { font-size:9px; color:var(--muted); font-family:var(--font); font-weight:700; text-transform:uppercase; }
   .mini-stat-val { font-size:16px; font-weight:700; font-family:var(--font); margin-top:2px; }
+
+  /* ─── POSICION TABLE ─── */
   .pos-table { background:var(--bg2); border:1px solid var(--border); border-radius:6px; overflow:hidden; }
   .pos-table table thead tr { background:var(--bg3); border-bottom:2px solid var(--border); }
   .pos-table table th { padding:7px 10px; text-align:left; color:var(--muted); font-weight:700; font-size:10px; font-family:var(--font); text-transform:uppercase; letter-spacing:0.5px; }
   .pos-table table td { padding:7px 10px; font-family:var(--font); font-size:12px; }
+
+  /* ─── SCROLLBAR ─── */
   ::-webkit-scrollbar { width:6px; height:6px; }
   ::-webkit-scrollbar-track { background:var(--bg); }
   ::-webkit-scrollbar-thumb { background:var(--border2); border-radius:3px; }
@@ -205,8 +231,10 @@
     <div class="loader-text">Cargando datos de mercado...</div>
   </div>
 
+  <!-- ══ TAB PLAZA ══════════════════════════════════════════════════════════ -->
   <div id="tab-plaza" class="tab-content">
     <div class="plaza-wrap">
+      <!-- CALLS -->
       <div class="plaza-col-calls">
         <div class="plaza-header-calls">
           <span class="card-title calls-title">▲ CALLS</span>
@@ -222,6 +250,7 @@
           <tbody id="calls-body"></tbody>
         </table>
       </div>
+      <!-- STRIKE CENTER -->
       <div class="plaza-col-strike">
         <div class="plaza-header-strike">
           <span style="font-size:10px;font-weight:700;color:var(--muted);font-family:var(--font);letter-spacing:0.8px;">STRIKE</span>
@@ -231,6 +260,7 @@
           <tbody id="strikes-body"></tbody>
         </table>
       </div>
+      <!-- PUTS -->
       <div class="plaza-col-puts">
         <div class="plaza-header-puts">
           <span class="card-title puts-title">▼ PUTS</span>
@@ -249,6 +279,7 @@
     </div>
   </div>
 
+  <!-- ══ TAB CALLS ══════════════════════════════════════════════════════════ -->
   <div id="tab-calls" class="tab-content">
     <div class="section-label">Estrategias con Calls</div>
     <div class="estrategias-wrap">
@@ -262,6 +293,7 @@
     </div>
   </div>
 
+  <!-- ══ TAB PUTS ═══════════════════════════════════════════════════════════ -->
   <div id="tab-puts" class="tab-content">
     <div class="section-label">Estrategias con Puts</div>
     <div class="estrategias-wrap">
@@ -275,6 +307,7 @@
     </div>
   </div>
 
+  <!-- ══ TAB LANZAMIENTO ════════════════════════════════════════════════════ -->
   <div id="tab-lanzamiento" class="tab-content">
     <div class="section-label">Lanzamiento Cubierto & Tasa Sintética</div>
     <div class="estrategias-wrap">
@@ -289,8 +322,10 @@
     </div>
   </div>
 
+  <!-- ══ TAB PAYOFF BUILDER ════════════════════════════════════════════════ -->
   <div id="tab-payoff" class="tab-content">
     <div class="payoff-wrap">
+      <!-- Panel izquierdo -->
       <div>
         <div class="payoff-panel">
           <div class="payoff-panel-header">
@@ -325,6 +360,7 @@
             </div>
           </div>
         </div>
+
         <div class="payoff-panel" style="margin-top:8px;padding:10px 12px;">
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px;">
             <div><div class="pata-label" style="margin-bottom:3px;">Option Size</div><input type="number" id="opt-size" value="100" oninput="recalcular()"></div>
@@ -333,402 +369,1685 @@
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
             <div><div class="pata-label" style="margin-bottom:3px;">Rango gráfico (%)</div><input type="number" id="rango-pct" value="30" min="5" max="100" oninput="recalcular()"></div>
-            <div>
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
-                <span style="font-size:9px;color:#505060;font-family:var(--font);text-transform:uppercase;letter-spacing:0.4px;font-weight:700;">📊 VI real del mercado</span>
-                <span id="grafico-vi-label" style="font-size:12px;font-weight:700;color:#f59e0b;font-family:var(--font);">Auto</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:6px;">
-                <span style="font-size:9px;color:#303050;font-family:var(--font);">0%</span>
-                <input type="range" id="grafico-vi" min="0" max="120" value="0" step="1" style="flex:1;accent-color:#f59e0b;height:3px;" oninput="onGraficoVIChange(this.value)">
-                <span style="font-size:9px;color:#303050;font-family:var(--font);">120%</span>
-              </div>
-              <div style="font-size:9px;color:#404050;font-family:var(--font);margin-top:2px;">0 = VI real de la cadena por strike</div>
-            </div>
+            <div><div class="pata-label" style="margin-bottom:3px;">Break-evens</div><div id="breakevens" style="font-size:12px;font-family:var(--font);color:var(--accent);padding-top:5px;">—</div></div>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px;">
-            <div><div class="pata-label" style="margin-bottom:3px;">ALyC (%)</div><input type="number" id="com-alyc" value="0.5" step="0.1" oninput="recalcular()"></div>
-            <div><div class="pata-label" style="margin-bottom:3px;">Otros (%)</div><input type="number" id="com-otros" value="0.06" step="0.01" oninput="recalcular()"></div>
-            <div><div class="pata-label" style="margin-bottom:3px;">Historial PnL</div><input type="number" id="pnl-historial" value="0" oninput="recalcular()"></div>
+        </div>
+
+        <div class="payoff-panel" style="margin-top:8px;padding:10px 12px;">
+          <div class="payoff-panel-title" style="margin-bottom:8px;">📋 Guardar operación</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+            <div><div class="pata-label" style="margin-bottom:3px;">Fecha</div><input type="date" id="op-fecha"></div>
+            <div><div class="pata-label" style="margin-bottom:3px;">Nota</div><input type="text" id="op-nota" placeholder="ej: cobertura cartera"></div>
           </div>
-          <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;">
-            <div class="mini-stat"><div class="mini-stat-label">Derechos</div><div class="mini-stat-val" id="costo-derechos" style="font-size:12px;">$0</div></div>
-            <div class="mini-stat"><div class="mini-stat-label">Comisión</div><div class="mini-stat-val" id="costo-comision" style="font-size:12px;">$0</div></div>
-            <div class="mini-stat"><div class="mini-stat-label">Total Gasto</div><div class="mini-stat-val" id="costo-total" style="font-size:12px;">$0</div></div>
-          </div>
-          <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <div style="display:flex;flex-direction:column;gap:6px;">
-              <div class="pata-label">Fecha Op.</div>
-              <input type="date" id="op-fecha">
-            </div>
-            <div style="display:flex;flex-direction:column;gap:6px;">
-              <div class="pata-label">Notas</div>
-              <input type="text" id="op-nota" placeholder="Ej: Bull GGAL Feb">
-            </div>
-          </div>
-          <button class="btn-add" style="margin:12px 0 0;width:100%;border:1px solid var(--accent);color:var(--accent);font-weight:700;background:var(--accent-light);height:36px;font-size:13px;" onclick="guardarOperacion()">GUARDAR EN MI POSICIÓN</button>
+          <button onclick="guardarOperacion()" style="width:100%;padding:7px;background:var(--accent);color:white;border:none;border-radius:4px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);">Guardar operación</button>
+        </div>
+
+        <div class="payoff-panel" style="margin-top:8px;">
+          <div class="payoff-panel-header"><div class="payoff-panel-title">Historial de operaciones</div></div>
+          <div id="op-lista"></div>
         </div>
       </div>
 
+      <!-- Panel derecho: gráfico -->
       <div class="dark-panel">
-        <div class="chart-title">Curva de Payoff (Vencimiento vs Teórico)</div>
-        <div style="height:340px;position:relative;">
-          <canvas id="payoff-chart"></canvas>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;padding:8px 10px;background:#0d0d18;border-radius:4px;">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
+              <span style="font-size:9px;color:#505060;font-family:var(--font);text-transform:uppercase;letter-spacing:0.4px;font-weight:700;">⏱ Días al vencimiento</span>
+              <span id="grafico-dias-label" style="font-size:12px;font-weight:700;color:#a0c4ff;font-family:var(--font);"></span>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:9px;color:#303050;font-family:var(--font);">Vto</span>
+              <input type="range" id="grafico-dias" min="1" max="365" value="37" style="flex:1;accent-color:#a0c4ff;height:3px;" oninput="onGraficoDiasChange(this.value)">
+              <span style="font-size:9px;color:#303050;font-family:var(--font);">Hoy</span>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
+              <span style="font-size:9px;color:#505060;font-family:var(--font);text-transform:uppercase;letter-spacing:0.4px;font-weight:700;">📊 Ajuste VI</span>
+              <span id="grafico-vi-label" style="font-size:12px;font-weight:700;color:#f59e0b;font-family:var(--font);">±0%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:9px;color:#303050;font-family:var(--font);">-50%</span>
+              <input type="range" id="grafico-vi" min="-50" max="50" value="0" step="5" style="flex:1;accent-color:#f59e0b;height:3px;" oninput="onGraficoVIChange(this.value)">
+              <span style="font-size:9px;color:#303050;font-family:var(--font);">+50%</span>
+            </div>
+          </div>
         </div>
-        <div id="payoff-greeks" style="margin-top:14px;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;"></div>
+        <div class="chart-title">Payoff al vencimiento + Teórico</div>
+        <canvas id="payoff-chart"></canvas>
+
         <div style="margin-top:14px;">
-          <div class="chart-title">Escenarios de Precio</div>
-          <div style="max-height:300px;overflow-y:auto;border:1px solid #1a1a1a;border-radius:4px;">
-            <table>
-              <thead style="position:sticky;top:0;z-index:10;">
-                <tr><th>Var %</th><th>Precio</th><th style="text-align:right;">PnL Vto.</th><th style="text-align:right;">PnL Hoy</th></tr>
-              </thead>
+          <div class="chart-title">Griegas de la posición</div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:5px;">
+            <div class="greek-box"><div class="greek-label">Δ Delta</div><div id="gr-delta" class="greek-val">—</div></div>
+            <div class="greek-box"><div class="greek-label">Γ Gamma</div><div id="gr-gamma" class="greek-val">—</div></div>
+            <div class="greek-box"><div class="greek-label">ν Vega</div><div id="gr-vega" class="greek-val">—</div></div>
+            <div class="greek-box"><div class="greek-label">Θ Theta</div><div id="gr-theta" class="greek-val">—</div></div>
+            <div class="greek-box"><div class="greek-label">ρ Rho</div><div id="gr-rho" class="greek-val">—</div></div>
+            <div class="greek-box"><div class="greek-label">P. Éxito</div><div id="gr-prob" class="greek-val" style="color:#22c55e;">—</div></div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div class="chart-title">Neutralizador de griegas</div>
+          <div id="neutralizador-panel" style="background:#0d0d18;border-radius:4px;padding:10px 12px;font-family:var(--font);font-size:12px;color:#505060;">Cargá una posición para ver sugerencias.</div>
+        </div>
+
+        <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;">
+          <div>
+            <div class="chart-title">Tabla de escenarios</div>
+            <table id="payoff-tabla" style="width:100%;border-collapse:collapse;font-size:12px;font-family:var(--font);">
+              <thead><tr style="border-bottom:1px solid #1a1a2a;">
+                <th style="padding:3px 6px;text-align:left;color:#505060;font-weight:700;">Var.</th>
+                <th style="padding:3px 6px;text-align:right;color:#505060;font-weight:700;">GGAL</th>
+                <th style="padding:3px 6px;text-align:right;color:#505060;font-weight:700;">P&L Vto.</th>
+                <th style="padding:3px 6px;text-align:right;color:#a0c4ff;font-weight:700;">Teórico</th>
+              </tr></thead>
               <tbody id="payoff-tabla-body"></tbody>
             </table>
           </div>
+          <div>
+            <div class="chart-title">Posición total</div>
+            <div style="font-size:9px;font-weight:700;color:#22c55e;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px;font-family:var(--font);">Calls</div>
+            <table style="width:100%;border-collapse:collapse;font-size:12px;font-family:var(--font);margin-bottom:6px;"><thead><tr style="border-bottom:1px solid #1a1a2a;"><th style="padding:2px 5px;text-align:left;color:#505060;font-size:9px;">Strike</th><th style="padding:2px 5px;text-align:right;color:#505060;font-size:9px;">Cant.</th><th style="padding:2px 5px;text-align:right;color:#505060;font-size:9px;">Prima</th><th style="padding:2px 5px;text-align:right;color:#f59e0b;font-size:9px;">VI</th><th style="padding:2px 5px;text-align:right;color:#a0c4ff;font-size:9px;">Δ</th></tr></thead><tbody id="pos-calls"></tbody></table>
+            <div style="font-size:9px;font-weight:700;color:#ef4444;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px;font-family:var(--font);">Puts</div>
+            <table style="width:100%;border-collapse:collapse;font-size:12px;font-family:var(--font);margin-bottom:6px;"><thead><tr style="border-bottom:1px solid #1a1a2a;"><th style="padding:2px 5px;text-align:left;color:#505060;font-size:9px;">Strike</th><th style="padding:2px 5px;text-align:right;color:#505060;font-size:9px;">Cant.</th><th style="padding:2px 5px;text-align:right;color:#505060;font-size:9px;">Prima</th><th style="padding:2px 5px;text-align:right;color:#f59e0b;font-size:9px;">VI</th><th style="padding:2px 5px;text-align:right;color:#a0c4ff;font-size:9px;">Δ</th></tr></thead><tbody id="pos-puts"></tbody></table>
+            <div style="font-size:9px;font-weight:700;color:#f59e0b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px;font-family:var(--font);">Acciones</div>
+            <table style="width:100%;border-collapse:collapse;font-size:12px;font-family:var(--font);margin-bottom:10px;"><thead><tr style="border-bottom:1px solid #1a1a2a;"><th style="padding:2px 5px;text-align:left;color:#505060;font-size:9px;">Precio</th><th style="padding:2px 5px;text-align:right;color:#505060;font-size:9px;">Cant.</th><th style="padding:2px 5px;text-align:right;color:#505060;font-size:9px;">Last</th><th style="padding:2px 5px;text-align:right;color:#505060;font-size:9px;">—</th><th style="padding:2px 5px;text-align:right;color:#a0c4ff;font-size:9px;">Δ</th></tr></thead><tbody id="pos-acc"></tbody></table>
+            <div class="chart-title">Costos operativos</div>
+            <div style="background:#0d0d18;border-radius:4px;padding:8px 10px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+                <div><div style="font-size:9px;color:#505060;font-family:var(--font);margin-bottom:2px;font-weight:700;">Comisión ALYC (%)</div><input type="number" id="com-alyc" value="0.5" step="0.1" min="0" oninput="recalcularCostos()"></div>
+                <div><div style="font-size:9px;color:#505060;font-family:var(--font);margin-bottom:2px;font-weight:700;">Otros (%)</div><input type="number" id="com-otros" value="0" step="0.1" min="0" oninput="recalcularCostos()"></div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;border-top:1px solid #1a1a2a;padding-top:6px;">
+                <div style="text-align:center;"><div style="font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">D. Mercado</div><div id="costo-derechos" style="font-size:12px;font-weight:700;color:#ef4444;font-family:var(--font);">—</div></div>
+                <div style="text-align:center;"><div style="font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">Comisión</div><div id="costo-comision" style="font-size:12px;font-weight:700;color:#ef4444;font-family:var(--font);">—</div></div>
+                <div style="text-align:center;"><div style="font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">Total</div><div id="costo-total" style="font-size:12px;font-weight:700;color:#ef4444;font-family:var(--font);">—</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <div class="chart-title">PnL por pata</div>
+          <div id="pnl-patas-panel" style="background:#0d0d18;border-radius:4px;padding:10px 12px;"><span style="color:#303050;font-family:var(--font);font-size:12px;">Cargá prima y last para ver PnL por pata.</span></div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <div class="chart-title">Simulador de tiempo</div>
+          <div style="background:#0d0d18;border-radius:4px;padding:10px 12px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+              <span style="font-size:11px;color:#606080;font-family:var(--font);">Hoy</span>
+              <input type="range" id="sim-dias" min="1" max="365" value="37" style="flex:1;accent-color:#a0c4ff;" oninput="actualizarSimulador()">
+              <span style="font-size:11px;color:#606080;font-family:var(--font);">Vto.</span>
+              <span id="sim-dias-label" style="font-size:12px;font-weight:700;color:#a0c4ff;font-family:var(--font);min-width:55px;text-align:right;">37 días</span>
+            </div>
+            <canvas id="sim-chart" height="110" style="width:100%;"></canvas>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <div class="chart-title">Sensibilidad de volatilidad implícita</div>
+          <div style="background:#0d0d18;border-radius:4px;padding:10px 12px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+              <span style="font-size:11px;color:#606080;font-family:var(--font);">VI base</span>
+              <input type="range" id="vi-slider" min="-50" max="50" value="0" step="5" style="flex:1;accent-color:#f59e0b;" oninput="actualizarSensVI()">
+              <span id="vi-slider-label" style="font-size:12px;font-weight:700;color:#f59e0b;font-family:var(--font);min-width:55px;text-align:right;">±0%</span>
+            </div>
+            <div id="vi-sens-tabla" style="overflow-x:auto;"></div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <div class="chart-title">Kelly & Sizing</div>
+          <div style="background:#0d0d18;border-radius:4px;padding:10px 12px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+              <div><div style="font-size:9px;color:#505060;font-family:var(--font);margin-bottom:2px;font-weight:700;">Capital total ($)</div><input type="number" id="kelly-capital" value="1000000" step="10000" oninput="calcularKelly()"></div>
+              <div><div style="font-size:9px;color:#505060;font-family:var(--font);margin-bottom:2px;font-weight:700;">Fracción Kelly</div><select id="kelly-frac" onchange="calcularKelly()"><option value="1">Full Kelly</option><option value="0.5" selected>Half Kelly</option><option value="0.25">Quarter Kelly</option></select></div>
+            </div>
+            <div id="kelly-resultado" style="font-family:var(--font);font-size:12px;color:#505060;">Cargá una posición para ver el sizing.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <div class="chart-title">Volatility Smile</div>
+          <div style="background:#0d0d18;border-radius:4px;padding:10px 12px;">
+            <canvas id="smile-chart" height="130" style="width:100%;"></canvas>
+            <div id="smile-skew" style="margin-top:6px;font-family:var(--font);font-size:11px;color:#606080;"></div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;margin-bottom:20px;">
+          <div class="chart-title">Cono de volatilidad</div>
+          <div style="background:#0d0d18;border-radius:4px;padding:10px 12px;">
+            <div id="cono-info" style="font-family:var(--font);font-size:12px;color:#505060;">Cargá una posición para ver el cono de volatilidad.</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- ══ TAB VOLATILITY ═════════════════════════════════════════════════════ -->
   <div id="tab-volatility" class="tab-content">
-    <div class="section-label">Análisis de Volatilidad</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <div class="chart-card">
-        <div class="chart-title">Volatility Smile (Strikes vs VI)</div>
-        <canvas id="smile-full-chart"></canvas>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:4px;">
+      <div class="card" style="padding:14px;">
+        <div class="chart-title">Volatility Smile — VI por Strike</div>
+        <canvas id="smile-chart2" height="180"></canvas>
+        <div id="smile-skew2" style="margin-top:6px;font-family:var(--font);font-size:11px;color:#606080;"></div>
       </div>
-      <div class="chart-card">
-        <div class="chart-title">Term Structure (No disponible)</div>
-        <div style="height:300px;display:flex;align-items:center;justify-content:center;color:var(--muted);">Se requiere más de un vencimiento.</div>
+      <div class="card" style="padding:14px;">
+        <div class="chart-title">VI ATM — Histórico & IV Rank</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px;">
+          <div class="mini-stat"><div class="mini-stat-label">VI ATM Actual</div><div id="vi-atm-actual" class="mini-stat-val" style="color:#a0c4ff;">—</div></div>
+          <div class="mini-stat"><div class="mini-stat-label">IV Rank</div><div id="vi-rank" class="mini-stat-val">—</div></div>
+          <div class="mini-stat"><div class="mini-stat-label">IV Percentile</div><div id="vi-percentile" class="mini-stat-val">—</div></div>
+        </div>
+        <canvas id="vi-historico-chart" height="140"></canvas>
+      </div>
+      <div class="card" style="padding:14px;">
+        <div class="chart-title">Skew & Estructura de Volatilidad</div>
+        <div id="skew-panel" style="font-family:var(--font);font-size:12px;color:#606080;">Cargando datos...</div>
+      </div>
+      <div class="card" style="padding:14px;">
+        <div class="chart-title">Vol. Realizada vs Implícita</div>
+        <div id="vol-real-panel" style="font-family:var(--font);font-size:12px;color:#606080;">Calculando con histórico...</div>
+        <canvas id="vol-comp-chart" height="140" style="margin-top:6px;"></canvas>
       </div>
     </div>
   </div>
 
+  <!-- ══ TAB MI POSICIÓN ════════════════════════════════════════════════════ -->
   <div id="tab-posicion" class="tab-content">
-    <div class="section-label">Mi Posición Abierta</div>
-    <div id="posiciones-container"></div>
-    <div class="section-label" style="margin-top:20px;">Historial de Operaciones</div>
-    <div class="pos-table">
-      <table>
-        <thead><tr><th>Fecha</th><th>Estrategia</th><th>Detalle</th><th>PnL Cierre</th><th>Nota</th><th>Acción</th></tr></thead>
-        <tbody id="operaciones-body"></tbody>
-      </table>
+    <div style="padding:4px;">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+        <button onclick="abrirModalPosicion()" style="padding:7px 14px;background:var(--accent);color:white;border:none;border-radius:4px;font-weight:700;font-family:var(--font);cursor:pointer;font-size:12px;">+ Agregar posición</button>
+        <button onclick="cerrarTodasPosiciones()" style="padding:7px 14px;background:none;color:#ef4444;border:1px solid #ef4444;border-radius:4px;font-family:var(--font);cursor:pointer;font-size:12px;">Cerrar todas</button>
+        <div style="font-size:11px;color:#606080;font-family:var(--font);">Las posiciones abiertas se siguen en tiempo real.</div>
+      </div>
+      <!-- Totales -->
+      <div style="background:#0d0d18;border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:12px;display:grid;grid-template-columns:repeat(7,1fr);gap:6px;">
+        <div class="mini-stat"><div class="mini-stat-label">P&L Día</div><div id="pos-pnl-dia" class="mini-stat-val" style="color:#a0c4ff;">—</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">P&L Total</div><div id="pos-pnl-total" class="mini-stat-val">—</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">Δ Delta</div><div id="pos-delta-total" class="mini-stat-val" style="color:#a0c4ff;">—</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">Γ Gamma</div><div id="pos-gamma-total" class="mini-stat-val" style="color:#a0c4ff;">—</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">Θ Theta</div><div id="pos-theta-total" class="mini-stat-val">—</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">ν Vega</div><div id="pos-vega-total" class="mini-stat-val" style="color:#a0c4ff;">—</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">Capital</div><div id="pos-capital-total" class="mini-stat-val" style="color:#f59e0b;">—</div></div>
+      </div>
+      <div class="pos-table" style="margin-bottom:12px;">
+        <table style="width:100%;border-collapse:collapse;">
+          <thead><tr>
+            <th>Fecha</th><th>Estrategia</th><th>Patas</th>
+            <th style="text-align:right;">Prima entrada</th><th style="text-align:right;">Valor actual</th>
+            <th style="text-align:right;">P&L</th><th style="text-align:right;">Δ</th>
+            <th style="text-align:right;">Θ/día</th><th style="text-align:right;">ν Vega</th>
+            <th style="text-align:right;">Días</th><th style="text-align:center;">Acc.</th>
+          </tr></thead>
+          <tbody id="posiciones-body"></tbody>
+        </table>
+      </div>
+      <div class="card" style="padding:14px;margin-bottom:12px;">
+        <div class="chart-title">Evolución P&L posición abierta</div>
+        <canvas id="pos-pnl-chart" height="120"></canvas>
+      </div>
+      <div class="dark-panel">
+        <div class="chart-title">Payoff & Teórico — Posición abierta</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:12px;padding:8px 10px;background:#0d0d18;border-radius:4px;">
+          <div><div style="font-size:9px;color:#505060;font-family:var(--font);margin-bottom:3px;font-weight:700;">Spot GGAL</div><input type="number" id="pos-spot-input" placeholder="6600" oninput="recalcularGraficoPosicion()"></div>
+          <div><div style="font-size:9px;color:#505060;font-family:var(--font);margin-bottom:3px;font-weight:700;">Rango (%)</div><input type="number" id="pos-rango-pct" value="30" min="5" max="100" oninput="recalcularGraficoPosicion()"></div>
+          <div><div style="display:flex;justify-content:space-between;"><span style="font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">⏱ Días</span><span id="pos-dias-label" style="font-size:10px;font-weight:700;color:#a0c4ff;font-family:var(--font);"></span></div><input type="range" id="pos-dias" min="1" max="365" value="37" style="width:100%;accent-color:#a0c4ff;margin-top:5px;" oninput="onPosDiasChange(this.value)"></div>
+          <div><div style="display:flex;justify-content:space-between;"><span style="font-size:9px;color:#505060;font-family:var(--font);font-weight:700;">📊 VI</span><span id="pos-vi-label" style="font-size:10px;font-weight:700;color:#f59e0b;font-family:var(--font);">±0%</span></div><input type="range" id="pos-vi" min="-50" max="50" value="0" step="5" style="width:100%;accent-color:#f59e0b;margin-top:5px;" oninput="onPosVIChange(this.value)"></div>
+        </div>
+        <canvas id="pos-payoff-chart" height="200"></canvas>
+        <div style="margin-top:6px;font-family:var(--font);font-size:11px;color:#606080;" id="pos-payoff-stats"></div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal-posicion" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;align-items:center;justify-content:center;">
+      <div style="background:#111;border:1px solid var(--border);border-radius:8px;padding:22px;width:480px;max-width:95vw;max-height:90vh;overflow-y:auto;">
+        <div style="font-size:14px;font-weight:700;color:var(--text);font-family:var(--font);margin-bottom:14px;">Nueva posición abierta</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+          <div><div style="font-size:10px;color:#606080;font-family:var(--font);margin-bottom:3px;font-weight:700;">Fecha entrada</div><input type="date" id="modal-fecha"></div>
+          <div><div style="font-size:10px;color:#606080;font-family:var(--font);margin-bottom:3px;font-weight:700;">Nota / tesis</div><input type="text" id="modal-nota" placeholder="ej: alcista moderado..."></div>
+        </div>
+        <div id="modal-patas-container"></div>
+        <button onclick="agregarPataModal()" style="width:100%;padding:7px;background:none;border:1px dashed var(--border2);border-radius:4px;color:#606080;font-family:var(--font);cursor:pointer;margin-bottom:10px;font-size:12px;">+ Agregar pata</button>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div><div style="font-size:10px;color:#606080;font-family:var(--font);margin-bottom:3px;font-weight:700;">Option Size</div><input type="number" id="modal-optsize" value="100"></div>
+          <div><div style="font-size:10px;color:#606080;font-family:var(--font);margin-bottom:3px;font-weight:700;">Und. Size</div><input type="number" id="modal-undsize" value="1"></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px;">
+          <button onclick="guardarPosicionModal()" style="flex:1;padding:9px;background:var(--accent);color:white;border:none;border-radius:4px;font-weight:700;font-family:var(--font);cursor:pointer;font-size:12px;">Guardar posición</button>
+          <button onclick="cerrarModal()" style="padding:9px 14px;background:none;border:1px solid var(--border2);border-radius:4px;color:#a0a0c0;font-family:var(--font);cursor:pointer;font-size:12px;">Cancelar</button>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- ══ TAB ANALYTICS ══════════════════════════════════════════════════════ -->
   <div id="tab-analytics" class="tab-content">
-    <div class="section-label">Analytics & Portfolio Metrics</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;">
-      <div class="mini-stat"><div class="mini-stat-label">Delta Total</div><div class="mini-stat-val" id="total-delta">0</div></div>
-      <div class="mini-stat"><div class="mini-stat-label">Gamma Total</div><div class="mini-stat-val" id="total-gamma">0</div></div>
-      <div class="mini-stat"><div class="mini-stat-label">Theta Total</div><div class="mini-stat-val" id="total-theta">0</div></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">Evolución de PnL Diaria</div>
-      <canvas id="portfolio-pnl-chart"></canvas>
+    <div style="padding:4px;">
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:12px;">
+        <div class="mini-stat"><div class="mini-stat-label">Total trades</div><div id="an-total" class="mini-stat-val" style="color:#a0c4ff;">—</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">Win Rate</div><div id="an-winrate" class="mini-stat-val">—</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">Profit Factor</div><div id="an-pf" class="mini-stat-val">—</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">P&L Total</div><div id="an-pnl" class="mini-stat-val">—</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">Mejor trade</div><div id="an-best" class="mini-stat-val" style="color:#22c55e;">—</div></div>
+        <div class="mini-stat"><div class="mini-stat-label">Peor trade</div><div id="an-worst" class="mini-stat-val" style="color:#ef4444;">—</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:12px;">
+        <div class="card" style="padding:14px;"><div class="chart-title">Curva de Equity</div><canvas id="equity-chart" height="150"></canvas></div>
+        <div class="card" style="padding:14px;"><div class="chart-title">P&L por estrategia</div><div id="an-por-estrategia" style="font-family:var(--font);font-size:12px;"></div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="card" style="padding:14px;"><div class="chart-title">Distribución de P&L por trade</div><canvas id="distrib-chart" height="150"></canvas></div>
+        <div class="card" style="padding:14px;"><div class="chart-title">Estadísticas detalladas</div><div id="an-stats-detalle" style="font-family:var(--font);font-size:12px;color:#606080;">Registrá operaciones con P&L para ver estadísticas.</div></div>
+      </div>
     </div>
   </div>
-</div>
+
+</div><!-- fin .container -->
+
 <script>
-// --- VARIABLES GLOBALES ---
-let marketData = { last: [], calls: [], puts: [] };
-let strikes = [];
-let spotPrice = 0, varDia = 0, diasVto = 0;
-let r = 0.40; // Tasa libre de riesgo (ajustar segun mercado)
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT3WNyHxyaxw15sycBbuKe1REh28RHytoNGw9y4No3-CbbtrvZUPpLJG7IU_D0ZYe5qrFzDU5RFAEhu/pub?gid=137375925&single=true&output=csv';
+let spotGGAL = null;
+let strikesDisponibles = [];
+let strikeLast = {};
+let diasVto = 37;
+
+// Chart.js defaults — todo Calibri
+Chart.defaults.font.family = 'Calibri, Arial, sans-serif';
+Chart.defaults.color = '#808090';
+
+function showTab(name, btn) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name==='analytics')  renderAnalytics();
+  if (name==='posicion')   { renderPosicionesAbiertas(); recalcularGraficoPosicion(); }
+  if (name==='volatility') renderVolatilityDashboard();
+}
+
+function parseCSV(text) {
+  return text.split('\n').map(line => {
+    const cols = []; let cur = '', inQ = false;
+    for (let c of line) {
+      if (c === '"') inQ = !inQ;
+      else if (c === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+      else cur += c;
+    }
+    cols.push(cur.trim());
+    return cols;
+  });
+}
+
+function fmtNum(val) {
+  if (!val || val === '-' || val === '') return '<span class="empty">—</span>';
+  const n = parseFloat(val);
+  if (isNaN(n)) return val;
+  return n.toFixed(2);
+}
+
+function colorNum(val) {
+  if (!val || val === '-' || val === '') return '<span class="empty">—</span>';
+  const n = parseFloat(val.toString().replace('%',''));
+  if (isNaN(n)) return `<span class="neu">${val}</span>`;
+  const cls = n > 0 ? 'pos' : n < 0 ? 'neg' : 'neu';
+  return `<span class="${cls}">${n.toFixed(2)}</span>`;
+}
+
+function colorPct(val) {
+  if (!val || val === '-' || val === '') return '<span class="empty">—</span>';
+  const s = val.toString();
+  const n = parseFloat(s.replace('%',''));
+  if (isNaN(n)) return `<span class="neu">${val}</span>`;
+  const cls = n > 0 ? 'pos' : n < 0 ? 'neg' : 'neu';
+  return `<span class="${cls}">${s.includes('%') ? s : n.toFixed(2)+'%'}</span>`;
+}
+
+// Variación % con badge de fondo verde/rojo
+function varBadge(val) {
+  if (!val || val === '-' || val === '') return '<span class="empty">—</span>';
+  const s = val.toString().trim();
+  const n = parseFloat(s.replace('%','').replace(',','.'));
+  if (isNaN(n)) return `<span class="var-neu">${s}</span>`;
+  const pctStr = s.includes('%') ? s : n.toFixed(2)+'%';
+  if (n > 0)  return `<span class="var-pos">+${pctStr.replace('+','')}</span>`;
+  if (n < 0)  return `<span class="var-neg">${pctStr}</span>`;
+  return `<span class="var-neu">${pctStr}</span>`;
+}
+
+function isATM(strike) {
+  if (!spotGGAL || !strike) return false;
+  return Math.abs(parseFloat(strike) - spotGGAL) < 150;
+}
+
+let fetchIntentos = 0;
+const FETCH_MAX_INTENTOS = 3;
+
+async function fetchData() {
+  fetchIntentos++;
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    const res = await fetch(CSV_URL + '&t=' + Date.now(), { signal: controller.signal });
+    clearTimeout(timeout);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+    const rows = parseCSV(text);
+    document.getElementById('loader').style.display = 'none';
+    if (!document.querySelector('.tab-content.active')) {
+      document.getElementById('tab-plaza').classList.add('active');
+    }
+    document.getElementById('update-time').textContent = 'Act. ' + new Date().toLocaleTimeString('es-AR');
+    fetchIntentos = 0;
+    try { render(rows); } catch(renderErr) { console.warn('render error:', renderErr); }
+  } catch(e) {
+    const loaderEl = document.getElementById('loader');
+    if (fetchIntentos >= FETCH_MAX_INTENTOS) {
+      loaderEl.style.display = 'none';
+      if (!document.querySelector('.tab-content.active')) {
+        document.getElementById('tab-plaza').classList.add('active');
+      }
+      fetchIntentos = 0;
+    } else {
+      loaderEl.innerHTML = `<div class="loader-bar"><div class="loader-fill"></div></div><div class="loader-text" style="color:#dc2626">Reintentando (${fetchIntentos}/${FETCH_MAX_INTENTOS})...</div>`;
+      setTimeout(fetchData, 3000);
+    }
+  }
+}
+
+function render(rows) {
+  // Fila 2 (index 1): GGAL last=D(3), var%=F(5), días=M(12)
+  const ggal = rows[1];
+  if (ggal) {
+    const last = parseFloat(ggal[3]);
+    if (!isNaN(last) && last > 0) {
+      spotGGAL = last;
+      document.getElementById('spot-val').textContent = last.toLocaleString('es-AR', {minimumFractionDigits:2, maximumFractionDigits:2});
+    }
+    // Variación % acción (col F = index 5)
+    const varPct = ggal[5] || '';
+    const varEl  = document.getElementById('var-val');
+    if (varEl && varPct) {
+      const n = parseFloat(varPct.replace('%','').replace(',','.'));
+      varEl.textContent = isNaN(n) ? varPct : (n >= 0 ? '+' : '') + n.toFixed(2) + '%';
+      varEl.style.color = isNaN(n) ? '#888' : n >= 0 ? '#22c55e' : '#ef4444';
+    }
+    if (ggal[12]) {
+      const d = parseInt(ggal[12]);
+      if (!isNaN(d) && d > 0) {
+        document.getElementById('dias-val').textContent = d;
+        diasVto = d;
+      }
+    }
+    if (spotGGAL) {
+      const spotEl = document.getElementById('spot-input');
+      if (spotEl && !spotEl.value) spotEl.value = spotGGAL.toFixed(2);
+    }
+  }
+
+  // PLAZA: filas 3-31 (index 2-30)
+  // Cols: A(0)=TkCall, B(1)=VI Call, C(2)=Bid, D(3)=Last, E(4)=Offer, F(5)=Var%, G(6)=Strike
+  //        H(7)=TkPut, I(8)=VI Put,  J(9)=Bid,  K(10)=Last,L(11)=Offer, M(12)=Var% Put, N(13)=Días, O(14)=TLR
+  const strikeMap = {};
+  let callsH = '', putsH = '', strikesH = '';
+  strikesDisponibles = [];
+  strikeLast = {};
+
+  for (let i = 2; i <= 30; i++) {
+    const r = rows[i];
+    if (!r || !r[0]) continue;
+    const strike = (r[6] || '').toString().trim();
+    const K_num  = parseFloat(strike);
+    if (r[0] && strike) strikeMap[r[0]] = strike;
+    if (r[7] && strike) strikeMap[r[7]] = strike;
+    if (strike && !isNaN(K_num) && K_num > 0 && !strikesDisponibles.includes(K_num)) {
+      strikesDisponibles.push(K_num);
+      const parseVI = s => {
+        if (!s || s.trim()===''||s.trim()==='-') return null;
+        const n = parseFloat(s.replace('%','').replace(',','.').trim());
+        if (isNaN(n)||n<=0) return null;
+        return n > 1 ? n/100 : n;
+      };
+      strikeLast[K_num] = {
+        call:   parseFloat(r[3])  || null,
+        put:    parseFloat(r[10]) || null,
+        viCall: parseVI(r[1]),
+        viPut:  parseVI(r[8])
+      };
+    }
+    const atm = isATM(strike);
+    const K   = K_num;
+    const T   = (diasVto||37)/365;
+    const rf  = Math.log(1+0.40);
+    const viC = strikeLast[K]?.viCall || 0.60;
+    const viP = strikeLast[K]?.viPut  || 0.60;
+    const gC  = spotGGAL ? bsGreeks(spotGGAL, K, T, rf, viC, 'C') : null;
+    const gP  = spotGGAL ? bsGreeks(spotGGAL, K, T, rf, viP, 'P') : null;
+
+    // Row class
+    let rowClassC='', rowClassP='', strikeClass='';
+    if (atm) { rowClassC='row-atm'; rowClassP='row-atm'; strikeClass='row-atm'; }
+    else if (spotGGAL) {
+      rowClassC = K < spotGGAL ? 'row-itm-call' : 'row-otm-call';
+      rowClassP = K > spotGGAL ? 'row-itm-put'  : 'row-otm-put';
+    }
+    const atmBadge = atm ? ' <span style="background:var(--accent);color:#fff;font-size:9px;padding:1px 3px;border-radius:2px;font-weight:700;letter-spacing:0.3px;">ATM</span>' : '';
+    const vol = r[13] || '';
+    // var% col F(5) calls, col M(12) puts — row 2-30 only for calls/puts
+    const varC = r[5] || '';
+    const varP = r[12] || '';
+
+    callsH += `<tr class="${rowClassC}" style="cursor:pointer;" onclick="agregarDesdeChain('C',${K},${parseFloat(r[3])||0})" title="Agregar al Payoff Builder">
+      <td>${r[0]}${atmBadge}</td>
+      <td class="bid">${fmtNum(r[2])}</td>
+      <td class="last-val">${fmtNum(r[3])}</td>
+      <td class="ask">${fmtNum(r[4])}</td>
+      <td class="neu" style="font-size:11px;">${r[1]||'<span class="empty">—</span>'}</td>
+      <td>${varBadge(varC)}</td>
+      <td style="color:${gC&&gC.delta>0?'#22c55e':'#606070'};font-size:11px;">${gC?gC.delta.toFixed(3):'—'}</td>
+      <td style="color:#a0c4ff;font-size:11px;">${gC?gC.gamma.toFixed(4):'—'}</td>
+      <td style="color:${gC&&gC.theta<0?'#ef4444':'#22c55e'};font-size:11px;">${gC?gC.theta.toFixed(2):'—'}</td>
+      <td style="color:#f59e0b;font-size:11px;">${gC?gC.vega.toFixed(2):'—'}</td>
+      <td style="color:#505060;font-size:11px;">${vol||'—'}</td>
+    </tr>`;
+
+    strikesH += `<tr class="${strikeClass}">
+      <td style="font-weight:700;font-size:12px;color:${atm?'#f59e0b':'#c0c0c0'};text-align:center;letter-spacing:0.3px;">${K.toLocaleString('es-AR')}</td>
+    </tr>`;
+
+    if (r[7]) {
+      putsH += `<tr class="${rowClassP}" style="cursor:pointer;" onclick="agregarDesdeChain('P',${K},${parseFloat(r[10])||0})" title="Agregar al Payoff Builder">
+        <td>${r[7]}${atmBadge}</td>
+        <td class="bid">${fmtNum(r[9])}</td>
+        <td class="last-val">${fmtNum(r[10])}</td>
+        <td class="ask">${fmtNum(r[11])}</td>
+        <td class="neu" style="font-size:11px;">${r[8]||'<span class="empty">—</span>'}</td>
+        <td>${varBadge(varP)}</td>
+        <td style="color:${gP&&gP.delta<0?'#ef4444':'#606070'};font-size:11px;">${gP?gP.delta.toFixed(3):'—'}</td>
+        <td style="color:#a0c4ff;font-size:11px;">${gP?gP.gamma.toFixed(4):'—'}</td>
+        <td style="color:${gP&&gP.theta<0?'#ef4444':'#22c55e'};font-size:11px;">${gP?gP.theta.toFixed(2):'—'}</td>
+        <td style="color:#f59e0b;font-size:11px;">${gP?gP.vega.toFixed(2):'—'}</td>
+        <td style="color:#505060;font-size:11px;">${vol||'—'}</td>
+      </tr>`;
+    } else {
+      putsH += `<tr class="${rowClassP}"><td colspan="11" style="color:#333;">—</td></tr>`;
+    }
+  }
+
+  document.getElementById('calls-body').innerHTML   = callsH;
+  document.getElementById('puts-body').innerHTML    = putsH;
+  document.getElementById('strikes-body').innerHTML = strikesH;
+
+  renderSmile();
+  sincronizarSliders();
+  if (spotGGAL) {
+    const posSpotEl = document.getElementById('pos-spot-input');
+    if (posSpotEl && !posSpotEl.value) posSpotEl.value = spotGGAL.toFixed(2);
+  }
+
+  // ESTRATEGIAS: filas 34-62 (index 33-61)
+  const strikeMapSorted = strikeMap;
+  let bull='',ratio='',ratio2='',ratio3='',mar='',mar1='',mar2='';
+  let bear='',pr='',pr2='',pr3='',pm='',pm1='',pm2='';
+  let lanz='',sint='';
+
+  for (let i = 33; i <= 61; i++) {
+    const r = rows[i];
+    if (!r || !r[0]) continue;
+    const strike = strikeMap[r[0].toString().trim()] || '';
+
+    bull  += `<tr><td>${strike}</td><td>${colorNum(r[1])}</td></tr>`;
+    ratio += `<tr><td>${strike}</td><td>${colorNum(r[2])}</td></tr>`;
+    ratio2+= `<tr><td>${strike}</td><td>${colorNum(r[3])}</td></tr>`;
+    ratio3+= `<tr><td>${strike}</td><td>${colorNum(r[4])}</td></tr>`;
+    mar   += `<tr><td>${strike}</td><td>${colorNum(r[5])}</td></tr>`;
+    mar1  += `<tr><td>${strike}</td><td>${colorNum(r[6])}</td></tr>`;
+    mar2  += `<tr><td>${strike}</td><td>${colorNum(r[7])}</td></tr>`;
+    lanz  += `<tr><td>${strike}</td><td>${colorPct(r[8])}</td><td>${colorPct(r[9])}</td></tr>`;
+    bear  += `<tr><td>${strike}</td><td>${colorNum(r[11])}</td></tr>`;
+    pr    += `<tr><td>${strike}</td><td>${colorNum(r[12])}</td></tr>`;
+    pr2   += `<tr><td>${strike}</td><td>${colorNum(r[13])}</td></tr>`;
+    pr3   += `<tr><td>${strike}</td><td>${colorNum(r[14])}</td></tr>`;
+    pm    += `<tr><td>${strike}</td><td>${colorNum(r[15])}</td></tr>`;
+    pm1   += `<tr><td>${strike}</td><td>${colorNum(r[16])}</td></tr>`;
+    pm2   += `<tr><td>${strike}</td><td>${colorNum(r[17])}</td></tr>`;
+    sint  += `<tr><td>${strike}</td><td>${colorPct(r[18])}</td></tr>`;
+  }
+
+  document.getElementById('bull-body').innerHTML     = bull;
+  document.getElementById('ratio-body').innerHTML    = ratio;
+  document.getElementById('ratio2-body').innerHTML   = ratio2;
+  document.getElementById('ratio3-body').innerHTML   = ratio3;
+  document.getElementById('mariposa-body').innerHTML = mar;
+  document.getElementById('mariposa1-body').innerHTML= mar1;
+  document.getElementById('mariposa2-body').innerHTML= mar2;
+  document.getElementById('bear-body').innerHTML     = bear;
+  document.getElementById('pratio-body').innerHTML   = pr;
+  document.getElementById('pratio2-body').innerHTML  = pr2;
+  document.getElementById('pratio3-body').innerHTML  = pr3;
+  document.getElementById('pmariposa-body').innerHTML= pm;
+  document.getElementById('pmariposa1-body').innerHTML=pm1;
+  document.getElementById('pmariposa2-body').innerHTML=pm2;
+  document.getElementById('lanz-body').innerHTML     = lanz;
+  document.getElementById('sint-body').innerHTML     = sint;
+}
+
+fetchData();
+setInterval(fetchData, 15000);
+
+// ─── PAYOFF BUILDER ───────────────────────────────────────────────────────────
 let patas = [];
-let defaultTipo = 'C';
-let payoffChart = null, portfolioChart = null, smileFullChart = null;
+let tipoDefault = 'C';
+let payoffChart = null;
+let pataId = 0;
+let operaciones = JSON.parse(localStorage.getItem('pb_operaciones') || '[]');
 
-// CAMBIO 1: Nueva variable global
-let graficoVIAbsoluta = 0; 
-
-let operaciones = JSON.parse(localStorage.getItem('pb_operaciones')) || [];
-let posicionesAbiertas = JSON.parse(localStorage.getItem('posiciones_abiertas')) || [];
-
-// --- UTILS ---
-function fmtARS(v) { return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(v); }
-
-// --- BLACK SCHOLES CORE ---
-function cnd(x) {
-  const a1=0.31938153, a2=-0.356563782, a3=1.781477937, a4=-1.821255978, a5=1.330274429;
-  const L=Math.abs(x), K=1/(1+0.2316419*L);
-  let d=1-1/Math.sqrt(2*Math.PI)*Math.exp(-L*L/2)*(a1*K+a2*K*K+a3*Math.pow(K,3)+a4*Math.pow(K,4)+a5*Math.pow(K,5));
-  return x<0 ? 1-d : d;
+function fmtARS(n) {
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  return n.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-function blackScholes(S, K, T, r, v, type) {
-  if (T<=0) return type==='C' ? Math.max(0,S-K) : Math.max(0,K-S);
-  const d1=(Math.log(S/K)+(r+v*v/2)*T)/(v*Math.sqrt(T));
-  const d2=d1-v*Math.sqrt(T);
-  if (type==='C') return S*cnd(d1)-K*Math.exp(-r*T)*cnd(d2);
-  return K*Math.exp(-r*T)*cnd(-d2)-S*cnd(-d1);
+function setTipoDefault(tipo, btn) {
+  tipoDefault = tipo;
+  document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active-call','active-put'));
+  btn.classList.add(tipo === 'C' ? 'active-call' : 'active-put');
 }
 
-function calcGreeks(S, K, T, r, v, type) {
-  if (T<=0) return { delta:0, gamma:0, theta:0, vega:0 };
-  const d1=(Math.log(S/K)+(r+v*v/2)*T)/(v*Math.sqrt(T));
-  const d2=d1-v*Math.sqrt(T);
-  const pdf=Math.exp(-d1*d1/2)/Math.sqrt(2*Math.PI);
-  const delta = type==='C' ? cnd(d1) : cnd(d1)-1;
-  const gamma = pdf/(S*v*Math.sqrt(T));
-  const vega = S*Math.sqrt(T)*pdf/100;
-  const theta = (-(S*v*pdf)/(2*Math.sqrt(T)) - r*K*Math.exp(-r*T)*cnd(type==='C'?d2:-d2))/365;
-  return { delta, gamma, theta, vega };
+function agregarPata() {
+  const id = pataId++;
+  patas.push({ id, tipo: tipoDefault, strike: '', prima: '', cant: 1, last: '' });
+  renderPatas();
 }
 
-function findVI(target, S, K, T, r, type) {
-  if(target<=0 || T<=0) return 0;
-  let v=0.5;
-  for(let i=0;i<20;i++){
-    let p=blackScholes(S,K,T,r,v,type);
-    let diff=target-p;
-    if(Math.abs(diff)<0.001) return v;
-    let vega=S*Math.sqrt(T)*(Math.exp(-(Math.pow((Math.log(S/K)+(r+v*v/2)*T)/(v*Math.sqrt(T)),2))/2)/Math.sqrt(2*Math.PI));
-    v+=diff/(vega*100||1);
-    if(v<=0) v=0.01;
-  }
-  return v;
+function eliminarPata(id) {
+  patas = patas.filter(p => p.id !== id);
+  renderPatas();
 }
 
-// --- LOGICA DE MERCADO ---
-function getVI(K, type) {
-  const row = marketData[type==='C'?'calls':'puts'].find(o => parseFloat(o.strike)===K);
-  if(row && row.last && !isNaN(parseFloat(row.last))) {
-    return findVI(parseFloat(row.last), spotPrice, K, diasVto/365, r, type);
-  }
-  return 0.5; // default 50%
-}
-
-// CAMBIO 1: Funcion modificada
-function onGraficoVIChange(val){
-  graficoVIAbsoluta = parseInt(val);
-  const l = document.getElementById('grafico-vi-label');
-  if(l) l.textContent = graficoVIAbsoluta === 0 ? 'Auto (cadena)' : graficoVIAbsoluta + '%';
+function renderPatas() {
+  const c = document.getElementById('patas-container');
+  c.innerHTML = patas.map(p => {
+    const esAccion = p.tipo === 'S';
+    const strikeField = esAccion
+      ? `<input type="number" placeholder="Precio compra" ${p.strike!==''?`value="${p.strike}"`:''}  oninput="updatePata(${p.id},'strike',this.value)">`
+      : strikesDisponibles.length
+        ? `<select onchange="updatePataStrike(${p.id},this.value)">
+             <option value="">-- Strike --</option>
+             ${strikesDisponibles.sort((a,b)=>a-b).map(s=>`<option value="${s}" ${parseFloat(p.strike)===s?'selected':''}>${s.toLocaleString('es-AR')}</option>`).join('')}
+           </select>`
+        : `<input type="number" placeholder="Strike" ${p.strike!==''?`value="${p.strike}"`:''}  oninput="updatePata(${p.id},'strike',this.value)">`;
+    const primaField = esAccion
+      ? `<input type="number" disabled placeholder="—" style="background:#0a0a0a;color:#444;">`
+      : `<input type="number" placeholder="Prima" ${p.prima!==''?`value="${p.prima}"`:''}  oninput="updatePata(${p.id},'prima',this.value)">`;
+    return `
+    <div class="pata-row" id="pata-${p.id}">
+      <select onchange="updatePata(${p.id},'tipo',this.value)" style="font-weight:700;">
+        <option value="C" ${p.tipo==='C'?'selected':''}>CALL</option>
+        <option value="P" ${p.tipo==='P'?'selected':''}>PUT</option>
+        <option value="S" ${p.tipo==='S'?'selected':''}>ACC</option>
+      </select>
+      ${strikeField}
+      ${primaField}
+      <input type="number" placeholder="Last" ${p.last!==''?`value="${p.last}"`:''}  oninput="updatePata(${p.id},'last',this.value)" style="background:#0d0d18;color:#a0c4ff;">
+      <input type="number" class="cant-input" placeholder="1" value="${p.cant}" oninput="updatePata(${p.id},'cant',this.value)" step="1">
+      <button class="btn-remove" onclick="eliminarPata(${p.id})">×</button>
+    </div>`;
+  }).join('');
   recalcular();
 }
 
-function calcCurvaDS(patas, range, spot, T, r, optSz, undSz) {
-  const ds = [];
-  const viAjuste = 0; // Se mantiene por compatibilidad
-  for(let i=0; i<=range; i++) {
-    const p = spot * (1 - range/200 + i/100);
-    let val = 0;
-    patas.forEach(pata => {
-      const K=parseFloat(pata.strike), cant=parseInt(pata.cant)||0, sz=pata.tipo==='S'?undSz:optSz;
-      if(pata.tipo==='S') { val += (p - K) * cant * sz; }
-      else {
-        // CAMBIO 1: Aplicacion de VI Absoluta
-        const vi = graficoVIAbsoluta > 0 ? graficoVIAbsoluta/100 : getVI(K, pata.tipo);
-        val += blackScholes(p, K, T, r, vi, pata.tipo) * cant * sz;
-      }
-    });
-    ds.push(val);
+function updatePataStrike(id, val) {
+  const p = patas.find(x => x.id === id);
+  if (!p) return;
+  p.strike = parseFloat(val) || '';
+  if (p.strike && strikeLast[p.strike]) {
+    const ld = strikeLast[p.strike];
+    if (p.tipo === 'C' && ld.call) p.last = ld.call;
+    else if (p.tipo === 'P' && ld.put) p.last = ld.put;
   }
-  return ds;
+  renderPatas();
 }
 
-function calcularPayoff(precio, v, optSize, undSize) {
-  let total = 0;
-  v.forEach(p => {
-    const K=parseFloat(p.strike), cant=parseInt(p.cant)||0, sz=p.tipo==='S'?undSize:optSize, prima=parseFloat(p.prima)||0;
-    let payoff = 0;
-    if(p.tipo==='S') payoff = precio - K;
-    else if(p.tipo==='C') payoff = Math.max(0, precio - K) - prima;
-    else if(p.tipo==='P') payoff = Math.max(0, K - precio) - prima;
-    total += payoff * cant * sz;
-  });
-  return total;
-}
-
-function calcularPayoffTeorico(precio, v, optSize, undSize, S0, T, r) {
-  let total = 0;
-  v.forEach(p => {
-    const K=parseFloat(p.strike), cant=parseInt(p.cant)||0, sz=p.tipo==='S'?undSize:optSize, prima=parseFloat(p.prima)||0;
-    if(p.tipo==='S') total += (precio - K) * cant * sz;
-    else {
-      const vi = graficoVIAbsoluta > 0 ? graficoVIAbsoluta/100 : getVI(K, p.tipo);
-      const teo = blackScholes(precio, K, T, r, vi, p.tipo);
-      total += (teo - prima) * cant * sz;
+function updatePata(id, campo, valor) {
+  const p = patas.find(x => x.id === id);
+  if (!p) return;
+  if (campo === 'cant') p.cant = parseInt(valor) || 1;
+  else if (campo === 'tipo') {
+    p.tipo = valor;
+    if (p.strike && strikeLast[p.strike]) {
+      const ld = strikeLast[p.strike];
+      if (valor==='C' && ld.call) p.last = ld.call;
+      else if (valor==='P' && ld.put) p.last = ld.put;
+      else if (valor==='S') p.last = '';
     }
-  });
-  return total;
+    renderPatas(); return;
+  }
+  else p[campo] = parseFloat(valor) === 0 ? 0 : (parseFloat(valor) || '');
+  recalcular();
 }
 
-// CAMBIO 3: Nueva funcion helper
-function recalcularCostosTotales(v, optSize, undSize) {
-  const comAlyc = parseFloat(document.getElementById('com-alyc')?.value)/100 || 0;
-  const comOtros = parseFloat(document.getElementById('com-otros')?.value)/100 || 0;
-  let derechos = 0, comision = 0;
-  v.forEach(p => {
-    const prima=parseFloat(p.prima)||0, K=parseFloat(p.strike)||0, cant=Math.abs(parseInt(p.cant)||1);
-    if(p.tipo==='C'||p.tipo==='P'){ const noc=prima*cant*optSize; derechos+=noc*0.0024; comision+=noc*(comAlyc+comOtros); }
-    else { const noc=K*cant*undSize; derechos+=noc*0.0008; comision+=noc*(comAlyc+comOtros); }
-  });
-  document.getElementById('costo-derechos').textContent = fmtARS(derechos);
-  document.getElementById('costo-comision').textContent = fmtARS(comision);
-  document.getElementById('costo-total').textContent = fmtARS(derechos+comision);
-  return derechos + comision;
-}
-
-// CAMBIO 3: recalcularCF modificada
-function recalcularCF() {
-  const v = patas.filter(p => p.strike !== '' && (p.tipo === 'S' || p.prima !== ''));
-  const optSize = parseFloat(document.getElementById('opt-size')?.value)||100;
-  const undSize = parseFloat(document.getElementById('und-size')?.value)||1;
-  const costoNeto = v.reduce((t,p) => {
-    const prima=parseFloat(p.prima)||0,cant=parseInt(p.cant)||1,sz=p.tipo==='S'?undSize:optSize;
-    return t+prima*cant*sz;
+function calcularPayoff(S, patas, optSize, undSize) {
+  return patas.reduce((total, p) => {
+    const K = parseFloat(p.strike);
+    const prima = parseFloat(p.prima) || 0;
+    const cant = parseInt(p.cant) || 1;
+    const sz = p.tipo === 'S' ? undSize : optSize;
+    let pnl = 0;
+    if (p.tipo === 'C')      pnl = (Math.max(S - K, 0) - prima) * cant * sz;
+    else if (p.tipo === 'P') pnl = (Math.max(K - S, 0) - prima) * cant * sz;
+    else                     pnl = (S - K) * cant * sz;
+    return total + pnl;
   }, 0);
-  const costosTotales = recalcularCostosTotales(v, optSize, undSize);
-  const capitalTotal = costoNeto + costosTotales;
-  const tasa = parseFloat(document.getElementById('cf-tasa')?.value)/100 || 0.40;
+}
+
+function calcularPnlVivo(patas, optSize, undSize) {
+  return patas.reduce((total, p) => {
+    const prima  = parseFloat(p.prima);
+    const last   = parseFloat(p.last);
+    const cant   = parseInt(p.cant) || 1;
+    const sz = p.tipo === 'S' ? undSize : optSize;
+    const costoBase = p.tipo === 'S' ? parseFloat(p.strike) : prima;
+    if (isNaN(costoBase) || isNaN(last)) return total;
+    return total + (last - costoBase) * cant * sz;
+  }, 0);
+}
+
+function recalcularCF() {
+  const capitalEl = document.getElementById('stat-costo');
+  const capitalStr = capitalEl ? capitalEl.textContent.replace(/\./g,'').replace(',','.') : '';
+  const capital = parseFloat(capitalStr) || 0;
+  const tasa = parseFloat(document.getElementById('cf-tasa')?.value) / 100 || 0.40;
   const dias = diasVto || 37;
   document.getElementById('cf-dias').textContent = dias;
-  document.getElementById('stat-costo').textContent = fmtARS(capitalTotal);
-  document.getElementById('stat-costo').style.color = capitalTotal>0?'var(--negative)':capitalTotal<0?'var(--positive)':'var(--muted)';
-  if(Math.abs(capitalTotal) > 0){
-    const cf = capitalTotal * (Math.pow(1 + tasa/365, dias) - 1);
+  if (capital !== 0) {
+    const cf = capital * (Math.pow(1 + tasa/365, dias) - 1);
     const cfEl = document.getElementById('cf-valor');
     cfEl.textContent = fmtARS(cf);
     cfEl.style.color = cf > 0 ? 'var(--negative)' : 'var(--positive)';
   } else {
-    document.getElementById('cf-valor').textContent = '—';
+    const cfEl = document.getElementById('cf-valor');
+    cfEl.textContent = '—';
+    cfEl.style.color = 'var(--muted)';
   }
 }
-function recalcular() {
-  const spotInput = parseFloat(document.getElementById('spot-input').value) || spotPrice;
-  const rangoPct = parseFloat(document.getElementById('rango-pct').value) || 30;
-  const optSize = parseFloat(document.getElementById('opt-size').value) || 100;
-  const undSize = parseFloat(document.getElementById('und-size').value) || 1;
-  const pnlHistorial = parseFloat(document.getElementById('pnl-historial').value) || 0;
-  const T = diasVto / 365;
 
+function detectarEstrategia(patas) {
   const v = patas.filter(p => p.strike !== '' && (p.tipo === 'S' || p.prima !== ''));
-  const costosTotalesPos = recalcularCostosTotales(v, optSize, undSize);
-  
-  // Costo Financiero (CF)
-  const costoNeto = v.reduce((t,p) => {
-    const sz=p.tipo==='S'?undSize:optSize;
-    return t+(parseFloat(p.prima)||0)*(parseInt(p.cant)||1)*sz;
-  }, 0);
-  const capitalTotal = costoNeto + costosTotalesPos;
-  const tasaCF = parseFloat(document.getElementById('cf-tasa').value)/100 || 0.40;
-  const cf_monto = capitalTotal > 0 ? capitalTotal * (Math.pow(1 + tasaCF/365, diasVto) - 1) : 0;
+  if (!v.length) return 'Ingresá las patas';
+  const calls = v.filter(p => p.tipo === 'C').sort((a,b) => parseFloat(a.strike)-parseFloat(b.strike));
+  const puts  = v.filter(p => p.tipo === 'P').sort((a,b) => parseFloat(a.strike)-parseFloat(b.strike));
+  const acc   = v.filter(p => p.tipo === 'S');
+  const totalLegs = v.length;
+  if (totalLegs === 1) {
+    const p = v[0]; const dir = parseInt(p.cant) > 0 ? 'Compra' : 'Venta';
+    const tipo = p.tipo==='C'?'Call':p.tipo==='P'?'Put':'Acción';
+    return `${dir} de ${tipo}`;
+  }
+  if (calls.length===2 && !puts.length && !acc.length) {
+    const c0=parseInt(calls[0].cant),c1=parseInt(calls[1].cant);
+    const a0=Math.abs(c0),a1=Math.abs(c1),s0=Math.sign(c0),s1=Math.sign(c1);
+    if (a0===a1&&s0===1&&s1===-1) return '📈 Bull Spread Call';
+    if (a0===a1&&s0===-1&&s1===1) return '📉 Bear Spread Call';
+    if (s0===1&&s1===-1) return `⚡ Ratio Call ${a0}×${a1}`;
+    if (s0===-1&&s1===1) return `⚡ Ratio Call inverso ${a1}×${a0}`;
+  }
+  if (puts.length===2 && !calls.length && !acc.length) {
+    const p0=parseInt(puts[0].cant),p1=parseInt(puts[1].cant);
+    const a0=Math.abs(p0),a1=Math.abs(p1),s0=Math.sign(p0),s1=Math.sign(p1);
+    if (a0===a1&&s0===-1&&s1===1) return '📉 Bear Spread Put';
+    if (a0===a1&&s0===1&&s1===-1) return '📈 Bull Spread Put';
+    if (s0===-1&&s1===1) return `⚡ Ratio Put ${a1}×${a0}`;
+    if (s0===1&&s1===-1) return `⚡ Ratio Put inverso ${a0}×${a1}`;
+  }
+  if (calls.length===1 && puts.length===1 && !acc.length) {
+    const cc=parseInt(calls[0].cant),pc=parseInt(puts[0].cant);
+    const ac=Math.abs(cc),ap=Math.abs(pc);
+    const sameStrike = parseFloat(calls[0].strike)===parseFloat(puts[0].strike);
+    if (cc>0&&pc>0) return sameStrike&&ac===ap?'🔔 Straddle Comprador':'🔔 Strangle Comprador';
+    if (cc<0&&pc<0) return sameStrike&&ac===ap?'🔕 Straddle Vendedor':'🔕 Strangle Vendedor';
+    if (cc>0&&pc<0) return '🔗 Sintética Larga';
+    if (cc<0&&pc>0) return '🔗 Sintética Corta';
+  }
+  if (calls.length===3 && !puts.length && !acc.length) {
+    const [c0,c1,c2]=calls.map(c=>parseInt(c.cant));
+    if (c0>0&&c1<0&&c2>0&&Math.abs(c1)===Math.abs(c0)+Math.abs(c2)) return '🦋 Mariposa Call';
+    if (c0<0&&c1>0&&c2<0) return '🦋 Mariposa Call Inversa';
+    return `⚡ Estrategia Call 3 patas`;
+  }
+  if (puts.length===3 && !calls.length && !acc.length) {
+    const [p0,p1,p2]=puts.map(p=>parseInt(p.cant));
+    if (p0>0&&p1<0&&p2>0&&Math.abs(p1)===Math.abs(p0)+Math.abs(p2)) return '🦋 Mariposa Put';
+    return `⚡ Estrategia Put 3 patas`;
+  }
+  if (acc.length===1&&calls.length===1&&!puts.length) {
+    if (parseInt(acc[0].cant)>0&&parseInt(calls[0].cant)<0) return '📋 Lanzamiento Cubierto';
+  }
+  if (acc.length===1&&puts.length===1&&!calls.length) {
+    if (parseInt(acc[0].cant)>0&&parseInt(puts[0].cant)>0) return '🛡️ Put Protector';
+  }
+  if (acc.length===1&&calls.length===1&&puts.length===1) {
+    if (parseInt(acc[0].cant)>0&&parseInt(calls[0].cant)<0&&parseInt(puts[0].cant)>0) return '🔰 Collar';
+  }
+  if (calls.length===2&&puts.length===2&&!acc.length) {
+    const cc=calls.map(c=>Math.sign(parseInt(c.cant)));
+    const pp=puts.map(p=>Math.sign(parseInt(p.cant)));
+    if (pp[0]===1&&pp[1]===-1&&cc[0]===-1&&cc[1]===1) return '🦅 Iron Condor';
+  }
+  return `🎯 Estrategia personalizada (${totalLegs} patas)`;
+}
 
-  // CAMBIO 2: Tabla siempre 31 filas
-  const paso = rangoPct / 15;
-  let tablaHTML = '';
-  for(let idx = 0; idx < 31; idx++){
-    const p = -rangoPct + idx * paso;
-    const precio = spotInput * (1 + p/100);
-    const pnlBruto = calcularPayoff(precio, v, optSize, undSize);
-    const pnlNeto = pnlBruto - costosTotalesPos - cf_monto + pnlHistorial;
-    let pnlTeorico = null;
-    if(T > 0){
-      const pnlBrutoTeo = calcularPayoffTeorico(precio, v, optSize, undSize, spotInput, T, r);
-      pnlTeorico = pnlBrutoTeo - costosTotalesPos - cf_monto + pnlHistorial;
+// ─── BLACK-SCHOLES ────────────────────────────────────────────────────────────
+function normCDF(x) {
+  const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
+  const sign=x<0?-1:1; x=Math.abs(x)/Math.SQRT2;
+  const t=1/(1+p*x);
+  const y=1-(((((a5*t+a4)*t+a3)*t+a2)*t+a1)*t)*Math.exp(-x*x);
+  return 0.5*(1+sign*y);
+}
+function normPDF(x) { return Math.exp(-0.5*x*x)/Math.sqrt(2*Math.PI); }
+
+function bsGreeks(S, K, T, r, sigma, tipo) {
+  if (T<=0||sigma<=0||S<=0||K<=0) return null;
+  const d1=(Math.log(S/K)+(r+0.5*sigma*sigma)*T)/(sigma*Math.sqrt(T));
+  const d2=d1-sigma*Math.sqrt(T);
+  const Nd1=normCDF(d1),Nd2=normCDF(d2),nd1=normPDF(d1),eRT=Math.exp(-r*T);
+  const isCall=tipo==='C';
+  const delta=isCall?Nd1:Nd1-1;
+  const gamma=nd1/(S*sigma*Math.sqrt(T));
+  const vega=S*nd1*Math.sqrt(T)/100;
+  const theta=isCall?(-(S*nd1*sigma)/(2*Math.sqrt(T))-r*K*eRT*Nd2)/365:(-(S*nd1*sigma)/(2*Math.sqrt(T))+r*K*eRT*(1-Nd2))/365;
+  const rho=isCall?K*T*eRT*Nd2/100:-K*T*eRT*(1-Nd2)/100;
+  const prob=isCall?Nd2:1-Nd2;
+  return {delta,gamma,vega,theta,rho,prob};
+}
+
+function getVI(strike, tipo) {
+  const K=parseFloat(strike); const ld=strikeLast[K];
+  if (!ld) return 0.60;
+  if (tipo==='C'&&ld.viCall&&ld.viCall>0.01) return ld.viCall;
+  if (tipo==='P'&&ld.viPut&&ld.viPut>0.01)  return ld.viPut;
+  if (ld.viCall&&ld.viCall>0.01) return ld.viCall;
+  if (ld.viPut&&ld.viPut>0.01)  return ld.viPut;
+  return 0.60;
+}
+
+function bsPrice(S, K, T, r, sigma, tipo) {
+  if (T<=0||sigma<=0) return 0;
+  const d1=(Math.log(S/K)+(r+0.5*sigma*sigma)*T)/(sigma*Math.sqrt(T));
+  const d2=d1-sigma*Math.sqrt(T); const eRT=Math.exp(-r*T);
+  if (tipo==='C') return S*normCDF(d1)-K*eRT*normCDF(d2);
+  return K*eRT*normCDF(-d2)-S*normCDF(-d1);
+}
+
+function calcularPayoffTeorico(S, v, optSize, undSize, spotActual, T, r) {
+  return v.reduce((total, p) => {
+    const K=parseFloat(p.strike),cant=parseInt(p.cant)||1,sz=p.tipo==='S'?undSize:optSize;
+    if (p.tipo==='S') return total+(S-K)*cant*sz;
+    const vi=getVI(K,p.tipo);
+    const prima=parseFloat(p.prima)||0;
+    const valorBS=T>0?bsPrice(S,K,T,r,vi,p.tipo):Math.max(p.tipo==='C'?S-K:K-S,0);
+    return total+(valorBS-prima)*cant*sz;
+  }, 0);
+}
+
+function calcularGriegas(v, S, r, T, optSize, undSize) {
+  let totDelta=0,totGamma=0,totVega=0,totTheta=0,totRho=0,probExito=null;
+  v.forEach(p => {
+    if (p.tipo==='S') { totDelta+=parseInt(p.cant)*undSize; return; }
+    const K=parseFloat(p.strike),cant=parseInt(p.cant),sz=optSize;
+    if (!K||!S||!T) return;
+    const vi=getVI(K,p.tipo),g=bsGreeks(S,K,T,r,vi,p.tipo);
+    if (!g) return;
+    totDelta+=g.delta*cant*sz; totGamma+=g.gamma*cant*sz;
+    totVega+=g.vega*cant*sz; totTheta+=g.theta*cant*sz; totRho+=g.rho*cant*sz;
+  });
+  const atmPata=v.filter(p=>p.tipo!=='S').sort((a,b)=>Math.abs(parseFloat(a.strike)-S)-Math.abs(parseFloat(b.strike)-S))[0];
+  if (atmPata) {
+    const vi=getVI(parseFloat(atmPata.strike),atmPata.tipo);
+    const g=bsGreeks(S,parseFloat(atmPata.strike),T,r,vi,atmPata.tipo);
+    if (g) probExito=atmPata.cant>0?g.prob:1-g.prob;
+  }
+  return {delta:totDelta,gamma:totGamma,vega:totVega,theta:totTheta,rho:totRho,prob:probExito};
+}
+
+function fmtG(n,dec=3) {
+  if (n===null||n===undefined||isNaN(n)) return '—';
+  return n.toLocaleString('es-AR',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+}
+
+function recalcular() {
+  const v=patas.filter(p=>p.strike!==''&&(p.tipo==='S'||p.prima!==''));
+  const optSize=parseFloat(document.getElementById('opt-size')?.value)||100;
+  const undSize=parseFloat(document.getElementById('und-size')?.value)||1;
+  if (!v.length) {
+    ['estrategia-label','stat-costo','stat-maxgan','stat-maxper','stat-pnl','breakevens']
+      .forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='—';});
+    if (payoffChart){payoffChart.destroy();payoffChart=null;}
+    return;
+  }
+  document.getElementById('estrategia-label').textContent=detectarEstrategia(patas);
+  const costoNeto=v.reduce((t,p)=>{
+    const prima=parseFloat(p.prima)||0,cant=parseInt(p.cant)||1,sz=p.tipo==='S'?undSize:optSize;
+    return t+prima*cant*sz;
+  },0);
+  const costoEl=document.getElementById('stat-costo');
+  costoEl.textContent=fmtARS(costoNeto);
+  costoEl.style.color=costoNeto>0?'var(--negative)':costoNeto<0?'var(--positive)':'var(--muted)';
+  const comAlyc2=parseFloat(document.getElementById('com-alyc')?.value)/100||0;
+  const comOtros2=parseFloat(document.getElementById('com-otros')?.value)/100||0;
+  function costosPataLocal(p) {
+    const prima=parseFloat(p.prima)||0,K=parseFloat(p.strike)||0,cant=Math.abs(parseInt(p.cant)||1);
+    if (p.tipo==='C'||p.tipo==='P'){const noc=prima*cant*optSize;return noc*0.0024+noc*(comAlyc2+comOtros2);}
+    else{const noc=K*cant*undSize;return noc*0.0008+noc*(comAlyc2+comOtros2);}
+  }
+  const costosTotalesPos=v.reduce((t,p)=>t+costosPataLocal(p),0);
+  const tienenLast=v.some(p=>p.last!==''&&!isNaN(parseFloat(p.last)));
+  const pnlEl=document.getElementById('stat-pnl');
+  if (tienenLast) {
+    const pnlBruto=calcularPnlVivo(v,optSize,undSize);
+    const pnlNeto=pnlBruto-costosTotalesPos;
+    pnlEl.textContent=fmtARS(pnlNeto);
+    pnlEl.style.color=pnlNeto>=0?'var(--positive)':'var(--negative)';
+  } else { pnlEl.textContent='—'; pnlEl.style.color='var(--muted)'; }
+
+  const strikes=v.map(p=>parseFloat(p.strike));
+  const spotInput=parseFloat(document.getElementById('spot-input').value)||spotGGAL||6600;
+  const rangoPct=parseFloat(document.getElementById('rango-pct')?.value)||30;
+  const centro=strikes.reduce((a,b)=>a+b,0)/strikes.length;
+  const sMin=Math.max(centro*(1-rangoPct/100),0),sMax=centro*(1+rangoPct/100);
+  const steps=300;
+  const precios=[],payoffs=[];
+  for(let i=0;i<=steps;i++){
+    const S=sMin+(sMax-sMin)*i/steps;
+    precios.push(S.toFixed(0)); payoffs.push(calcularPayoff(S,v,optSize,undSize));
+  }
+  const maxGan=Math.max(...payoffs),maxPer=Math.min(...payoffs);
+  const maxGanEl=document.getElementById('stat-maxgan'),maxPerEl=document.getElementById('stat-maxper');
+  maxGanEl.textContent=maxGan<1e9?fmtARS(maxGan):'∞';
+  maxPerEl.textContent=maxPer>-1e9?fmtARS(maxPer):'-∞';
+  maxGanEl.style.color=maxGan>=0?'var(--positive)':'var(--negative)';
+  maxPerEl.style.color='var(--negative)';
+  const bes=[];
+  for(let i=1;i<payoffs.length;i++){
+    if((payoffs[i-1]<0)!==(payoffs[i]<0)){
+      const t=-payoffs[i-1]/(payoffs[i]-payoffs[i-1]);
+      const S=(sMin+(sMax-sMin)*(i-1)/steps)+t*(sMax-sMin)/steps;
+      bes.push(`$${fmtARS(S)}`);
     }
-    const esHoy = Math.abs(p) < paso / 2;
-    const cVto = pnlNeto>=0?'#22c55e':'#ef4444';
-    const cTeo = pnlTeorico!==null?(pnlTeorico>=0?'#22c55e':'#ef4444'):'#505060';
-    const bg = esHoy ? 'background:#0d1800;' : '';
-    const bld = esHoy ? 'font-weight:700;' : '';
-    tablaHTML += `<tr style="${bg}${bld}border-bottom:1px solid #12121e;">
-      <td style="padding:2px 6px;font-family:Calibri,Arial;font-size:11px;color:${p<0?'#ef4444':p>0?'#22c55e':'#a0c4ff'};">${p>=0?'+':''}${p.toFixed(1)}%</td>
+  }
+  document.getElementById('breakevens').textContent=bes.length?bes.join(' · '):'—';
+
+  const posData=payoffs.map(v=>v>=0?v:null);
+  const negData=payoffs.map(v=>v<0?v:null);
+  if(payoffChart)payoffChart.destroy();
+  const ctx=document.getElementById('payoff-chart').getContext('2d');
+  const rBS=Math.log(1+0.40);
+  const viAjuste=graficoVIActual||0;
+  const usarSlider=graficoDiasActual!==null;
+  const calcCurvaDS=(dias,label,color,dash,width)=>({
+    label,data:precios.map(s=>{
+      const S=parseFloat(s),T_cur=Math.max(dias,0.5)/365;
+      return v.reduce((total,p)=>{
+        if(p.tipo==='S') return total+(S-parseFloat(p.strike))*parseInt(p.cant)*undSize;
+        const K=parseFloat(p.strike),cant=parseInt(p.cant),prima=parseFloat(p.prima)||0;
+        const viBase=getVI(K,p.tipo),vi=Math.max(0.01,viBase+viAjuste/100);
+        const valorBS=T_cur>0?bsPrice(S,K,T_cur,rBS,vi,p.tipo):Math.max(p.tipo==='C'?S-K:K-S,0);
+        return total+(valorBS-prima)*cant*optSize;
+      },0);
+    }),
+    borderColor:color,borderDash:dash,backgroundColor:'transparent',
+    tension:0.3,pointRadius:0,borderWidth:width,spanGaps:true,
+  });
+  let curvasDatasets;
+  if(usarSlider){
+    curvasDatasets=[calcCurvaDS(graficoDiasActual,`Teórico ${graficoDiasActual}d`,'#a78bfa',[],2.5)];
+  } else {
+    curvasDatasets=[
+      calcCurvaDS(Math.max(1,Math.round(diasVto*0.75)),`T-75%`,'#60a5fa',[5,3],1.5),
+      calcCurvaDS(Math.max(1,Math.round(diasVto*0.50)),`T-50%`,'#f59e0b',[5,3],1.5),
+      calcCurvaDS(Math.max(1,Math.round(diasVto*0.25)),`T-25%`,'#f87171',[5,3],1.5),
+      calcCurvaDS(1,'Hoy (teórico)','#a78bfa',[3,2],2),
+    ].filter((c,i,arr)=>arr.findIndex(x=>x.label===c.label)===i);
+  }
+  const spotIdx=precios.findIndex(p=>parseFloat(p)>=spotInput);
+  const spotLinePlugin={id:'spotLine',afterDraw(chart){
+    if(spotIdx<0) return;
+    const{ctx,chartArea,scales}=chart;
+    const x=scales.x.getPixelForValue(spotIdx);
+    ctx.save();ctx.setLineDash([4,4]);ctx.strokeStyle='#f59e0b';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(x,chartArea.top);ctx.lineTo(x,chartArea.bottom);ctx.stroke();
+    ctx.fillStyle='#f59e0b';ctx.font='bold 10px Calibri,Arial';
+    ctx.fillText(`$${spotInput.toFixed(0)}`,x+4,chartArea.top+12);ctx.restore();
+  }};
+  payoffChart=new Chart(ctx,{
+    type:'line',plugins:[spotLinePlugin],
+    data:{labels:precios,datasets:[...curvasDatasets,
+      {label:'P&L Vto (gan)',data:posData,borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,0.08)',fill:true,tension:0.1,pointRadius:0,borderWidth:2.5,spanGaps:false},
+      {label:'P&L Vto (pérd)',data:negData,borderColor:'#ef4444',backgroundColor:'rgba(239,68,68,0.08)',fill:true,tension:0.1,pointRadius:0,borderWidth:2.5,spanGaps:false}
+    ]},
+    options:{responsive:true,animation:false,
+      plugins:{legend:{display:true,position:'top',labels:{color:'#606070',font:{family:'Calibri,Arial',size:10},boxWidth:18,filter:item=>!['P&L Vto (gan)','P&L Vto (pérd)'].includes(item.text)}},
+        tooltip:{mode:'index',intersect:false,backgroundColor:'#0d0d18',titleColor:'#a0a0c0',bodyColor:'#ffffff',
+          callbacks:{title:c=>`GGAL: $${c[0].label}`,label:c=>c.raw!==null?`${c.dataset.label}: $${fmtARS(c.raw)}`:null,filter:i=>i.raw!==null}}},
+      scales:{x:{ticks:{maxTicksLimit:10,font:{family:'Calibri,Arial',size:10},color:'#505060'},grid:{color:'#1a1a2a'},border:{color:'#1a1a2a'}},
+              y:{ticks:{font:{family:'Calibri,Arial',size:10},color:'#505060'},grid:{color:'#1a1a2a'},border:{color:'#1a1a2a'}}}}
+  });
+
+  const T=diasVto/365,r=Math.log(1+0.40);
+  const grk=calcularGriegas(v,spotInput,r,T,optSize,undSize);
+  if(grk){
+    document.getElementById('gr-delta').textContent=fmtG(grk.delta,2);
+    document.getElementById('gr-gamma').textContent=fmtG(grk.gamma,4);
+    document.getElementById('gr-vega').textContent=fmtG(grk.vega,2);
+    document.getElementById('gr-theta').textContent=fmtG(grk.theta,2);
+    document.getElementById('gr-rho').textContent=fmtG(grk.rho,2);
+    document.getElementById('gr-prob').textContent=grk.prob!==null?(grk.prob*100).toFixed(1)+'%':'—';
+    document.getElementById('gr-delta').style.color=grk.delta>0?'#22c55e':grk.delta<0?'#ef4444':'#a0c4ff';
+    document.getElementById('gr-theta').style.color=grk.theta<0?'#ef4444':'#22c55e';
+  }
+
+  // Tabla de escenarios
+  const pasoTabla=2,varMin=-Math.round(rangoPct/pasoTabla)*pasoTabla,varMax=Math.round(rangoPct/pasoTabla)*pasoTabla;
+  const tasa_cf=parseFloat(document.getElementById('cf-tasa')?.value)/100||0.40;
+  const cf_monto=Math.abs(costoNeto)>0?costoNeto*(Math.pow(1+tasa_cf/365,diasVto)-1):0;
+  const pnlHistorial=operaciones.reduce((sum,op)=>sum+(op.pnlCierre||0),0);
+  let tablaHTML='';
+  for(let p=varMin;p<=varMax;p+=pasoTabla){
+    const precio=spotInput*(1+p/100);
+    const pnlBruto=calcularPayoff(precio,v,optSize,undSize);
+    const pnlNeto=pnlBruto-costosTotalesPos-cf_monto+pnlHistorial;
+    let pnlTeorico=null;
+    if(T>0){
+      const pnlBrutoTeo=calcularPayoffTeorico(precio,v,optSize,undSize,spotInput,T,r);
+      pnlTeorico=pnlBrutoTeo-costosTotalesPos-cf_monto+pnlHistorial;
+    }
+    const esHoy=p===0;
+    const cVto=pnlNeto>=0?'#22c55e':'#ef4444',cTeo=pnlTeorico!==null?(pnlTeorico>=0?'#22c55e':'#ef4444'):'#505060';
+    const bg=esHoy?'background:#0d1800;':'';const bld=esHoy?'font-weight:700;':'';
+    tablaHTML+=`<tr style="${bg}${bld}border-bottom:1px solid #12121e;">
+      <td style="padding:2px 6px;font-family:Calibri,Arial;font-size:11px;color:${p<0?'#ef4444':p>0?'#22c55e':'#a0c4ff'};">${p>0?'+':''}${p}%</td>
       <td style="padding:2px 6px;font-family:Calibri,Arial;font-size:11px;text-align:right;color:#c0c0d0;">${fmtARS(precio)}</td>
       <td style="padding:2px 6px;font-family:Calibri,Arial;font-size:11px;text-align:right;color:${cVto};">${fmtARS(pnlNeto)}</td>
       <td style="padding:2px 6px;font-family:Calibri,Arial;font-size:11px;text-align:right;color:${cTeo};">${pnlTeorico!==null?fmtARS(pnlTeorico):'—'}</td>
     </tr>`;
   }
-  document.getElementById('payoff-tabla-body').innerHTML = tablaHTML;
+  document.getElementById('payoff-tabla-body').innerHTML=tablaHTML;
 
-  // Actualizar Stats Superiores
-  const pnlActual = calcularPayoff(spotInput, v, optSize, undSize) - costosTotalesPos - cf_monto + pnlHistorial;
-  document.getElementById('stat-pnl').textContent = fmtARS(pnlActual);
-  document.getElementById('stat-pnl').style.color = pnlActual>=0?'var(--positive)':'var(--negative)';
-  
-  recalcularCF();
-  updatePayoffChart(v, spotInput, rangoPct, optSize, undSize, costosTotalesPos, cf_monto, pnlHistorial);
-  renderGreeks(v, spotInput, T, r, optSize, undSize);
-  document.getElementById('estrategia-label').textContent = detectarEstrategia(patas);
+  renderPosicion(v,spotInput,T,r,optSize,undSize);
+  recalcularCostos();
+  neutralizarGriegas(grk,spotInput,T,r,optSize);
+  setTimeout(recalcularCF,0);
+  renderPnlPatas(v,optSize,undSize);
+  calcularKelly();
+  actualizarSensVI();
+  renderCono(spotInput,T,optSize);
+  const simSlider=document.getElementById('sim-dias');
+  if(simSlider){simSlider.max=diasVto||365;simSlider.value=Math.min(parseInt(simSlider.value),diasVto||365);actualizarSimulador();}
 }
 
-// CAMBIO 4: guardarOperacion completa con Netting
-function guardarOperacion() {
-  const v = patas.filter(p => p.strike !== '' && (p.tipo === 'S' || p.prima !== ''));
-  if(!v.length) return alert('Ingresá al menos una pata válida');
-  const fecha = document.getElementById('op-fecha').value;
-  const nota = document.getElementById('op-nota').value;
-  const optSize = parseFloat(document.getElementById('opt-size').value)||100;
-  const undSize = parseFloat(document.getElementById('und-size').value)||1;
-  const tienenLast = v.some(p => p.last !== '' && !isNaN(parseFloat(p.last)));
-  let pnlCierre = null;
-  if(tienenLast){ pnlCierre = calcularPnlVivo(v, optSize, undSize); }
+function renderPosicion(v,S,T,r,optSize,undSize) {
+  const calls=v.filter(p=>p.tipo==='C'),puts=v.filter(p=>p.tipo==='P'),accs=v.filter(p=>p.tipo==='S');
+  function fila(p,tipo){
+    const K=parseFloat(p.strike),vi=tipo!=='S'?getVI(K,tipo):0;
+    const g=tipo!=='S'?bsGreeks(S,K,T,r,vi,tipo):null;
+    const delta=g?(g.delta*parseInt(p.cant)).toFixed(2):(parseInt(p.cant)).toFixed(2);
+    const dColor=parseFloat(delta)>0?'#22c55e':'#ef4444';
+    const cantColor=parseInt(p.cant)>0?'#22c55e':'#ef4444';
+    const prima=tipo==='S'?(parseFloat(p.last)||'—'):(parseFloat(p.prima)||'—');
+    const viStr=tipo!=='S'?(vi*100).toFixed(1)+'%':'—';
+    return `<tr style="border-bottom:1px solid #12121e;">
+      <td style="padding:2px 5px;color:#c0c0d0;font-family:Calibri,Arial;font-size:11px;">${K||'—'}</td>
+      <td style="padding:2px 5px;text-align:right;color:${cantColor};font-family:Calibri,Arial;font-size:11px;font-weight:700;">${parseInt(p.cant)>0?'+':''}${p.cant}</td>
+      <td style="padding:2px 5px;text-align:right;color:#a0a0c0;font-family:Calibri,Arial;font-size:11px;">${typeof prima==='number'?fmtARS(prima):prima}</td>
+      <td style="padding:2px 5px;text-align:right;color:#f59e0b;font-family:Calibri,Arial;font-size:11px;">${viStr}</td>
+      <td style="padding:2px 5px;text-align:right;color:${dColor};font-family:Calibri,Arial;font-size:11px;">${delta}</td>
+    </tr>`;
+  }
+  const emptyRow='<tr><td colspan="5" style="padding:3px 5px;color:#303030;font-size:11px;font-family:Calibri,Arial;">—</td></tr>';
+  document.getElementById('pos-calls').innerHTML=calls.length?calls.map(p=>fila(p,'C')).join(''):emptyRow;
+  document.getElementById('pos-puts').innerHTML=puts.length?puts.map(p=>fila(p,'P')).join(''):emptyRow;
+  document.getElementById('pos-acc').innerHTML=accs.length?accs.map(p=>fila(p,'S')).join(''):emptyRow;
+}
 
-  let msgCierre = '';
-  posicionesAbiertas.forEach((pos, posIdx) => {
-    pos.patas.forEach((pp, pataIdx) => {
-      v.forEach(np => {
-        if(pp.tipo === np.tipo && parseFloat(pp.strike) === parseFloat(np.strike)) {
-          const cantExis = parseInt(pp.cant), cantNueva = parseInt(np.cant);
-          if(Math.sign(cantExis) !== Math.sign(cantNueva)) {
-            const nuevaCant = cantExis + cantNueva;
-            msgCierre += `\n⚠️ Netting: ${np.tipo==='C'?'CALL':'PUT'} ${parseFloat(np.strike).toLocaleString('es-AR')} → ${cantExis>0?'+':''}${cantExis} + (${cantNueva>0?'+':''}${cantNueva}) = ${nuevaCant>0?'+':''}${nuevaCant||'CERRADO'}`;
-            if(nuevaCant === 0){
-              posicionesAbiertas[posIdx].patas.splice(pataIdx, 1);
-              if(posicionesAbiertas[posIdx].patas.length === 0){
-                posicionesAbiertas.splice(posIdx, 1);
-                msgCierre += ' ✅ Posición cerrada';
-              }
-            } else {
-              posicionesAbiertas[posIdx].patas[pataIdx].cant = nuevaCant;
-              msgCierre += ' (parcial)';
-            }
-          }
-        }
-      });
-    });
+function neutralizarGriegas(grk,S,T,r,optSize) {
+  const panel=document.getElementById('neutralizador-panel');
+  if(!grk||!S||!T){panel.innerHTML='<span style="color:#303050;font-family:Calibri,Arial;font-size:12px;">Cargá una posición.</span>';return;}
+  const K_atm=strikesDisponibles.length?strikesDisponibles.sort((a,b)=>Math.abs(a-S)-Math.abs(b-S))[0]:S;
+  const vi_c=getVI(K_atm,'C'),vi_p=getVI(K_atm,'P');
+  const gC=bsGreeks(S,K_atm,T,r,vi_c,'C'),gP=bsGreeks(S,K_atm,T,r,vi_p,'P');
+  if(!gC||!gP){panel.innerHTML='<span style="color:#303050;font-family:Calibri,Arial;">Sin datos.</span>';return;}
+  const UMBRAL=0.05,sugerencias=[];
+  if(Math.abs(grk.delta)>UMBRAL*optSize){
+    const cantC=-(grk.delta/(gC.delta*optSize));
+    const dirC=cantC>0?'Comprá':'Vendé';
+    sugerencias.push({griega:'Δ Delta',valor:fmtG(grk.delta,2),color:grk.delta>0?'#22c55e':'#ef4444',
+      opciones:[`${dirC} <b>${Math.abs(cantC).toFixed(1)} CALL ${K_atm.toLocaleString('es-AR')}</b> VI: ${(vi_c*100).toFixed(1)}%`]});
+  }
+  if(Math.abs(grk.gamma)>0.0001){
+    const cantC=-(grk.gamma/(gC.gamma*optSize));const dirC=cantC>0?'Comprá':'Vendé';
+    sugerencias.push({griega:'Γ Gamma',valor:fmtG(grk.gamma,4),color:grk.gamma>0?'#22c55e':'#ef4444',
+      opciones:[`${dirC} <b>${Math.abs(cantC).toFixed(1)} CALL ${K_atm.toLocaleString('es-AR')}</b>`]});
+  }
+  if(!sugerencias.length){panel.innerHTML='<span style="color:#22c55e;font-weight:700;font-family:Calibri,Arial;font-size:12px;">✓ Posición neutralizada.</span>';return;}
+  panel.innerHTML=`<div style="font-size:10px;color:#505060;margin-bottom:6px;font-family:Calibri,Arial;">ATM: <b style="color:#a0c4ff;">${K_atm.toLocaleString('es-AR')}</b></div>`
+    +sugerencias.map(s=>`<div style="margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #1a1a28;">
+      <span style="font-size:12px;font-weight:700;color:${s.color};font-family:Calibri,Arial;">${s.griega}: ${s.valor}</span>
+      <ul style="margin:3px 0 0;padding-left:14px;list-style:disc;">
+        ${s.opciones.map(o=>`<li style="color:#c0c0d0;font-size:11px;font-family:Calibri,Arial;">${o}</li>`).join('')}
+      </ul></div>`).join('');
+}
+
+function recalcularCostos() {
+  const v=patas.filter(p=>p.strike!==''&&(p.tipo==='S'||p.prima!==''));
+  const optSize=parseFloat(document.getElementById('opt-size')?.value)||100;
+  const undSize=parseFloat(document.getElementById('und-size')?.value)||1;
+  const comAlyc=parseFloat(document.getElementById('com-alyc')?.value)/100||0;
+  const comOtros=parseFloat(document.getElementById('com-otros')?.value)/100||0;
+  let derechos=0,nocionalComision=0;
+  v.forEach(p=>{
+    const K=parseFloat(p.strike)||0,prima=parseFloat(p.prima)||0,cant=Math.abs(parseInt(p.cant)||1);
+    if(p.tipo==='C'||p.tipo==='P'){const noc=prima*cant*optSize;derechos+=noc*0.0024;nocionalComision+=noc;}
+    else{const noc=K*cant*undSize;derechos+=noc*0.0008;nocionalComision+=noc;}
   });
-  localStorage.setItem('posiciones_abiertas', JSON.stringify(posicionesAbiertas));
+  const comision=nocionalComision*(comAlyc+comOtros),total=derechos+comision;
+  document.getElementById('costo-derechos').textContent=fmtARS(derechos);
+  document.getElementById('costo-comision').textContent=fmtARS(comision);
+  document.getElementById('costo-total').textContent=fmtARS(total);
+}
 
-  const nueva = {id:Date.now(), fecha, nota, optSize, undSize,
-    patas: JSON.parse(JSON.stringify(v)),
-    estrategia: detectarEstrategia(patas),
-    snapshotPnl: [{fecha: new Date().toISOString(), pnl: 0}]};
-  posicionesAbiertas.push(nueva);
-  localStorage.setItem('posiciones_abiertas', JSON.stringify(posicionesAbiertas));
-
-  const op = {id:Date.now(), fecha, nota, estrategia:detectarEstrategia(patas),
-    patas: JSON.parse(JSON.stringify(v)), optSize, undSize, pnlCierre};
+// ─── OPERACIONES ──────────────────────────────────────────────────────────────
+function guardarOperacion() {
+  const v=patas.filter(p=>p.strike!==''&&(p.tipo==='S'||p.prima!==''));
+  if(!v.length) return alert('Ingresá al menos una pata válida');
+  const fecha=document.getElementById('op-fecha').value;
+  const nota=document.getElementById('op-nota').value;
+  const optSize=parseFloat(document.getElementById('opt-size').value)||100;
+  const undSize=parseFloat(document.getElementById('und-size').value)||1;
+  const tienenLast=v.some(p=>p.last!==''&&!isNaN(parseFloat(p.last)));
+  let pnlCierre=null;
+  if(tienenLast){
+    const pnlBruto=calcularPnlVivo(v,optSize,undSize);
+    pnlCierre=pnlBruto;
+  }
+  const op={id:Date.now(),fecha,nota,estrategia:detectarEstrategia(patas),patas:JSON.parse(JSON.stringify(v)),optSize,undSize,pnlCierre};
   operaciones.unshift(op);
-  localStorage.setItem('pb_operaciones', JSON.stringify(operaciones));
+  localStorage.setItem('pb_operaciones',JSON.stringify(operaciones));
   renderOperaciones();
-
-  alert('✅ Operación guardada' + (pnlCierre!==null ? `\nPnL: $${fmtARS(pnlCierre)}` : '') + msgCierre);
-
-  const btnPos = document.querySelector('.nav-tab[onclick*="posicion"]');
-  showTab('posicion', btnPos);
+  alert('✅ Operación guardada'+(pnlCierre!==null?`\nPnL: ${fmtARS(pnlCierre)}`:''));
 }
 
-// ... Resto de funciones (detectarEstrategia, renderOperaciones, updateCharts, etc.)
-// Se asume que el resto del codigo original sigue aqui hasta cerrar el script y el body.
+function eliminarOp(id){operaciones=operaciones.filter(o=>o.id!==id);localStorage.setItem('pb_operaciones',JSON.stringify(operaciones));renderOperaciones();}
+function cargarOp(id){const op=operaciones.find(o=>o.id===id);if(!op)return;patas=op.patas.map(p=>({...p,id:pataId++}));document.getElementById('opt-size').value=op.optSize;document.getElementById('und-size').value=op.undSize;renderPatas();}
 
-// Ejemplo de cierre necesario:
-function showTab(tab, btn) {
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
+function renderOperaciones() {
+  const c=document.getElementById('op-lista');
+  if(!operaciones.length){c.innerHTML='<div style="color:var(--muted);font-size:12px;padding:10px;font-family:Calibri,Arial;">Sin operaciones guardadas.</div>';return;}
+  const pnlAcum=operaciones.reduce((s,o)=>s+(o.pnlCierre||0),0);
+  const hayPnl=operaciones.some(o=>o.pnlCierre!==null&&o.pnlCierre!==undefined);
+  let header='';
+  if(hayPnl){
+    const col=pnlAcum>=0?'#22c55e':'#ef4444';
+    header=`<div style="padding:7px 12px;border-bottom:1px solid var(--border);background:var(--bg3);display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-size:10px;font-weight:700;color:#606060;font-family:Calibri,Arial;text-transform:uppercase;letter-spacing:0.4px;">PnL acumulado</span>
+      <span style="font-size:14px;font-weight:800;color:${col};font-family:Calibri,Arial;">${fmtARS(pnlAcum)}</span>
+    </div>`;
+  }
+  c.innerHTML=header+operaciones.map(op=>{
+    const pnlStr=op.pnlCierre!==null&&op.pnlCierre!==undefined?`<span style="font-weight:700;color:${op.pnlCierre>=0?'#22c55e':'#ef4444'};font-family:Calibri,Arial;"> · PnL: ${fmtARS(op.pnlCierre)}</span>`:'';
+    return `<div style="padding:8px 12px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:8px;">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:12px;font-weight:600;font-family:Calibri,Arial;">${op.estrategia}${pnlStr}</div>
+        <div style="font-size:10px;color:var(--muted);font-family:Calibri,Arial;">${op.fecha||'Sin fecha'} · ${op.nota||''}</div>
+        <div style="font-size:10px;color:#444;margin-top:1px;font-family:Calibri,Arial;">${op.patas.map(p=>`${p.cant>0?'+':''}${p.cant} ${p.tipo}@${p.strike}`).join(' | ')}</div>
+      </div>
+      <div style="display:flex;gap:4px;flex-shrink:0;">
+        <button onclick="cargarOp(${op.id})" style="padding:3px 7px;font-size:10px;border:1px solid var(--border2);border-radius:3px;cursor:pointer;background:none;font-family:Calibri,Arial;color:var(--text);">Cargar</button>
+        <button onclick="eliminarOp(${op.id})" style="padding:3px 7px;font-size:10px;border:1px solid #3a0a0a;border-radius:3px;cursor:pointer;background:none;color:#ef4444;font-family:Calibri,Arial;">×</button>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-// Inicialización
-window.onload = () => {
-  // Simulación de carga inicial o llamada a API
-  document.getElementById('loader').style.display = 'none';
-  document.getElementById('tab-plaza').classList.add('active');
-  // agregarPata(); // Opcional
-};
+// ─── SLIDERS ──────────────────────────────────────────────────────────────────
+let graficoDiasActual=null,graficoVIActual=0;
+function onGraficoDiasChange(val){graficoDiasActual=parseInt(val);const l=document.getElementById('grafico-dias-label');if(l)l.textContent=`${graficoDiasActual}d`;recalcular();}
+function onGraficoVIChange(val){graficoVIActual=parseInt(val);const l=document.getElementById('grafico-vi-label');if(l)l.textContent=`${graficoVIActual>=0?'+':''}${graficoVIActual}%`;recalcular();}
+function sincronizarSliders(){
+  const s=document.getElementById('grafico-dias'),l=document.getElementById('grafico-dias-label');
+  if(s&&diasVto){s.max=diasVto;s.value=graficoDiasActual||diasVto;if(l)l.textContent=`${s.value}d`;}
+}
+
+// ─── MI POSICIÓN GRÁFICO ──────────────────────────────────────────────────────
+let posPayoffChart=null,posDiasActual=null,posVIActual=0;
+function onPosDiasChange(val){posDiasActual=parseInt(val);const l=document.getElementById('pos-dias-label');if(l)l.textContent=`${posDiasActual}d`;recalcularGraficoPosicion();}
+function onPosVIChange(val){posVIActual=parseInt(val);const l=document.getElementById('pos-vi-label');if(l)l.textContent=`${posVIActual>=0?'+':''}${posVIActual}%`;recalcularGraficoPosicion();}
+
+function recalcularGraficoPosicion() {
+  if(!posicionesAbiertas.length) return;
+  const todasPatas=[];
+  let optSizePrincipal=100,undSizePrincipal=1;
+  posicionesAbiertas.forEach(pos=>{
+    optSizePrincipal=pos.optSize||100;undSizePrincipal=pos.undSize||1;
+    pos.patas.forEach(p=>todasPatas.push({tipo:p.tipo,strike:p.strike,prima:p.prima,last:p.last,cant:p.cant}));
+  });
+  if(!todasPatas.length) return;
+  const spotInput=parseFloat(document.getElementById('pos-spot-input')?.value)||spotGGAL||6600;
+  const rangoPct=parseFloat(document.getElementById('pos-rango-pct')?.value)||30;
+  const diasSlider=posDiasActual||diasVto||37;
+  const viDelta=posVIActual||0;
+  const r=Math.log(1+0.40);
+  const sliderD=document.getElementById('pos-dias'),labelD=document.getElementById('pos-dias-label');
+  if(sliderD&&!posDiasActual){sliderD.max=diasVto||37;sliderD.value=diasVto||37;if(labelD)labelD.textContent=`${diasVto||37}d`;}
+  const strikes=todasPatas.map(p=>parseFloat(p.strike)).filter(Boolean);
+  const centro=strikes.reduce((a,b)=>a+b,0)/strikes.length;
+  const sMin=Math.max(centro*(1-rangoPct/100),0),sMax=centro*(1+rangoPct/100),steps=200;
+  const precios=[];
+  for(let i=0;i<=steps;i++) precios.push(sMin+(sMax-sMin)*i/steps);
+  const calcPnl=(S,dias)=>{
+    const T=Math.max(dias,0.5)/365;
+    return todasPatas.reduce((total,p)=>{
+      if(p.tipo==='S') return total+(S-parseFloat(p.strike))*parseInt(p.cant)*undSizePrincipal;
+      const K=parseFloat(p.strike),cant=parseInt(p.cant),prima=parseFloat(p.prima)||0;
+      const viBase=getVI(K,p.tipo),vi=Math.max(0.01,viBase+viDelta/100);
+      const valorBS=T>0?bsPrice(S,K,T,r,vi,p.tipo):Math.max(p.tipo==='C'?S-K:K-S,0);
+      return total+(valorBS-prima)*cant*optSizePrincipal;
+    },0);
+  };
+  const payoffsVto=precios.map(S=>calcPnl(S,0.5));
+  const posData=payoffsVto.map(v=>v>=0?v:null),negData=payoffsVto.map(v=>v<0?v:null);
+  const payoffsDias=precios.map(S=>calcPnl(S,diasSlider));
+  const curvasFijas=[
+    {pct:0.75,color:'#60a5fa',label:`T-75%`},{pct:0.50,color:'#f59e0b',label:`T-50%`},{pct:0.25,color:'#f87171',label:`T-25%`}
+  ].map(cf=>({label:cf.label,data:precios.map(S=>calcPnl(S,Math.max(1,Math.round((diasVto||37)*cf.pct)))),
+    borderColor:cf.color,backgroundColor:'transparent',borderDash:[5,3],tension:0.3,pointRadius:0,borderWidth:1.5,spanGaps:true}));
+  const labelsStr=precios.map(s=>s.toFixed(0));
+  const bes=[];
+  for(let i=1;i<payoffsVto.length;i++){
+    if((payoffsVto[i-1]<0)!==(payoffsVto[i]<0)){
+      const t=-payoffsVto[i-1]/(payoffsVto[i]-payoffsVto[i-1]);
+      bes.push(`$${fmtARS(precios[i-1]+t*(precios[i]-precios[i-1]))}`);
+    }
+  }
+  const statsEl=document.getElementById('pos-payoff-stats');
+  if(statsEl){const maxG=Math.max(...payoffsVto),maxP=Math.min(...payoffsVto);
+    statsEl.innerHTML=`Break-evens: <b style="color:#a0c4ff">${bes.length?bes.join(' · '):'—'}</b> · Máx gan: <b style="color:#22c55e">${maxG<1e9?'$'+fmtARS(maxG):'∞'}</b> · Máx pérd: <b style="color:#ef4444">${maxP>-1e9?'$'+fmtARS(maxP):'-∞'}</b>`;}
+  const spotIdx2=precios.findIndex(p=>p>=spotInput);
+  const spotLinePlugin2={id:'spotLine2',afterDraw(chart){
+    if(spotIdx2<0) return;
+    const{ctx,chartArea,scales}=chart;const x=scales.x.getPixelForValue(spotIdx2);
+    ctx.save();ctx.setLineDash([4,4]);ctx.strokeStyle='#f59e0b';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(x,chartArea.top);ctx.lineTo(x,chartArea.bottom);ctx.stroke();
+    ctx.fillStyle='#f59e0b';ctx.font='bold 10px Calibri,Arial';ctx.fillText(`$${fmtARS(spotInput)}`,x+4,chartArea.top+12);ctx.restore();
+  }};
+  const ctx=document.getElementById('pos-payoff-chart')?.getContext('2d');
+  if(!ctx) return;
+  if(posPayoffChart) posPayoffChart.destroy();
+  posPayoffChart=new Chart(ctx,{type:'line',plugins:[spotLinePlugin2],
+    data:{labels:labelsStr,datasets:[...curvasFijas,
+      {label:`Teórico (${diasSlider}d)`,data:payoffsDias,borderColor:'#a78bfa',backgroundColor:'rgba(167,139,250,0.06)',fill:true,tension:0.3,pointRadius:0,borderWidth:2.5,spanGaps:true},
+      {label:'Vto (gan)',data:posData,borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,0.08)',fill:true,tension:0.1,pointRadius:0,borderWidth:2.5,spanGaps:false},
+      {label:'Vto (pérd)',data:negData,borderColor:'#ef4444',backgroundColor:'rgba(239,68,68,0.08)',fill:true,tension:0.1,pointRadius:0,borderWidth:2.5,spanGaps:false}
+    ]},
+    options:{responsive:true,animation:false,
+      plugins:{legend:{display:true,position:'top',labels:{color:'#606070',font:{family:'Calibri,Arial',size:10},boxWidth:16,filter:item=>!['Vto (gan)','Vto (pérd)'].includes(item.text)}},
+        tooltip:{mode:'index',intersect:false,backgroundColor:'#0d0d18',bodyColor:'#fff',titleColor:'#a0a0c0',
+          callbacks:{title:c=>`GGAL: $${c[0].label}`,label:c=>c.raw!==null?`${c.dataset.label}: $${fmtARS(c.raw)}`:null,filter:i=>i.raw!==null}}},
+      scales:{x:{ticks:{maxTicksLimit:10,color:'#505060',font:{family:'Calibri,Arial',size:10}},grid:{color:'#0d0d18'}},
+              y:{ticks:{color:'#505060',font:{family:'Calibri,Arial',size:10},callback:v=>'$'+fmtARS(v)},grid:{color:'#0d0d18'}}}}
+  });
+}
+
+function agregarDesdeChain(tipo,strike,last) {
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelector('[onclick*="payoff"]').classList.add('active');
+  document.getElementById('tab-payoff').classList.add('active');
+  const id=patas.length?Math.max(...patas.map(p=>p.id))+1:1;
+  const lastVal=tipo==='C'?(strikeLast[strike]?.call||''):(strikeLast[strike]?.put||'');
+  const prima=strikeLast[strike]?.[tipo==='C'?'call':'put']||last||0;
+  patas.push({id,tipo,strike,prima,last:lastVal,cant:1});
+  renderPatas();
+  const toast=document.createElement('div');
+  toast.textContent=`✓ ${tipo==='C'?'CALL':'PUT'} ${strike.toLocaleString('es-AR')} agregado`;
+  toast.style.cssText='position:fixed;bottom:20px;right:20px;background:#22c55e;color:#000;padding:9px 16px;border-radius:4px;font-family:Calibri,Arial;font-weight:700;z-index:9999;font-size:12px;';
+  document.body.appendChild(toast);setTimeout(()=>toast.remove(),2000);
+}
+
+// ─── VOLATILITY DASHBOARD ─────────────────────────────────────────────────────
+let smileChart2=null,viHistChart=null;
+function renderVolatilityDashboard() {
+  if(!strikesDisponibles.length) return;
+  const strikes=[...strikesDisponibles].sort((a,b)=>a-b);
+  const viCalls=strikes.map(k=>strikeLast[k]?.viCall?strikeLast[k].viCall*100:null);
+  const viPuts=strikes.map(k=>strikeLast[k]?.viPut?strikeLast[k].viPut*100:null);
+  const ctx2=document.getElementById('smile-chart2')?.getContext('2d');
+  if(ctx2){
+    if(smileChart2) smileChart2.destroy();
+    smileChart2=new Chart(ctx2,{type:'line',
+      data:{labels:strikes.map(k=>k.toLocaleString('es-AR')),datasets:[
+        {label:'VI Calls',data:viCalls,borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,0.06)',tension:0.3,pointRadius:3,borderWidth:2,spanGaps:false},
+        {label:'VI Puts',data:viPuts,borderColor:'#ef4444',backgroundColor:'rgba(239,68,68,0.06)',tension:0.3,pointRadius:3,borderWidth:2,spanGaps:false}
+      ]},
+      options:{responsive:true,animation:false,
+        plugins:{legend:{labels:{color:'#606070',font:{family:'Calibri,Arial',size:11}}},tooltip:{backgroundColor:'#0d0d18',bodyColor:'#fff',callbacks:{label:c=>`${c.dataset.label}: ${c.raw?.toFixed(1)}%`}}},
+        scales:{x:{ticks:{maxTicksLimit:8,color:'#606070',font:{family:'Calibri,Arial',size:10}},grid:{color:'#1a1a1a'}},y:{ticks:{color:'#606070',font:{family:'Calibri,Arial',size:10},callback:v=>v+'%'},grid:{color:'#1a1a1a'}}}}
+    });
+  }
+  const atmK=strikes.sort((a,b)=>Math.abs(a-(spotGGAL||6600))-Math.abs(b-(spotGGAL||6600)))[0];
+  const viC_atm=strikeLast[atmK]?.viCall||0,viP_atm=strikeLast[atmK]?.viPut||0;
+  const skew=(viP_atm-viC_atm)*100;
+  const viAtmEl=document.getElementById('vi-atm-actual');
+  if(viAtmEl) viAtmEl.textContent=(viC_atm*100).toFixed(1)+'%';
+  const skewEl2=document.getElementById('smile-skew2');
+  if(skewEl2) skewEl2.innerHTML=`ATM: <b>${atmK?.toLocaleString('es-AR')}</b> · Call: <b style="color:#22c55e">${(viC_atm*100).toFixed(1)}%</b> · Put: <b style="color:#ef4444">${(viP_atm*100).toFixed(1)}%</b> · Skew P-C: <b style="color:${skew>0?'#ef4444':'#22c55e'}">${skew>=0?'+':''}${skew.toFixed(1)}%</b>`;
+  const skewPanel=document.getElementById('skew-panel');
+  if(skewPanel){
+    const otmCall=strikes.filter(k=>k>atmK).slice(2)[0],otmPut=strikes.filter(k=>k<atmK).reverse().slice(2)[0];
+    const viOtmC=otmCall?(strikeLast[otmCall]?.viCall||0)*100:0,viOtmP=otmPut?(strikeLast[otmPut]?.viPut||0)*100:0;
+    const rr=viOtmP-viOtmC,bf=viOtmP+viOtmC-2*(viC_atm*100);
+    skewPanel.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-family:Calibri,Arial;">
+      <div class="mini-stat"><div class="mini-stat-label">Risk Reversal</div><div class="mini-stat-val" style="color:${rr>0?'#ef4444':'#22c55e'};">${rr>=0?'+':''}${rr.toFixed(1)}%</div></div>
+      <div class="mini-stat"><div class="mini-stat-label">Butterfly</div><div class="mini-stat-val" style="color:#a0c4ff;">${bf>=0?'+':''}${bf.toFixed(1)}%</div></div>
+      <div class="mini-stat"><div class="mini-stat-label">VI mín</div><div class="mini-stat-val" style="color:#22c55e;">${Math.min(...[...viCalls,...viPuts].filter(Boolean)).toFixed(1)}%</div></div>
+      <div class="mini-stat"><div class="mini-stat-label">VI máx</div><div class="mini-stat-val" style="color:#ef4444;">${Math.max(...[...viCalls,...viPuts].filter(Boolean)).toFixed(1)}%</div></div>
+    </div>`;
+  }
+  const hist=JSON.parse(localStorage.getItem('vi_historico')||'[]');
+  const hoy=new Date().toISOString().split('T')[0];
+  if(!hist.find(h=>h.fecha===hoy)&&viC_atm>0){hist.push({fecha:hoy,vi:viC_atm*100});if(hist.length>252)hist.shift();localStorage.setItem('vi_historico',JSON.stringify(hist));}
+  if(hist.length>=5){
+    const vals=hist.map(h=>h.vi),minVI=Math.min(...vals),maxVI=Math.max(...vals),actual=viC_atm*100;
+    const rank=((actual-minVI)/(maxVI-minVI)*100).toFixed(0),pctile=(vals.filter(v=>v<=actual).length/vals.length*100).toFixed(0);
+    const rankEl=document.getElementById('vi-rank'),pctEl=document.getElementById('vi-percentile');
+    if(rankEl){rankEl.textContent=rank+'%';rankEl.style.color=rank>70?'#ef4444':rank>30?'#f59e0b':'#22c55e';}
+    if(pctEl){pctEl.textContent=pctile+'%';pctEl.style.color=pctile>70?'#ef4444':pctile>30?'#f59e0b':'#22c55e';}
+    const ctxH=document.getElementById('vi-historico-chart')?.getContext('2d');
+    if(ctxH){if(viHistChart)viHistChart.destroy();
+      viHistChart=new Chart(ctxH,{type:'line',
+        data:{labels:hist.map(h=>h.fecha.slice(5)),datasets:[{label:'VI ATM',data:vals,borderColor:'#a0c4ff',backgroundColor:'rgba(160,196,255,0.08)',tension:0.3,pointRadius:2,borderWidth:2}]},
+        options:{responsive:true,animation:false,plugins:{legend:{display:false}},
+          scales:{x:{ticks:{maxTicksLimit:8,color:'#606070',font:{family:'Calibri,Arial',size:10}},grid:{color:'#1a1a1a'}},y:{ticks:{color:'#606070',font:{family:'Calibri,Arial',size:10},callback:v=>v+'%'},grid:{color:'#1a1a1a'}}}}
+      });}
+  }
+  const volRealPanel=document.getElementById('vol-real-panel');
+  if(volRealPanel) volRealPanel.innerHTML='<span style="color:#505060;font-family:Calibri,Arial;">Se necesitan cierres diarios en el histórico.</span>';
+}
+
+// ─── MI POSICIÓN ──────────────────────────────────────────────────────────────
+let posicionesAbiertas=JSON.parse(localStorage.getItem('posiciones_abiertas')||'[]');
+let modalPatasCount=0,posPnlChart=null;
+
+function abrirModalPosicion(){
+  modalPatasCount=0;document.getElementById('modal-patas-container').innerHTML='';
+  document.getElementById('modal-fecha').value=new Date().toISOString().split('T')[0];
+  document.getElementById('modal-nota').value='';agregarPataModal();
+  document.getElementById('modal-posicion').style.display='flex';
+}
+function cerrarModal(){document.getElementById('modal-posicion').style.display='none';}
+function agregarPataModal(){
+  modalPatasCount++;const id=modalPatasCount;
+  const strikesOpts=strikesDisponibles.sort((a,b)=>a-b).map(s=>`<option value="${s}">${s.toLocaleString('es-AR')}</option>`).join('');
+  const div=document.createElement('div');
+  div.id=`modal-pata-${id}`;
+  div.style.cssText='display:grid;grid-template-columns:auto 1fr 1fr 1fr 1fr auto;gap:5px;margin-bottom:6px;align-items:center;';
+  div.innerHTML=`
+    <select onchange="syncModalLast(${id})" style="background:#0d0d18;color:var(--text);border:1px solid var(--border2);border-radius:3px;padding:4px;font-family:Calibri,Arial;font-size:12px;">
+      <option value="C">CALL</option><option value="P">PUT</option><option value="S">ACC</option>
+    </select>
+    <select id="modal-strike-${id}" onchange="syncModalLast(${id})" style="background:#0d0d18;color:var(--text);border:1px solid var(--border2);border-radius:3px;padding:4px;font-family:Calibri,Arial;font-size:12px;">
+      <option value="">-- Strike --</option>${strikesOpts}
+    </select>
+    <input type="number" id="modal-prima-${id}" placeholder="Prima">
+    <input type="number" id="modal-last-${id}" placeholder="Last" readonly style="color:#a0c4ff;">
+    <input type="number" id="modal-cant-${id}" value="1" placeholder="Cant">
+    <button onclick="document.getElementById('modal-pata-${id}').remove()" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:15px;">×</button>`;
+  document.getElementById('modal-patas-container').appendChild(div);
+}
+function syncModalLast(id){
+  const div=document.getElementById(`modal-pata-${id}`);if(!div) return;
+  const tipo=div.querySelector('select').value,strike=parseFloat(document.getElementById(`modal-strike-${id}`)?.value);
+  const lastEl=document.getElementById(`modal-last-${id}`);
+  if(strike&&strikeLast[strike]&&lastEl){
+    if(tipo==='C') lastEl.value=strikeLast[strike].call||'';
+    else if(tipo==='P') lastEl.value=strikeLast[strike].put||'';
+    else lastEl.value='';
+  }
+}
+function guardarPosicionModal(){
+  const fecha=document.getElementById('modal-fecha').value,nota=document.getElementById('modal-nota').value;
+  const optSize=parseFloat(document.getElementById('modal-optsize').value)||100;
+  const undSize=parseFloat(document.getElementById('modal-undsize').value)||1;
+  const patasModal=[];
+  document.querySelectorAll('[id^="modal-pata-"]').forEach(div=>{
+    const id=div.id.split('-')[2];
+    const tipo=div.querySelector('select').value,strike=parseFloat(document.getElementById(`modal-strike-${id}`)?.value);
+    const prima=parseFloat(document.getElementById(`modal-prima-${id}`)?.value)||0;
+    const last=parseFloat(document.getElementById(`modal-last-${id}`)?.value)||null;
+    const cant=parseInt(document.getElementById(`modal-cant-${id}`)?.value)||1;
+    if(strike) patasModal.push({tipo,strike,prima,last,cant});
+  });
+  if(!patasModal.length){alert('Agregá al menos una pata');return;}
+  const nueva={id:Date.now(),fecha,nota,optSize,undSize,patas:patasModal,estrategia:detectarEstrategia(patasModal),snapshotPnl:[{fecha:new Date().toISOString(),pnl:0}]};
+  posicionesAbiertas.push(nueva);localStorage.setItem('posiciones_abiertas',JSON.stringify(posicionesAbiertas));
+  cerrarModal();renderPosicionesAbiertas();
+}
+function cerrarPosicion(id){posicionesAbiertas=posicionesAbiertas.filter(p=>p.id!==id);localStorage.setItem('posiciones_abiertas',JSON.stringify(posicionesAbiertas));renderPosicionesAbiertas();}
+function cerrarTodasPosiciones(){if(confirm('¿Cerrar todas las posiciones?')){posicionesAbiertas=[];localStorage.setItem('posiciones_abiertas',JSON.stringify(posicionesAbiertas));renderPosicionesAbiertas();}}
+
+function renderPosicionesAbiertas(){
+  const tbody=document.getElementById('posiciones-body');if(!tbody) return;
+  const S=spotGGAL||6600,T=(diasVto||37)/365,r=Math.log(1+0.40);
+  let totDelta=0,totGamma=0,totTheta=0,totVega=0,totCapital=0,totPnl=0,html='';
+  posicionesAbiertas.forEach(pos=>{
+    const optSize=pos.optSize||100,undSize=pos.undSize||1;
+    let valorEntrada=0,valorActual=0,delta=0,gamma=0,theta=0,vega=0;
+    pos.patas.forEach(p=>{
+      const K=parseFloat(p.strike),cant=parseInt(p.cant)||1,sz=p.tipo==='S'?undSize:optSize;
+      const prima=parseFloat(p.prima)||0,vi=p.tipo!=='S'?getVI(K,p.tipo):0;
+      const g=p.tipo!=='S'?bsGreeks(S,K,T,r,vi,p.tipo):null;
+      const valorBS=p.tipo==='S'?S:(g?bsPrice(S,K,T,r,vi,p.tipo):prima);
+      valorEntrada+=prima*cant*sz;valorActual+=valorBS*cant*sz;
+      if(g){delta+=g.delta*cant*sz;gamma+=g.gamma*cant*sz;theta+=g.theta*cant*sz;vega+=g.vega*cant*sz;}
+      else if(p.tipo==='S') delta+=cant*sz;
+    });
+    const pnl=valorActual-valorEntrada;
+    totDelta+=delta;totGamma+=gamma;totTheta+=theta;totVega+=vega;totCapital+=Math.abs(valorEntrada);totPnl+=pnl;
+    const hoy2=new Date().toISOString().split('T')[0];
+    if(!pos.snapshotPnl.find(s=>s.fecha===hoy2)){pos.snapshotPnl.push({fecha:hoy2,pnl});localStorage.setItem('posiciones_abiertas',JSON.stringify(posicionesAbiertas));}
+    const cPnl=pnl>=0?'#22c55e':'#ef4444';
+    const diasAbierto=Math.round((Date.now()-new Date(pos.fecha).getTime())/(1000*60*60*24));
+    html+=`<tr style="border-bottom:1px solid #1a1a1a;">
+      <td style="font-family:Calibri,Arial;font-size:11px;color:#606070;">${pos.fecha}</td>
+      <td style="font-family:Calibri,Arial;font-size:12px;font-weight:700;">${pos.estrategia}</td>
+      <td style="font-family:Calibri,Arial;font-size:11px;color:#606070;">${pos.patas.map(p=>`${p.cant>0?'+':''}${p.cant} ${p.tipo}@${p.strike}`).join(' | ')}</td>
+      <td style="font-family:Calibri,Arial;font-size:12px;text-align:right;">${fmtARS(valorEntrada)}</td>
+      <td style="font-family:Calibri,Arial;font-size:12px;text-align:right;color:#a0c4ff;">${fmtARS(valorActual)}</td>
+      <td style="font-family:Calibri,Arial;font-size:12px;text-align:right;font-weight:700;color:${cPnl};">${fmtARS(pnl)}</td>
+      <td style="font-family:Calibri,Arial;font-size:11px;text-align:right;color:${delta>0?'#22c55e':'#ef4444'};">${delta.toFixed(2)}</td>
+      <td style="font-family:Calibri,Arial;font-size:11px;text-align:right;color:${theta<0?'#ef4444':'#22c55e'};">${theta.toFixed(2)}</td>
+      <td style="font-family:Calibri,Arial;font-size:11px;text-align:right;color:#f59e0b;">${vega.toFixed(2)}</td>
+      <td style="font-family:Calibri,Arial;font-size:11px;text-align:right;color:#606070;">${diasAbierto}d</td>
+      <td style="text-align:center;"><button onclick="cerrarPosicion(${pos.id})" style="padding:2px 7px;font-size:10px;border:1px solid #3a0a0a;border-radius:3px;cursor:pointer;background:none;color:#ef4444;font-family:Calibri,Arial;">Cerrar</button></td>
+    </tr>`;
+  });
+  tbody.innerHTML=html||'<tr><td colspan="11" style="padding:16px;text-align:center;color:#404040;font-family:Calibri,Arial;">No hay posiciones abiertas.</td></tr>';
+  const setEl=(id,val,color)=>{const el=document.getElementById(id);if(el){el.textContent=val;if(color)el.style.color=color;}};
+  setEl('pos-pnl-total',fmtARS(totPnl),totPnl>=0?'#22c55e':'#ef4444');
+  setEl('pos-delta-total',totDelta.toFixed(2));setEl('pos-gamma-total',totGamma.toFixed(4));
+  setEl('pos-theta-total',totTheta.toFixed(2),totTheta<0?'#ef4444':'#22c55e');
+  setEl('pos-vega-total',totVega.toFixed(2));setEl('pos-capital-total','$'+fmtARS(totCapital));
+  const hoy3=new Date().toISOString().split('T')[0],ayer=new Date(Date.now()-86400000).toISOString().split('T')[0];
+  let pnlDia=0;
+  posicionesAbiertas.forEach(pos=>{
+    const sA=pos.snapshotPnl.find(s=>s.fecha===ayer),sH=pos.snapshotPnl.find(s=>s.fecha===hoy3);
+    if(sA&&sH) pnlDia+=sH.pnl-sA.pnl;
+  });
+  setEl('pos-pnl-dia',fmtARS(pnlDia),pnlDia>=0?'#22c55e':'#ef4444');
+  renderPosPnlChart();
+}
+
+function renderPosPnlChart(){
+  const ctx=document.getElementById('pos-pnl-chart')?.getContext('2d');if(!ctx||!posicionesAbiertas.length) return;
+  const fechaMap={};
+  posicionesAbiertas.forEach(pos=>pos.snapshotPnl?.forEach(s=>{fechaMap[s.fecha]=(fechaMap[s.fecha]||0)+s.pnl;}));
+  const fechas=Object.keys(fechaMap).sort(),vals=fechas.map(f=>fechaMap[f]);
+  if(posPnlChart) posPnlChart.destroy();
+  posPnlChart=new Chart(ctx,{type:'line',
+    data:{labels:fechas,datasets:[{label:'P&L Total',data:vals,borderColor:'#a0c4ff',backgroundColor:'rgba(160,196,255,0.08)',tension:0.3,pointRadius:3,borderWidth:2,fill:true}]},
+    options:{responsive:true,animation:false,plugins:{legend:{display:false}},
+      scales:{x:{ticks:{maxTicksLimit:8,color:'#606070',font:{family:'Calibri,Arial',size:10}},grid:{color:'#1a1a1a'}},
+              y:{ticks:{color:'#606070',font:{family:'Calibri,Arial',size:10},callback:v=>'$'+fmtARS(v)},grid:{color:'#1a1a1a'}}}}
+  });
+}
+
+// ─── ANALYTICS ────────────────────────────────────────────────────────────────
+let equityChart=null,distribChart=null;
+function renderAnalytics(){
+  const ops=operaciones.filter(op=>op.pnlCierre!==null&&op.pnlCierre!==undefined);if(!ops.length) return;
+  const total=ops.length,wins=ops.filter(o=>o.pnlCierre>0).length,losses=ops.filter(o=>o.pnlCierre<0).length;
+  const winRate=(wins/total*100).toFixed(1),pnlTotal=ops.reduce((s,o)=>s+o.pnlCierre,0);
+  const ganTotal=ops.filter(o=>o.pnlCierre>0).reduce((s,o)=>s+o.pnlCierre,0);
+  const perTotal=Math.abs(ops.filter(o=>o.pnlCierre<0).reduce((s,o)=>s+o.pnlCierre,0));
+  const pf=perTotal>0?(ganTotal/perTotal).toFixed(2):'∞';
+  const best=Math.max(...ops.map(o=>o.pnlCierre)),worst=Math.min(...ops.map(o=>o.pnlCierre));
+  const setEl=(id,val,color)=>{const el=document.getElementById(id);if(el){el.textContent=val;if(color)el.style.color=color;}};
+  setEl('an-total',total);setEl('an-winrate',winRate+'%',parseFloat(winRate)>=50?'#22c55e':'#ef4444');
+  setEl('an-pf',pf,parseFloat(pf)>=1?'#22c55e':'#ef4444');setEl('an-pnl','$'+fmtARS(pnlTotal),pnlTotal>=0?'#22c55e':'#ef4444');
+  setEl('an-best','$'+fmtARS(best));setEl('an-worst','$'+fmtARS(worst));
+  const ctxE=document.getElementById('equity-chart')?.getContext('2d');
+  if(ctxE){if(equityChart)equityChart.destroy();
+    let acum=0;const eqData=ops.map(o=>{acum+=o.pnlCierre;return acum;});
+    equityChart=new Chart(ctxE,{type:'line',
+      data:{labels:ops.map((_,i)=>`#${i+1}`),datasets:[{label:'Equity',data:eqData,borderColor:'#a0c4ff',backgroundColor:'rgba(160,196,255,0.08)',tension:0.3,pointRadius:2,borderWidth:2,fill:true}]},
+      options:{responsive:true,animation:false,plugins:{legend:{display:false}},
+        scales:{x:{ticks:{maxTicksLimit:10,color:'#606070',font:{family:'Calibri,Arial',size:10}},grid:{color:'#1a1a1a'}},
+                y:{ticks:{color:'#606070',font:{family:'Calibri,Arial',size:10},callback:v=>'$'+fmtARS(v)},grid:{color:'#1a1a1a'}}}}
+    });}
+  const porEst={};ops.forEach(o=>{porEst[o.estrategia]=(porEst[o.estrategia]||0)+o.pnlCierre;});
+  const estEl=document.getElementById('an-por-estrategia');
+  if(estEl) estEl.innerHTML=Object.entries(porEst).sort((a,b)=>b[1]-a[1]).map(([k,v])=>
+    `<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #1a1a1a;font-family:Calibri,Arial;font-size:12px;">
+      <span style="color:#606070;">${k}</span><span style="font-weight:700;color:${v>=0?'#22c55e':'#ef4444'};">$${fmtARS(v)}</span></div>`).join('');
+  const ctxD=document.getElementById('distrib-chart')?.getContext('2d');
+  if(ctxD){if(distribChart)distribChart.destroy();
+    const bins=10,min2=worst,max2=best,step2=(max2-min2)/bins||1;
+    const counts=Array(bins).fill(0);
+    ops.forEach(o=>{const idx=Math.min(Math.floor((o.pnlCierre-min2)/step2),bins-1);counts[idx]++;});
+    distribChart=new Chart(ctxD,{type:'bar',
+      data:{labels:counts.map((_,i)=>'$'+fmtARS(min2+i*step2)),datasets:[{label:'Trades',data:counts,backgroundColor:counts.map((_,i)=>min2+i*step2>=0?'rgba(34,197,94,0.6)':'rgba(239,68,68,0.6)'),borderWidth:0}]},
+      options:{responsive:true,animation:false,plugins:{legend:{display:false}},
+        scales:{x:{ticks:{maxTicksLimit:6,color:'#606070',font:{family:'Calibri,Arial',size:9}},grid:{display:false}},
+                y:{ticks:{color:'#606070',font:{family:'Calibri,Arial',size:10}},grid:{color:'#1a1a1a'}}}}
+    });}
+  let rachaMax=0,rachaAct=0,rachaPerMax=0,rachaPerAct=0;
+  ops.forEach(o=>{if(o.pnlCierre>0){rachaAct++;rachaPerAct=0;rachaMax=Math.max(rachaMax,rachaAct);}else{rachaPerAct++;rachaAct=0;rachaPerMax=Math.max(rachaPerMax,rachaPerAct);}});
+  const promGan=wins>0?ganTotal/wins:0,promPer=losses>0?perTotal/losses:0;
+  const detEl=document.getElementById('an-stats-detalle');
+  if(detEl) detEl.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-family:Calibri,Arial;">
+    ${[['Gan. promedio','$'+fmtARS(promGan),'#22c55e'],['Pérd. promedio','-$'+fmtARS(promPer),'#ef4444'],
+       ['Racha gan. máx',rachaMax+' trades','#22c55e'],['Racha pérd. máx',rachaPerMax+' trades','#ef4444'],
+       ['Trades ganadores',wins,'#22c55e'],['Trades perdedores',losses,'#ef4444']]
+    .map(([l,v,c])=>`<div class="mini-stat"><div class="mini-stat-label">${l}</div><div class="mini-stat-val" style="color:${c};">${v}</div></div>`).join('')}</div>`;
+}
+
+// ─── PnL POR PATA ─────────────────────────────────────────────────────────────
+function renderPnlPatas(v,optSize,undSize){
+  const panel=document.getElementById('pnl-patas-panel');if(!panel) return;
+  const conLast=v.filter(p=>p.last!==''&&!isNaN(parseFloat(p.last)));
+  if(!conLast.length){panel.innerHTML='<span style="color:#303050;font-family:Calibri,Arial;font-size:12px;">Cargá prima y last.</span>';return;}
+  const comAlyc=parseFloat(document.getElementById('com-alyc')?.value)/100||0;
+  const comOtros=parseFloat(document.getElementById('com-otros')?.value)/100||0;
+  let html=`<table style="width:100%;border-collapse:collapse;font-family:Calibri,Arial;font-size:12px;">
+    <thead><tr style="border-bottom:1px solid #1a1a2a;">
+      <th style="padding:2px 6px;text-align:left;color:#505060;font-size:10px;font-weight:700;">Pata</th>
+      <th style="padding:2px 6px;text-align:right;color:#505060;font-size:10px;font-weight:700;">Cant.</th>
+      <th style="padding:2px 6px;text-align:right;color:#505060;font-size:10px;font-weight:700;">Prima</th>
+      <th style="padding:2px 6px;text-align:right;color:#505060;font-size:10px;font-weight:700;">Last</th>
+      <th style="padding:2px 6px;text-align:right;color:#505060;font-size:10px;font-weight:700;">PnL bruto</th>
+      <th style="padding:2px 6px;text-align:right;color:#505060;font-size:10px;font-weight:700;">Costos</th>
+      <th style="padding:2px 6px;text-align:right;color:#a0c4ff;font-size:10px;font-weight:700;">PnL neto</th>
+    </tr></thead><tbody>`;
+  let totalNeto=0;
+  v.forEach(p=>{
+    const prima=parseFloat(p.prima)||0,last=parseFloat(p.last),cant=parseInt(p.cant)||1,sz=p.tipo==='S'?undSize:optSize;
+    const costoBase=p.tipo==='S'?parseFloat(p.strike):prima;
+    const tieneL=!isNaN(last)&&p.last!=='';
+    const pnlBruto=tieneL?(last-costoBase)*cant*sz:null;
+    let costos=0;
+    if(p.tipo==='C'||p.tipo==='P'){const noc=prima*Math.abs(cant)*optSize;costos=noc*0.0024+noc*(comAlyc+comOtros);}
+    else{const noc=(parseFloat(p.strike)||0)*Math.abs(cant)*undSize;costos=noc*0.0008+noc*(comAlyc+comOtros);}
+    const pnlNeto=pnlBruto!==null?pnlBruto-costos:null;
+    if(pnlNeto!==null) totalNeto+=pnlNeto;
+    const label=p.tipo==='S'?`ACC @${p.strike}`:`${p.tipo==='C'?'CALL':'PUT'} ${parseFloat(p.strike).toLocaleString('es-AR')}`;
+    const cPnl=pnlNeto!==null?(pnlNeto>=0?'#22c55e':'#ef4444'):'#505060';
+    const cCant=cant>0?'#22c55e':'#ef4444';
+    html+=`<tr style="border-bottom:1px solid #12121e;">
+      <td style="padding:2px 6px;color:#c0c0d0;">${label}</td>
+      <td style="padding:2px 6px;text-align:right;color:${cCant};font-weight:700;">${cant>0?'+':''}${cant}</td>
+      <td style="padding:2px 6px;text-align:right;color:#a0a0c0;">${fmtARS(prima)}</td>
+      <td style="padding:2px 6px;text-align:right;color:#a0c4ff;">${tieneL?fmtARS(last):'—'}</td>
+      <td style="padding:2px 6px;text-align:right;color:${cPnl};">${pnlBruto!==null?fmtARS(pnlBruto):'—'}</td>
+      <td style="padding:2px 6px;text-align:right;color:#ef4444;">-${fmtARS(costos)}</td>
+      <td style="padding:2px 6px;text-align:right;color:${cPnl};font-weight:700;">${pnlNeto!==null?fmtARS(pnlNeto):'—'}</td>
+    </tr>`;
+  });
+  const cTotal=totalNeto>=0?'#22c55e':'#ef4444';
+  html+=`<tr style="border-top:1px solid #2a2a3a;font-weight:700;">
+    <td colspan="6" style="padding:3px 6px;color:#a0a0c0;">Total</td>
+    <td style="padding:3px 6px;text-align:right;color:${cTotal};">${fmtARS(totalNeto)}</td>
+  </tr></tbody></table>`;
+  panel.innerHTML=html;
+}
+
+// ─── SIMULADOR DE TIEMPO ──────────────────────────────────────────────────────
+let simChart=null;
+function actualizarSimulador(){
+  const slider=document.getElementById('sim-dias'),label=document.getElementById('sim-dias-label');
+  if(!slider) return;
+  const dias=parseInt(slider.value);label.textContent=`${dias} días`;
+  const v=patas.filter(p=>p.strike!==''&&(p.tipo==='S'||p.prima!==''));if(!v.length) return;
+  const optSize=parseFloat(document.getElementById('opt-size')?.value)||100;
+  const undSize=parseFloat(document.getElementById('und-size')?.value)||1;
+  const spotInput=parseFloat(document.getElementById('spot-input')?.value)||spotGGAL||6600;
+  const r=Math.log(1+0.40),T=dias/365;
+  const rangoPct=parseFloat(document.getElementById('rango-pct')?.value)||30;
+  const sMin=spotInput*(1-rangoPct/100),sMax=spotInput*(1+rangoPct/100),steps=60;
+  const precios=[],payoffs=[];
+  for(let i=0;i<=steps;i++){const S=sMin+(sMax-sMin)*i/steps;precios.push(S.toFixed(0));payoffs.push(calcularPayoffTeorico(S,v,optSize,undSize,spotInput,T,r));}
+  const posData=payoffs.map(v=>v>=0?v:null),negData=payoffs.map(v=>v<0?v:null);
+  const ctx=document.getElementById('sim-chart')?.getContext('2d');if(!ctx) return;
+  if(simChart) simChart.destroy();
+  simChart=new Chart(ctx,{type:'line',
+    data:{labels:precios,datasets:[
+      {label:'Gan.',data:posData,borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,0.08)',fill:true,tension:0.3,pointRadius:0,borderWidth:2,spanGaps:false},
+      {label:'Pérd.',data:negData,borderColor:'#ef4444',backgroundColor:'rgba(239,68,68,0.08)',fill:true,tension:0.3,pointRadius:0,borderWidth:2,spanGaps:false}
+    ]},
+    options:{responsive:true,animation:false,plugins:{legend:{display:false},
+      tooltip:{mode:'index',intersect:false,backgroundColor:'#0d0d18',bodyColor:'#fff',callbacks:{title:c=>`GGAL: $${c[0].label}`,label:c=>c.raw!==null?`P&L: $${fmtARS(c.raw)}`:null,filter:i=>i.raw!==null}}},
+      scales:{x:{ticks:{maxTicksLimit:7,color:'#505060',font:{family:'Calibri,Arial',size:11}},grid:{color:'#0d0d18'}},
+              y:{ticks:{color:'#505060',font:{family:'Calibri,Arial',size:11},callback:v=>'$'+fmtARS(v)},grid:{color:'#0d0d18'}}}}
+  });
+}
+
+// ─── SENSIBILIDAD VI ──────────────────────────────────────────────────────────
+function actualizarSensVI(){
+  const slider=document.getElementById('vi-slider'),label=document.getElementById('vi-slider-label'),tabla=document.getElementById('vi-sens-tabla');
+  if(!slider||!tabla) return;
+  const deltVI=parseInt(slider.value);
+  label.textContent=`${deltVI>=0?'+':''}${deltVI}%`;label.style.color=deltVI>0?'#22c55e':deltVI<0?'#ef4444':'#f59e0b';
+  const v=patas.filter(p=>p.strike!==''&&(p.tipo==='S'||p.prima!==''));if(!v.length){tabla.innerHTML='';return;}
+  const optSize=parseFloat(document.getElementById('opt-size')?.value)||100;
+  const undSize=parseFloat(document.getElementById('und-size')?.value)||1;
+  const spotInput=parseFloat(document.getElementById('spot-input')?.value)||spotGGAL||6600;
+  const r=Math.log(1+0.40),T=(diasVto||37)/365;
+  const variaciones=[-30,-20,-10,-5,0,5,10,20,30];
+  let html=`<table style="width:100%;border-collapse:collapse;font-family:Calibri,Arial;font-size:12px;">
+    <thead><tr style="border-bottom:1px solid #1a1a2a;">
+      <th style="padding:2px 5px;text-align:left;color:#505060;font-size:10px;font-weight:700;">Precio</th>
+      <th style="padding:2px 5px;text-align:right;color:#505060;font-size:10px;font-weight:700;">P&L base</th>
+      <th style="padding:2px 5px;text-align:right;color:#f59e0b;font-size:10px;font-weight:700;">VI adj.</th>
+      <th style="padding:2px 5px;text-align:right;color:#a0c4ff;font-size:10px;font-weight:700;">Dif.</th>
+    </tr></thead><tbody>`;
+  variaciones.forEach(pct=>{
+    const S=spotInput*(1+pct/100);
+    const pnlBase=calcularPayoffTeorico(S,v,optSize,undSize,spotInput,T,r);
+    const vMod=v.map(p=>({...p,_viOverride:p.tipo!=='S'?Math.max(0.01,getVI(parseFloat(p.strike),p.tipo)+deltVI/100):0}));
+    const pnlMod=vMod.reduce((total,p)=>{
+      if(p.tipo==='S') return total+(S-parseFloat(p.strike))*parseInt(p.cant)*undSize;
+      const K=parseFloat(p.strike),cant=parseInt(p.cant),prima=parseFloat(p.prima)||0;
+      const valorBS=T>0?bsPrice(S,K,T,r,p._viOverride,p.tipo):Math.max(p.tipo==='C'?S-K:K-S,0);
+      return total+(valorBS-prima)*cant*optSize;
+    },0);
+    const diff=pnlMod-pnlBase,esHoy=pct===0;
+    const bg=esHoy?'background:#0d1800;':'',bld=esHoy?'font-weight:700;':'';
+    html+=`<tr style="${bg}${bld}border-bottom:1px solid #12121e;">
+      <td style="padding:2px 5px;color:${pct<0?'#ef4444':pct>0?'#22c55e':'#a0c4ff'};font-size:11px;">${pct>0?'+':''}${pct}% · ${fmtARS(S)}</td>
+      <td style="padding:2px 5px;text-align:right;color:${pnlBase>=0?'#22c55e':'#ef4444'};font-size:11px;">${fmtARS(pnlBase)}</td>
+      <td style="padding:2px 5px;text-align:right;color:${pnlMod>=0?'#22c55e':'#ef4444'};font-size:11px;">${fmtARS(pnlMod)}</td>
+      <td style="padding:2px 5px;text-align:right;color:${diff>=0?'#22c55e':'#ef4444'};font-size:11px;">${diff>=0?'+':''}${fmtARS(diff)}</td>
+    </tr>`;
+  });
+  tabla.innerHTML=html+'</tbody></table>';
+}
+
+// ─── KELLY ────────────────────────────────────────────────────────────────────
+function calcularKelly(){
+  const panel=document.getElementById('kelly-resultado');if(!panel) return;
+  const v=patas.filter(p=>p.strike!==''&&(p.tipo==='S'||p.prima!==''));
+  if(!v.length){panel.innerHTML='<span style="color:#303050;font-family:Calibri,Arial;font-size:12px;">Cargá una posición.</span>';return;}
+  const capitalTotal=parseFloat(document.getElementById('kelly-capital')?.value)||1000000;
+  const fraccion=parseFloat(document.getElementById('kelly-frac')?.value)||0.5;
+  const optSize=parseFloat(document.getElementById('opt-size')?.value)||100;
+  const spotInput=parseFloat(document.getElementById('spot-input')?.value)||spotGGAL||6600;
+  const T=(diasVto||37)/365,r=Math.log(1+0.40);
+  const atmPata=v.filter(p=>p.tipo!=='S').sort((a,b)=>Math.abs(parseFloat(a.strike)-spotInput)-Math.abs(parseFloat(b.strike)-spotInput))[0];
+  let prob=0.5;
+  if(atmPata){const vi=getVI(parseFloat(atmPata.strike),atmPata.tipo);const g=bsGreeks(spotInput,parseFloat(atmPata.strike),T,r,vi,atmPata.tipo);if(g)prob=parseInt(atmPata.cant)>0?g.prob:1-g.prob;}
+  const steps=200,sMin=spotInput*0.5,sMax=spotInput*1.5;
+  let maxGan=-Infinity,maxPer=Infinity;
+  for(let i=0;i<=steps;i++){const S=sMin+(sMax-sMin)*i/steps;const pnl=calcularPayoff(S,v,optSize,1);if(pnl>maxGan)maxGan=pnl;if(pnl<maxPer)maxPer=pnl;}
+  maxGan=Math.max(maxGan,0);const maxPer_abs=Math.abs(Math.min(maxPer,0));
+  if(maxPer_abs===0){panel.innerHTML='<span style="color:#22c55e;font-family:Calibri,Arial;">Riesgo ilimitado.</span>';return;}
+  const b=maxGan/maxPer_abs,q=1-prob,kellyFull=Math.max(0,(prob*b-q)/b),kellyFrac=kellyFull*fraccion;
+  const capitalSugerido=capitalTotal*kellyFrac,contratosMax=maxPer_abs>0?Math.floor(capitalSugerido/maxPer_abs):0;
+  panel.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
+    <div class="greek-box"><div class="greek-label">P. Éxito</div><div class="greek-val" style="color:#22c55e;">${(prob*100).toFixed(1)}%</div></div>
+    <div class="greek-box"><div class="greek-label">Kelly ${fraccion===1?'Full':fraccion===0.5?'Half':'Quarter'}</div><div class="greek-val" style="color:#f59e0b;">${(kellyFrac*100).toFixed(1)}%</div></div>
+    <div class="greek-box"><div class="greek-label">Capital sugerido</div><div class="greek-val" style="color:#a0c4ff;">$${fmtARS(capitalSugerido)}</div></div>
+  </div>
+  <div style="margin-top:6px;padding:6px 8px;background:#0d0d18;border-radius:3px;font-size:11px;color:#606070;font-family:Calibri,Arial;">
+    Ratio B: <b style="color:#e0e0e0;">${b.toFixed(2)}</b> · Máx gan: <b style="color:#22c55e;">$${fmtARS(maxGan)}</b> · Máx pérd: <b style="color:#ef4444;">$${fmtARS(maxPer_abs)}</b> · Contratos: <b style="color:#a0c4ff;">${contratosMax}</b>
+  </div>`;
+}
+
+// ─── VOLATILITY SMILE ─────────────────────────────────────────────────────────
+let smileChart=null;
+function renderSmile(){
+  const ctx=document.getElementById('smile-chart')?.getContext('2d');const skewEl=document.getElementById('smile-skew');
+  if(!ctx||!strikesDisponibles.length) return;
+  const strikes=[...strikesDisponibles].sort((a,b)=>a-b);
+  const viCalls=strikes.map(k=>{const vi=strikeLast[k]?.viCall;return vi?vi*100:null;});
+  const viPuts=strikes.map(k=>{const vi=strikeLast[k]?.viPut;return vi?vi*100:null;});
+  if(smileChart) smileChart.destroy();
+  smileChart=new Chart(ctx,{type:'line',
+    data:{labels:strikes.map(k=>k.toLocaleString('es-AR')),datasets:[
+      {label:'VI Calls',data:viCalls,borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,0.08)',tension:0.3,pointRadius:3,borderWidth:2,spanGaps:false},
+      {label:'VI Puts',data:viPuts,borderColor:'#ef4444',backgroundColor:'rgba(239,68,68,0.08)',tension:0.3,pointRadius:3,borderWidth:2,spanGaps:false}
+    ]},
+    options:{responsive:true,animation:false,
+      plugins:{legend:{display:true,labels:{color:'#606070',font:{family:'Calibri,Arial',size:11}}},tooltip:{backgroundColor:'#0d0d18',bodyColor:'#fff',callbacks:{label:c=>`${c.dataset.label}: ${c.raw?.toFixed(1)}%`}}},
+      scales:{x:{ticks:{maxTicksLimit:8,color:'#505060',font:{family:'Calibri,Arial',size:10}},grid:{color:'#0d0d18'}},y:{ticks:{color:'#505060',font:{family:'Calibri,Arial',size:10},callback:v=>v+'%'},grid:{color:'#0d0d18'}}}}
+  });
+  if(skewEl){
+    const atmK=strikesDisponibles.length?strikesDisponibles.sort((a,b)=>Math.abs(a-(spotGGAL||6600))-Math.abs(b-(spotGGAL||6600)))[0]:null;
+    const viC_atm=atmK?(strikeLast[atmK]?.viCall||0)*100:0,viP_atm=atmK?(strikeLast[atmK]?.viPut||0)*100:0;
+    const skew=viP_atm-viC_atm;
+    skewEl.innerHTML=`ATM ${atmK?.toLocaleString('es-AR')} · Call: <b style="color:#22c55e">${viC_atm.toFixed(1)}%</b> · Put: <b style="color:#ef4444">${viP_atm.toFixed(1)}%</b> · Skew: <b style="color:${skew>0?'#ef4444':'#22c55e'}">${skew>=0?'+':''}${skew.toFixed(1)}%</b>`;
+  }
+}
+
+// ─── CONO DE VOLATILIDAD ──────────────────────────────────────────────────────
+function renderCono(spotInput,T,optSize){
+  const el=document.getElementById('cono-info');if(!el||!spotInput||!T) return;
+  const atmK=strikesDisponibles.length?strikesDisponibles.sort((a,b)=>Math.abs(a-spotInput)-Math.abs(b-spotInput))[0]:null;
+  const vi=atmK?getVI(atmK,'C'):0.60;
+  const sigma1=spotInput*vi*Math.sqrt(T),sigma2=sigma1*2;
+  const s1U=spotInput+sigma1,s1D=spotInput-sigma1,s2U=spotInput+sigma2,s2D=spotInput-sigma2;
+  const p1U=((s1U/spotInput-1)*100).toFixed(1),p1D=((s1D/spotInput-1)*100).toFixed(1);
+  const p2U=((s2U/spotInput-1)*100).toFixed(1),p2D=((s2D/spotInput-1)*100).toFixed(1);
+  el.innerHTML=`<div style="font-family:Calibri,Arial;font-size:11px;color:#606070;margin-bottom:6px;">VI ATM: <b style="color:#f59e0b">${(vi*100).toFixed(1)}%</b> · Spot: <b style="color:#a0c4ff">$${fmtARS(spotInput)}</b> · Días: <b style="color:#a0c4ff">${Math.round(T*365)}</b></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;font-family:Calibri,Arial;">
+      <div class="greek-box"><div class="greek-label">1σ (68%)</div><div style="font-size:12px;font-weight:700;color:#22c55e;">+${p1U}% · $${fmtARS(s1U)}</div><div style="font-size:12px;font-weight:700;color:#ef4444;">${p1D}% · $${fmtARS(s1D)}</div></div>
+      <div class="greek-box"><div class="greek-label">2σ (95%)</div><div style="font-size:12px;font-weight:700;color:#22c55e;">+${p2U}% · $${fmtARS(s2U)}</div><div style="font-size:12px;font-weight:700;color:#ef4444;">${p2D}% · $${fmtARS(s2D)}</div></div>
+      <div class="greek-box"><div class="greek-label">Mov. diario 1σ</div><div style="font-size:13px;font-weight:700;color:#a0c4ff;">±$${fmtARS(spotInput*vi/Math.sqrt(365))}</div><div style="font-size:11px;color:#606070;">±${(vi/Math.sqrt(365)*100).toFixed(2)}%/día</div></div>
+    </div>`;
+}
 </script>
 </body>
 </html>
