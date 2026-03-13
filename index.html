@@ -405,7 +405,18 @@
           <div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
               <span style="font-size:9px;color:#505060;font-family:var(--font);text-transform:uppercase;letter-spacing:0.4px;font-weight:700;">📊 Ajuste VI</span>
-              <span id="grafico-vi-label" style="font-size:12px;font-weight:700;color:#f59e0b;font-family:var(--font);">±0%</span>
+             <div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
+    <span style="font-size:9px;color:#505060;font-family:var(--font);text-transform:uppercase;letter-spacing:0.4px;font-weight:700;">📊 VI real del mercado</span>
+    <span id="grafico-vi-label" style="font-size:12px;font-weight:700;color:#f59e0b;font-family:var(--font);">Auto</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:6px;">
+    <span style="font-size:9px;color:#303050;font-family:var(--font);">0%</span>
+    <input type="range" id="grafico-vi" min="0" max="120" value="0" step="1" style="flex:1;accent-color:#f59e0b;height:3px;" oninput="onGraficoVIChange(this.value)">
+    <span style="font-size:9px;color:#303050;font-family:var(--font);">120%</span>
+  </div>
+  <div style="font-size:9px;color:#404050;font-family:var(--font);margin-top:2px;">0 = VI real de la cadena por strike</div>
+</div>
             </div>
             <div style="display:flex;align-items:center;gap:6px;">
               <span style="font-size:9px;color:#303050;font-family:var(--font);">-50%</span>
