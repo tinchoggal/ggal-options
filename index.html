@@ -856,11 +856,11 @@ function renderPatas() {
              <option value="">-- Strike --</option>
              ${strikesDisponibles.sort((a,b)=>a-b).map(s=>`<option value="${s}" ${parseFloat(p.strike)===s?'selected':''}>${s.toLocaleString('es-AR')}</option>`).join('')}
            </select>`
-        : `<input type="number" placeholder="Strike" value="${p.strike}" oninput="updatePata(${p.id},'strike',this.value)">`;
+        : `<input type="number" placeholder="Strike" ${p.strike !== '' ? `value="${p.strike}"` : ''} oninput="updatePata(${p.id},'strike',this.value)">`;
 
     const primaField = esAccion
       ? `<input type="number" disabled placeholder="—" style="background:#f0f0f4;color:#bbb;">`
-      : `<input type="number" placeholder="Prima" value="${p.prima}" oninput="updatePata(${p.id},'prima',this.value)">`;
+      : `<input type="number" placeholder="Prima" ${p.prima !== '' ? `value="${p.prima}"` : ''} oninput="updatePata(${p.id},'prima',this.value)">`;
 
     return `
     <div class="pata-row" id="pata-${p.id}">
@@ -871,7 +871,7 @@ function renderPatas() {
       </select>
       ${strikeField}
       ${primaField}
-      <input type="number" placeholder="Last" value="${p.last}" oninput="updatePata(${p.id},'last',this.value)" style="background:#1a1a2e;color:#a0c4ff;">
+      <input type="number" placeholder="Last" ${p.last !== '' ? `${p.last !== '' ? `value="${p.last}"` : ''}` : ''} oninput="updatePata(${p.id},'last',this.value)" style="background:#1a1a2e;color:#a0c4ff;">
       <input type="number" class="cant-input" placeholder="1" value="${p.cant}" oninput="updatePata(${p.id},'cant',this.value)" step="1">
       <button class="btn-remove" onclick="eliminarPata(${p.id})">×</button>
     </div>`
