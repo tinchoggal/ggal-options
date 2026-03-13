@@ -8,73 +8,40 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
-    --bg: #f5f5f7;
-    --white: #ffffff;
-    --border: #e2e2e6;
-    --border-light: #f0f0f4;
-    --text: #111118;
-    --muted: #8888a0;
-    --accent: #d4581a;
-    --accent-light: #fff4ee;
-    --positive: #16a34a;
-    --negative: #dc2626;
-    --blue: #2563eb;
+    --bg: #f5f5f7; --white: #ffffff; --border: #e2e2e6; --border-light: #f0f0f4;
+    --text: #111118; --muted: #8888a0; --accent: #d4581a; --accent-light: #fff4ee;
+    --positive: #16a34a; --negative: #dc2626; --blue: #2563eb;
     --shadow: 0 1px 3px rgba(0,0,0,0.07);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:var(--bg); color:var(--text); font-family:'Calibri','Inter',sans-serif; font-size:13px; }
-
-  header {
-    background:var(--white); border-bottom:1px solid var(--border);
-    position:sticky; top:0; z-index:100; box-shadow:var(--shadow);
-  }
-  .header-inner {
-    max-width:1500px; margin:0 auto; padding:0 28px;
-    height:62px; display:flex; align-items:center; justify-content:space-between;
-  }
+  header { background:var(--white); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; box-shadow:var(--shadow); }
+  .header-inner { max-width:1500px; margin:0 auto; padding:0 28px; height:62px; display:flex; align-items:center; justify-content:space-between; }
   .logo { display:flex; align-items:center; gap:10px; }
-  .logo-icon {
-    width:34px; height:34px; background:var(--accent); border-radius:8px;
-    display:flex; align-items:center; justify-content:center;
-    color:white; font-weight:700; font-size:13px; letter-spacing:-0.5px;
-  }
+  .logo-icon { width:34px; height:34px; background:var(--accent); border-radius:8px; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:13px; }
   .logo-title { font-size:15px; font-weight:700; }
   .logo-title span { color:var(--accent); }
   .logo-sub { font-size:10px; color:var(--muted); margin-top:1px; }
-
   .nav-tabs { display:flex; gap:2px; }
-  .nav-tab {
-    padding:7px 15px; font-size:12px; font-weight:500;
-    color:var(--muted); cursor:pointer; border:none; background:none;
-    border-radius:6px; font-family:'Inter',sans-serif; transition:all 0.15s;
-  }
+  .nav-tab { padding:7px 15px; font-size:12px; font-weight:500; color:var(--muted); cursor:pointer; border:none; background:none; border-radius:6px; font-family:'Inter',sans-serif; transition:all 0.15s; }
   .nav-tab:hover { background:var(--bg); color:var(--text); }
   .nav-tab.active { background:var(--accent-light); color:var(--accent); font-weight:600; }
-
   .header-right { display:flex; align-items:center; gap:24px; }
   .stat-block { text-align:right; }
   .stat-label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; font-weight:500; }
   .stat-value { font-size:22px; font-weight:700; font-family:'DM Mono',monospace; line-height:1.1; }
-  .live-pill {
-    display:flex; align-items:center; gap:6px; background:var(--accent-light);
-    color:var(--accent); font-size:10px; font-weight:600;
-    padding:5px 10px; border-radius:20px; letter-spacing:0.5px;
-  }
+  .live-pill { display:flex; align-items:center; gap:6px; background:var(--accent-light); color:var(--accent); font-size:10px; font-weight:600; padding:5px 10px; border-radius:20px; letter-spacing:0.5px; }
   .live-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); animation:blink 2s infinite; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
   .update-time { font-size:10px; color:var(--muted); margin-top:3px; text-align:right; }
-
   .container { max-width:1500px; margin:0 auto; padding:20px 28px; }
-
   .loader { display:flex; flex-direction:column; align-items:center; padding:80px; gap:14px; }
   .loader-bar { width:180px; height:3px; background:var(--border); border-radius:3px; overflow:hidden; }
   .loader-fill { height:100%; background:var(--accent); animation:load 1.4s ease infinite; }
   @keyframes load { 0%{width:0;margin-left:0} 50%{width:60%;margin-left:20%} 100%{width:0;margin-left:100%} }
   .loader-text { font-size:12px; color:var(--muted); }
-
   .tab-content { display:none; }
   .tab-content.active { display:block; }
-
   .plaza-wrap { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
   .card { background:var(--white); border:1px solid var(--border); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); }
   .card-header { padding:12px 16px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
@@ -82,39 +49,16 @@
   .calls-title { color:var(--positive); }
   .puts-title { color:var(--negative); }
   .card-sub { font-size:10px; color:var(--muted); }
-
   table { width:100%; border-collapse:collapse; }
-  th {
-    padding:7px 12px; text-align:right; font-size:10px; font-weight:500;
-    color:var(--muted); letter-spacing:0.5px; text-transform:uppercase;
-    background:#fafafa; border-bottom:1px solid var(--border);
-  }
+  th { padding:7px 12px; text-align:right; font-size:10px; font-weight:500; color:var(--muted); letter-spacing:0.5px; text-transform:uppercase; background:#fafafa; border-bottom:1px solid var(--border); }
   th:first-child { text-align:left; }
-  td {
-    padding:6px 12px; text-align:right;
-    border-bottom:1px solid var(--border-light);
-    font-family:'DM Mono',monospace; font-size:12px;
-  }
+  td { padding:6px 12px; text-align:right; border-bottom:1px solid var(--border-light); font-family:'DM Mono',monospace; font-size:12px; }
   td:first-child { text-align:left; font-family:'Inter',sans-serif; color:var(--muted); font-size:11px; }
   tr:last-child td { border-bottom:none; }
   tr:hover td { background:#fafafa; }
-  .atm td { background:var(--accent-light) !important; }
-  .atm td:nth-child(2) { color:var(--accent); font-weight:600; }
-
-  .bid { color:var(--blue); }
-  .ask { color:var(--negative); }
-  .last-val { color:var(--text); font-weight:600; }
-  .empty { color:#ccc; }
-  .pos { color:var(--positive); font-weight:500; }
-  .neg { color:var(--negative); font-weight:500; }
-  .neu { color:var(--muted); }
-
-  .section-label {
-    font-size:11px; font-weight:600; color:var(--muted);
-    letter-spacing:1px; text-transform:uppercase;
-    padding-bottom:12px; margin-bottom:16px;
-    border-bottom:1px solid var(--border);
-  }
+  .bid { color:var(--blue); } .ask { color:var(--negative); } .last-val { color:var(--text); font-weight:600; }
+  .empty { color:#ccc; } .pos { color:var(--positive); font-weight:500; } .neg { color:var(--negative); font-weight:500; } .neu { color:var(--muted); }
+  .section-label { font-size:11px; font-weight:600; color:var(--muted); letter-spacing:1px; text-transform:uppercase; padding-bottom:12px; margin-bottom:16px; border-bottom:1px solid var(--border); }
   .estrategias-wrap { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; }
   .strat-card { background:var(--white); border:1px solid var(--border); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); }
   .strat-header { padding:10px 14px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:baseline; }
@@ -124,72 +68,33 @@
   .puts-strat { border-top:3px solid var(--negative); }
   .mixed-strat { border-top:3px solid var(--blue); }
   .lanz-strat { border-top:3px solid var(--accent); }
-
-  @media(max-width:900px) {
-    .plaza-wrap { grid-template-columns:1fr; }
-    .nav-tabs { display:none; }
-    .stat-value { font-size:18px; }
-  }
-
-  /* PAYOFF BUILDER */
   .payoff-wrap { display:grid; grid-template-columns:480px 1fr; gap:16px; align-items:start; }
   .payoff-panel { background:var(--white); border:1px solid var(--border); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); }
   .payoff-panel-header { padding:12px 16px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
   .payoff-panel-title { font-size:13px; font-weight:600; }
-  .pata-row {
-    display:grid; grid-template-columns:65px 1fr 90px 90px 70px 28px;
-    gap:6px; padding:10px 14px; border-bottom:1px solid var(--border-light);
-    align-items:center;
-  }
+  .pata-row { display:grid; grid-template-columns:65px 1fr 90px 90px 70px 28px; gap:6px; padding:10px 14px; border-bottom:1px solid var(--border-light); align-items:center; }
   .pata-label { font-size:11px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.4px; font-family:'Calibri',sans-serif; }
   .pata-headers { display:grid; grid-template-columns:65px 1fr 90px 90px 70px 28px; gap:6px; padding:7px 14px; background:#fafafa; border-bottom:1px solid var(--border); }
-  input[type=number], input[type=text], input[type=date], select {
-    width:100%; padding:6px 8px; border:1px solid var(--border);
-    border-radius:5px; font-size:14px; font-family:'Calibri',sans-serif;
-    color:var(--text); background:var(--white); outline:none;
-  }
+  input[type=number], input[type=text], input[type=date], select { width:100%; padding:6px 8px; border:1px solid var(--border); border-radius:5px; font-size:14px; font-family:'Calibri',sans-serif; color:var(--text); background:var(--white); outline:none; }
   input[type=number]:focus, select:focus { border-color:var(--accent); }
   select { font-family:'Calibri',sans-serif; font-size:14px; }
   .cant-input { font-size:18px !important; font-weight:800 !important; text-align:center; }
-  .btn-add {
-    margin:10px 14px; width:calc(100% - 28px);
-    padding:8px; border:1px dashed var(--border); border-radius:6px;
-    background:none; color:var(--muted); font-size:12px; cursor:pointer;
-    font-family:'Inter',sans-serif; transition:all 0.15s;
-  }
+  .btn-add { margin:10px 14px; width:calc(100% - 28px); padding:8px; border:1px dashed var(--border); border-radius:6px; background:none; color:var(--muted); font-size:12px; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.15s; }
   .btn-add:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-light); }
-  .btn-remove {
-    width:24px; height:24px; border-radius:4px; border:none;
-    background:none; color:var(--muted); font-size:14px; cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    transition:all 0.15s;
-  }
+  .btn-remove { width:24px; height:24px; border-radius:4px; border:none; background:none; color:var(--muted); font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s; }
   .btn-remove:hover { background:#fee2e2; color:var(--negative); }
-  .estrategia-detected {
-    margin:0 14px 10px; padding:8px 12px;
-    background:var(--accent-light); border-radius:6px;
-    font-size:12px; font-weight:600; color:var(--accent);
-    text-align:center; min-height:34px; display:flex; align-items:center; justify-content:center;
-  }
-  .payoff-stats {
-    display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px;
-    background:var(--border); border-top:1px solid var(--border);
-  }
-  .payoff-stat {
-    background:var(--white); padding:10px 14px; text-align:center;
-  }
+  .estrategia-detected { margin:0 14px 10px; padding:8px 12px; background:var(--accent-light); border-radius:6px; font-size:12px; font-weight:600; color:var(--accent); text-align:center; min-height:34px; display:flex; align-items:center; justify-content:center; }
+  .payoff-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; background:var(--border); border-top:1px solid var(--border); }
+  .payoff-stat { background:var(--white); padding:10px 14px; text-align:center; }
   .payoff-stat-label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.4px; font-family:'Calibri',sans-serif; }
   .payoff-stat-val { font-size:15px; font-weight:700; font-family:'Calibri',sans-serif; margin-top:2px; }
   .chart-card { background:var(--white); border:1px solid var(--border); border-radius:10px; padding:16px; box-shadow:var(--shadow); }
   .chart-title { font-size:12px; font-weight:600; color:var(--muted); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px; }
   .tipo-btn-group { display:flex; gap:4px; }
-  .tipo-btn {
-    padding:4px 10px; font-size:11px; font-weight:500; border-radius:4px;
-    border:1px solid var(--border); background:none; cursor:pointer;
-    font-family:'Inter',sans-serif; transition:all 0.15s; color:var(--muted);
-  }
+  .tipo-btn { padding:4px 10px; font-size:11px; font-weight:500; border-radius:4px; border:1px solid var(--border); background:none; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.15s; color:var(--muted); }
   .tipo-btn.active-call { background:#dcfce7; color:var(--positive); border-color:var(--positive); }
   .tipo-btn.active-put { background:#fee2e2; color:var(--negative); border-color:var(--negative); }
+  @media(max-width:900px) { .plaza-wrap { grid-template-columns:1fr; } .nav-tabs { display:none; } .stat-value { font-size:18px; } }
 </style>
 </head>
 <body>
@@ -236,7 +141,7 @@
     <div class="loader-text">Cargando datos de mercado...</div>
   </div>
 
-  <!-- PLAZA -->
+  <!-- ══ TAB PLAZA ══════════════════════════════════════════════════════════ -->
   <div id="tab-plaza" class="tab-content">
     <div class="plaza-wrap">
       <div class="card">
@@ -268,100 +173,53 @@
     </div>
   </div>
 
-  <!-- CALLS -->
+  <!-- ══ TAB CALLS ══════════════════════════════════════════════════════════ -->
   <div id="tab-calls" class="tab-content">
     <div class="section-label">Estrategias con Calls</div>
     <div class="estrategias-wrap">
-      <div class="strat-card calls-strat">
-        <div class="strat-header"><div class="strat-name">Bull Spread</div><div class="strat-desc">B1 − B2</div></div>
-        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="bull-body"></tbody></table>
-      </div>
-      <div class="strat-card calls-strat">
-        <div class="strat-header"><div class="strat-name">Ratio</div><div class="strat-desc">B1 / B2</div></div>
-        <table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="ratio-body"></tbody></table>
-      </div>
-      <div class="strat-card calls-strat">
-        <div class="strat-header"><div class="strat-name">Ratio +2</div><div class="strat-desc">B1 / B3</div></div>
-        <table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="ratio2-body"></tbody></table>
-      </div>
-      <div class="strat-card calls-strat">
-        <div class="strat-header"><div class="strat-name">Ratio +3</div><div class="strat-desc">B1 / B4</div></div>
-        <table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="ratio3-body"></tbody></table>
-      </div>
-      <div class="strat-card mixed-strat">
-        <div class="strat-header"><div class="strat-name">Mariposa</div><div class="strat-desc">B1 + B3 − B2×2</div></div>
-        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="mariposa-body"></tbody></table>
-      </div>
-      <div class="strat-card mixed-strat">
-        <div class="strat-header"><div class="strat-name">Mariposa +1</div><div class="strat-desc">B1 + B5 − B3×2</div></div>
-        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="mariposa1-body"></tbody></table>
-      </div>
-      <div class="strat-card mixed-strat">
-        <div class="strat-header"><div class="strat-name">Mariposa +2</div><div class="strat-desc">B1 + B7 − B4×2</div></div>
-        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="mariposa2-body"></tbody></table>
-      </div>
+      <div class="strat-card calls-strat"><div class="strat-header"><div class="strat-name">Bull Spread</div><div class="strat-desc">B1 − B2</div></div><table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="bull-body"></tbody></table></div>
+      <div class="strat-card calls-strat"><div class="strat-header"><div class="strat-name">Ratio</div><div class="strat-desc">B1 / B2</div></div><table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="ratio-body"></tbody></table></div>
+      <div class="strat-card calls-strat"><div class="strat-header"><div class="strat-name">Ratio +2</div><div class="strat-desc">B1 / B3</div></div><table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="ratio2-body"></tbody></table></div>
+      <div class="strat-card calls-strat"><div class="strat-header"><div class="strat-name">Ratio +3</div><div class="strat-desc">B1 / B4</div></div><table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="ratio3-body"></tbody></table></div>
+      <div class="strat-card mixed-strat"><div class="strat-header"><div class="strat-name">Mariposa</div><div class="strat-desc">B1 + B3 − B2×2</div></div><table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="mariposa-body"></tbody></table></div>
+      <div class="strat-card mixed-strat"><div class="strat-header"><div class="strat-name">Mariposa +1</div><div class="strat-desc">B1 + B5 − B3×2</div></div><table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="mariposa1-body"></tbody></table></div>
+      <div class="strat-card mixed-strat"><div class="strat-header"><div class="strat-name">Mariposa +2</div><div class="strat-desc">B1 + B7 − B4×2</div></div><table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="mariposa2-body"></tbody></table></div>
     </div>
   </div>
 
-  <!-- PUTS -->
+  <!-- ══ TAB PUTS ═══════════════════════════════════════════════════════════ -->
   <div id="tab-puts" class="tab-content">
     <div class="section-label">Estrategias con Puts</div>
     <div class="estrategias-wrap">
-      <div class="strat-card puts-strat">
-        <div class="strat-header"><div class="strat-name">Bear Spread</div><div class="strat-desc">B2 − B1</div></div>
-        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="bear-body"></tbody></table>
-      </div>
-      <div class="strat-card puts-strat">
-        <div class="strat-header"><div class="strat-name">Ratio Put</div><div class="strat-desc">B2 / B1</div></div>
-        <table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="pratio-body"></tbody></table>
-      </div>
-      <div class="strat-card puts-strat">
-        <div class="strat-header"><div class="strat-name">Ratio Put +2</div><div class="strat-desc">B3 / B1</div></div>
-        <table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="pratio2-body"></tbody></table>
-      </div>
-      <div class="strat-card puts-strat">
-        <div class="strat-header"><div class="strat-name">Ratio Put +3</div><div class="strat-desc">B4 / B1</div></div>
-        <table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="pratio3-body"></tbody></table>
-      </div>
-      <div class="strat-card mixed-strat">
-        <div class="strat-header"><div class="strat-name">Mariposa Put</div><div class="strat-desc">B1 + B3 − B2×2</div></div>
-        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="pmariposa-body"></tbody></table>
-      </div>
-      <div class="strat-card mixed-strat">
-        <div class="strat-header"><div class="strat-name">Mariposa Put +1</div><div class="strat-desc">B1 + B5 − B3×2</div></div>
-        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="pmariposa1-body"></tbody></table>
-      </div>
-      <div class="strat-card mixed-strat">
-        <div class="strat-header"><div class="strat-name">Mariposa Put +2</div><div class="strat-desc">B1 + B7 − B4×2</div></div>
-        <table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="pmariposa2-body"></tbody></table>
-      </div>
+      <div class="strat-card puts-strat"><div class="strat-header"><div class="strat-name">Bear Spread</div><div class="strat-desc">B2 − B1</div></div><table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="bear-body"></tbody></table></div>
+      <div class="strat-card puts-strat"><div class="strat-header"><div class="strat-name">Ratio Put</div><div class="strat-desc">B2 / B1</div></div><table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="pratio-body"></tbody></table></div>
+      <div class="strat-card puts-strat"><div class="strat-header"><div class="strat-name">Ratio Put +2</div><div class="strat-desc">B3 / B1</div></div><table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="pratio2-body"></tbody></table></div>
+      <div class="strat-card puts-strat"><div class="strat-header"><div class="strat-name">Ratio Put +3</div><div class="strat-desc">B4 / B1</div></div><table><thead><tr><th>Strike</th><th>Ratio</th></tr></thead><tbody id="pratio3-body"></tbody></table></div>
+      <div class="strat-card mixed-strat"><div class="strat-header"><div class="strat-name">Mariposa Put</div><div class="strat-desc">B1 + B3 − B2×2</div></div><table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="pmariposa-body"></tbody></table></div>
+      <div class="strat-card mixed-strat"><div class="strat-header"><div class="strat-name">Mariposa Put +1</div><div class="strat-desc">B1 + B5 − B3×2</div></div><table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="pmariposa1-body"></tbody></table></div>
+      <div class="strat-card mixed-strat"><div class="strat-header"><div class="strat-name">Mariposa Put +2</div><div class="strat-desc">B1 + B7 − B4×2</div></div><table><thead><tr><th>Strike</th><th>Costo</th></tr></thead><tbody id="pmariposa2-body"></tbody></table></div>
     </div>
   </div>
 
-  <!-- LANZAMIENTO -->
+  <!-- ══ TAB LANZAMIENTO ════════════════════════════════════════════════════ -->
   <div id="tab-lanzamiento" class="tab-content">
     <div class="section-label">Lanzamiento Cubierto & Tasa Sintética</div>
     <div class="estrategias-wrap">
       <div class="strat-card lanz-strat">
         <div class="strat-header"><div class="strat-name">Lanzamiento Cubierto</div><div class="strat-desc">TNA · Cobertura</div></div>
-        <table>
-          <thead><tr><th>Strike</th><th>TNA</th><th>Cobertura</th></tr></thead>
-          <tbody id="lanz-body"></tbody>
-        </table>
+        <table><thead><tr><th>Strike</th><th>TNA</th><th>Cobertura</th></tr></thead><tbody id="lanz-body"></tbody></table>
       </div>
       <div class="strat-card mixed-strat">
         <div class="strat-header"><div class="strat-name">Tasa Sintética</div><div class="strat-desc">Call − Put + Strike</div></div>
-        <table>
-          <thead><tr><th>Strike</th><th>TNA</th></tr></thead>
-          <tbody id="sint-body"></tbody>
-        </table>
+        <table><thead><tr><th>Strike</th><th>TNA</th></tr></thead><tbody id="sint-body"></tbody></table>
       </div>
     </div>
   </div>
 
-  <!-- PAYOFF BUILDER -->
+  <!-- ══ TAB PAYOFF BUILDER ════════════════════════════════════════════════ -->
   <div id="tab-payoff" class="tab-content">
     <div class="payoff-wrap">
+      <!-- Panel izquierdo -->
       <div>
         <div class="payoff-panel">
           <div class="payoff-panel-header">
@@ -383,103 +241,50 @@
           <button class="btn-add" onclick="agregarPata()">+ Agregar pata</button>
           <div class="estrategia-detected" id="estrategia-label">Ingresá las patas</div>
           <div class="payoff-stats" style="grid-template-columns:1fr 1fr 1fr 1fr;">
-            <div class="payoff-stat">
-              <div class="payoff-stat-label">Capital</div>
-              <div class="payoff-stat-val" id="stat-costo">—</div>
-            </div>
-            <div class="payoff-stat">
-              <div class="payoff-stat-label">PnL</div>
-              <div class="payoff-stat-val" id="stat-pnl">—</div>
-            </div>
-            <div class="payoff-stat">
-              <div class="payoff-stat-label">Máx ganancia</div>
-              <div class="payoff-stat-val" id="stat-maxgan" style="color:var(--positive)">—</div>
-            </div>
-            <div class="payoff-stat">
-              <div class="payoff-stat-label">Máx pérdida</div>
-              <div class="payoff-stat-val" id="stat-maxper" style="color:var(--negative)">—</div>
-            </div>
+            <div class="payoff-stat"><div class="payoff-stat-label">Capital</div><div class="payoff-stat-val" id="stat-costo">—</div></div>
+            <div class="payoff-stat"><div class="payoff-stat-label">PnL</div><div class="payoff-stat-val" id="stat-pnl">—</div></div>
+            <div class="payoff-stat"><div class="payoff-stat-label">Máx ganancia</div><div class="payoff-stat-val" id="stat-maxgan" style="color:var(--positive)">—</div></div>
+            <div class="payoff-stat"><div class="payoff-stat-label">Máx pérdida</div><div class="payoff-stat-val" id="stat-maxper" style="color:var(--negative)">—</div></div>
           </div>
-          <!-- Costo financiero -->
-          <div style="padding:10px 16px; border-top:1px solid var(--border-light); background:#fafbff;">
+          <div style="padding:10px 16px;border-top:1px solid var(--border-light);background:#fafbff;">
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;align-items:center;">
-              <div>
-                <div class="pata-label" style="margin-bottom:3px;">Tasa anual (%)</div>
-                <input type="number" id="cf-tasa" value="40" step="1" oninput="recalcularCF()" style="font-size:14px;">
-              </div>
-              <div>
-                <div class="pata-label" style="margin-bottom:3px;">Días</div>
-                <div id="cf-dias" style="font-size:16px;font-weight:700;font-family:'Calibri',sans-serif;padding-top:4px;">—</div>
-              </div>
-              <div>
-                <div class="pata-label" style="margin-bottom:3px;">Costo financiero</div>
-                <div id="cf-valor" style="font-size:16px;font-weight:700;color:var(--negative);font-family:'Calibri',sans-serif;padding-top:4px;">—</div>
-              </div>
+              <div><div class="pata-label" style="margin-bottom:3px;">Tasa anual (%)</div><input type="number" id="cf-tasa" value="40" step="1" oninput="recalcularCF()"></div>
+              <div><div class="pata-label" style="margin-bottom:3px;">Días</div><div id="cf-dias" style="font-size:16px;font-weight:700;font-family:'Calibri',sans-serif;padding-top:4px;">—</div></div>
+              <div><div class="pata-label" style="margin-bottom:3px;">Costo financiero</div><div id="cf-valor" style="font-size:16px;font-weight:700;color:var(--negative);font-family:'Calibri',sans-serif;padding-top:4px;">—</div></div>
             </div>
           </div>
         </div>
 
-        <!-- Sizes y rango -->
-        <div class="payoff-panel" style="margin-top:10px; padding:12px 14px;">
-          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:10px;">
-            <div>
-              <div class="pata-label" style="margin-bottom:4px;">Option Size</div>
-              <input type="number" id="opt-size" value="100" oninput="recalcular()">
-            </div>
-            <div>
-              <div class="pata-label" style="margin-bottom:4px;">Underlying Size</div>
-              <input type="number" id="und-size" value="1" oninput="recalcular()">
-            </div>
-            <div>
-              <div class="pata-label" style="margin-bottom:4px;">Spot GGAL</div>
-              <input type="number" id="spot-input" placeholder="6600" oninput="recalcular()">
-            </div>
+        <div class="payoff-panel" style="margin-top:10px;padding:12px 14px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
+            <div><div class="pata-label" style="margin-bottom:4px;">Option Size</div><input type="number" id="opt-size" value="100" oninput="recalcular()"></div>
+            <div><div class="pata-label" style="margin-bottom:4px;">Underlying Size</div><input type="number" id="und-size" value="1" oninput="recalcular()"></div>
+            <div><div class="pata-label" style="margin-bottom:4px;">Spot GGAL</div><input type="number" id="spot-input" placeholder="6600" oninput="recalcular()"></div>
           </div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-            <div>
-              <div class="pata-label" style="margin-bottom:4px;">Rango gráfico (%)</div>
-              <input type="number" id="rango-pct" value="30" min="5" max="100" oninput="recalcular()">
-            </div>
-            <div>
-              <div class="pata-label" style="margin-bottom:4px;">Break-evens</div>
-              <div id="breakevens" style="font-size:12px; font-family:'DM Mono',monospace; color:var(--accent); padding-top:6px;">—</div>
-            </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div><div class="pata-label" style="margin-bottom:4px;">Rango gráfico (%)</div><input type="number" id="rango-pct" value="30" min="5" max="100" oninput="recalcular()"></div>
+            <div><div class="pata-label" style="margin-bottom:4px;">Break-evens</div><div id="breakevens" style="font-size:12px;font-family:'DM Mono',monospace;color:var(--accent);padding-top:6px;">—</div></div>
           </div>
         </div>
 
-        <!-- Guardar operación -->
-        <div class="payoff-panel" style="margin-top:10px; padding:12px 14px;">
+        <div class="payoff-panel" style="margin-top:10px;padding:12px 14px;">
           <div class="payoff-panel-title" style="margin-bottom:10px;">📋 Guardar operación</div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
-            <div>
-              <div class="pata-label" style="margin-bottom:4px;">Fecha del trade</div>
-              <input type="date" id="op-fecha" style="width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:5px;font-size:12px;">
-            </div>
-            <div>
-              <div class="pata-label" style="margin-bottom:4px;">Nota</div>
-              <input type="text" id="op-nota" placeholder="ej: cobertura cartera" style="width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:5px;font-size:12px;">
-            </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+            <div><div class="pata-label" style="margin-bottom:4px;">Fecha del trade</div><input type="date" id="op-fecha" style="width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:5px;font-size:12px;"></div>
+            <div><div class="pata-label" style="margin-bottom:4px;">Nota</div><input type="text" id="op-nota" placeholder="ej: cobertura cartera" style="width:100%;padding:5px 7px;border:1px solid var(--border);border-radius:5px;font-size:12px;"></div>
           </div>
-          <button onclick="guardarOperacion()" style="width:100%;padding:8px;background:var(--accent);color:white;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;">
-            Guardar operación
-          </button>
+          <button onclick="guardarOperacion()" style="width:100%;padding:8px;background:var(--accent);color:white;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;">Guardar operación</button>
         </div>
 
-        <!-- Historial -->
         <div class="payoff-panel" style="margin-top:10px;">
-          <div class="payoff-panel-header">
-            <div class="payoff-panel-title">Historial de operaciones</div>
-          </div>
+          <div class="payoff-panel-header"><div class="payoff-panel-title">Historial de operaciones</div></div>
           <div id="op-lista"></div>
         </div>
       </div>
 
-      <!-- Gráfico -->
-      <div class="chart-card" style="background:#0d0d1a; border-color:#2a2a3e;">
-
-        <!-- Controles del gráfico -->
+      <!-- Panel derecho: gráfico -->
+      <div class="chart-card" style="background:#0d0d1a;border-color:#2a2a3e;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;padding:10px 12px;background:#111122;border-radius:8px;">
-          <!-- Slider días -->
           <div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
               <span style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;text-transform:uppercase;letter-spacing:0.4px;">⏱ Días al vencimiento</span>
@@ -487,13 +292,10 @@
             </div>
             <div style="display:flex;align-items:center;gap:8px;">
               <span style="font-size:10px;color:#404060;font-family:'Calibri',sans-serif;">Vto</span>
-              <input type="range" id="grafico-dias" min="1" max="365" value="37"
-                style="flex:1;accent-color:#a0c4ff;height:4px;"
-                oninput="onGraficoDiasChange(this.value)">
+              <input type="range" id="grafico-dias" min="1" max="365" value="37" style="flex:1;accent-color:#a0c4ff;height:4px;" oninput="onGraficoDiasChange(this.value)">
               <span style="font-size:10px;color:#404060;font-family:'Calibri',sans-serif;">Hoy</span>
             </div>
           </div>
-          <!-- Slider VI -->
           <div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
               <span style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;text-transform:uppercase;letter-spacing:0.4px;">📊 Ajuste VI</span>
@@ -501,162 +303,72 @@
             </div>
             <div style="display:flex;align-items:center;gap:8px;">
               <span style="font-size:10px;color:#404060;font-family:'Calibri',sans-serif;">-50%</span>
-              <input type="range" id="grafico-vi" min="-50" max="50" value="0" step="5"
-                style="flex:1;accent-color:#f59e0b;height:4px;"
-                oninput="onGraficoVIChange(this.value)">
+              <input type="range" id="grafico-vi" min="-50" max="50" value="0" step="5" style="flex:1;accent-color:#f59e0b;height:4px;" oninput="onGraficoVIChange(this.value)">
               <span style="font-size:10px;color:#404060;font-family:'Calibri',sans-serif;">+50%</span>
             </div>
           </div>
         </div>
-
         <div class="chart-title" style="color:#606080;">Payoff al vencimiento + Teórico</div>
         <canvas id="payoff-chart"></canvas>
 
-        <!-- Griegas -->
         <div style="margin-top:16px;">
           <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;font-family:'Calibri',sans-serif;">Griegas de la posición</div>
-          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px;" id="griegas-panel">
-            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;">
-              <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Δ Delta</div>
-              <div id="gr-delta" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#a0c4ff;">—</div>
-            </div>
-            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;">
-              <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Γ Gamma</div>
-              <div id="gr-gamma" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#a0c4ff;">—</div>
-            </div>
-            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;">
-              <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">ν Vega</div>
-              <div id="gr-vega" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#a0c4ff;">—</div>
-            </div>
-            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;">
-              <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Θ Theta/día</div>
-              <div id="gr-theta" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#a0c4ff;">—</div>
-            </div>
-            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;">
-              <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">ρ Rho</div>
-              <div id="gr-rho" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#a0c4ff;">—</div>
-            </div>
-            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;">
-              <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">P. Éxito</div>
-              <div id="gr-prob" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#22c55e;">—</div>
-            </div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px;">
+            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Δ Delta</div><div id="gr-delta" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#a0c4ff;">—</div></div>
+            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Γ Gamma</div><div id="gr-gamma" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#a0c4ff;">—</div></div>
+            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">ν Vega</div><div id="gr-vega" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#a0c4ff;">—</div></div>
+            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Θ Theta/día</div><div id="gr-theta" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#a0c4ff;">—</div></div>
+            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">ρ Rho</div><div id="gr-rho" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#a0c4ff;">—</div></div>
+            <div style="background:#111122;border-radius:6px;padding:8px 10px;text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">P. Éxito</div><div id="gr-prob" style="font-size:15px;font-weight:700;font-family:'Calibri',sans-serif;color:#22c55e;">—</div></div>
           </div>
         </div>
 
-        <!-- Neutralizador de griegas -->
         <div style="margin-top:10px;">
           <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Neutralizador de griegas</div>
-          <div id="neutralizador-panel" style="background:#111122;border-radius:8px;padding:10px 14px;font-family:'Calibri',sans-serif;font-size:13px;color:#a0a0c0;">
-            Cargá una posición para ver sugerencias de cobertura.
-          </div>
+          <div id="neutralizador-panel" style="background:#111122;border-radius:8px;padding:10px 14px;font-family:'Calibri',sans-serif;font-size:13px;color:#a0a0c0;">Cargá una posición para ver sugerencias de cobertura.</div>
         </div>
-        <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;">
 
-          <!-- Tabla escenarios -->
+        <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;">
           <div style="overflow-x:auto;">
             <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Tabla de escenarios</div>
             <table id="payoff-tabla" style="width:100%;border-collapse:collapse;font-size:13px;font-family:'Calibri',sans-serif;">
-              <thead>
-                <tr style="border-bottom:1px solid #2a2a3e;">
-                  <th style="padding:3px 8px;text-align:left;color:#808090;font-weight:600;">Var.</th>
-                  <th style="padding:3px 8px;text-align:right;color:#808090;font-weight:600;">GGAL</th>
-                  <th style="padding:3px 8px;text-align:right;color:#808090;font-weight:600;">P&amp;L Vto.</th>
-                  <th style="padding:3px 8px;text-align:right;color:#a0c4ff;font-weight:600;">Teórico</th>
-                </tr>
-              </thead>
+              <thead><tr style="border-bottom:1px solid #2a2a3e;">
+                <th style="padding:3px 8px;text-align:left;color:#808090;font-weight:600;">Var.</th>
+                <th style="padding:3px 8px;text-align:right;color:#808090;font-weight:600;">GGAL</th>
+                <th style="padding:3px 8px;text-align:right;color:#808090;font-weight:600;">P&amp;L Vto.</th>
+                <th style="padding:3px 8px;text-align:right;color:#a0c4ff;font-weight:600;">Teórico</th>
+              </tr></thead>
               <tbody id="payoff-tabla-body"></tbody>
             </table>
           </div>
-
-          <!-- Posición total -->
           <div>
             <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Posición total</div>
-
-            <!-- CALLs -->
             <div style="font-size:10px;font-weight:700;color:#22c55e;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;font-family:'Calibri',sans-serif;">Calls</div>
-            <table style="width:100%;border-collapse:collapse;font-size:13px;font-family:'Calibri',sans-serif;margin-bottom:8px;">
-              <thead>
-                <tr style="border-bottom:1px solid #2a2a3e;">
-                  <th style="padding:2px 6px;text-align:left;color:#808090;font-weight:600;">Strike</th>
-                  <th style="padding:2px 6px;text-align:right;color:#808090;font-weight:600;">Cant.</th>
-                  <th style="padding:2px 6px;text-align:right;color:#808090;font-weight:600;">Prima</th>
-                  <th style="padding:2px 6px;text-align:right;color:#f59e0b;font-weight:600;">VI</th>
-                  <th style="padding:2px 6px;text-align:right;color:#a0c4ff;font-weight:600;">Δ</th>
-                </tr>
-              </thead>
-              <tbody id="pos-calls"></tbody>
-            </table>
-
-            <!-- PUTs -->
+            <table style="width:100%;border-collapse:collapse;font-size:13px;font-family:'Calibri',sans-serif;margin-bottom:8px;"><thead><tr style="border-bottom:1px solid #2a2a3e;"><th style="padding:2px 6px;text-align:left;color:#808090;">Strike</th><th style="padding:2px 6px;text-align:right;color:#808090;">Cant.</th><th style="padding:2px 6px;text-align:right;color:#808090;">Prima</th><th style="padding:2px 6px;text-align:right;color:#f59e0b;">VI</th><th style="padding:2px 6px;text-align:right;color:#a0c4ff;">Δ</th></tr></thead><tbody id="pos-calls"></tbody></table>
             <div style="font-size:10px;font-weight:700;color:#ef4444;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;font-family:'Calibri',sans-serif;">Puts</div>
-            <table style="width:100%;border-collapse:collapse;font-size:13px;font-family:'Calibri',sans-serif;margin-bottom:8px;">
-              <thead>
-                <tr style="border-bottom:1px solid #2a2a3e;">
-                  <th style="padding:2px 6px;text-align:left;color:#808090;font-weight:600;">Strike</th>
-                  <th style="padding:2px 6px;text-align:right;color:#808090;font-weight:600;">Cant.</th>
-                  <th style="padding:2px 6px;text-align:right;color:#808090;font-weight:600;">Prima</th>
-                  <th style="padding:2px 6px;text-align:right;color:#f59e0b;font-weight:600;">VI</th>
-                  <th style="padding:2px 6px;text-align:right;color:#a0c4ff;font-weight:600;">Δ</th>
-                </tr>
-              </thead>
-              <tbody id="pos-puts"></tbody>
-            </table>
-
-            <!-- Acciones -->
+            <table style="width:100%;border-collapse:collapse;font-size:13px;font-family:'Calibri',sans-serif;margin-bottom:8px;"><thead><tr style="border-bottom:1px solid #2a2a3e;"><th style="padding:2px 6px;text-align:left;color:#808090;">Strike</th><th style="padding:2px 6px;text-align:right;color:#808090;">Cant.</th><th style="padding:2px 6px;text-align:right;color:#808090;">Prima</th><th style="padding:2px 6px;text-align:right;color:#f59e0b;">VI</th><th style="padding:2px 6px;text-align:right;color:#a0c4ff;">Δ</th></tr></thead><tbody id="pos-puts"></tbody></table>
             <div style="font-size:10px;font-weight:700;color:#f59e0b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;font-family:'Calibri',sans-serif;">Acciones</div>
-            <table style="width:100%;border-collapse:collapse;font-size:13px;font-family:'Calibri',sans-serif;margin-bottom:12px;">
-              <thead>
-                <tr style="border-bottom:1px solid #2a2a3e;">
-                  <th style="padding:2px 6px;text-align:left;color:#808090;font-weight:600;">Precio cpa.</th>
-                  <th style="padding:2px 6px;text-align:right;color:#808090;font-weight:600;">Cant.</th>
-                  <th style="padding:2px 6px;text-align:right;color:#808090;font-weight:600;">Last</th>
-                  <th style="padding:2px 6px;text-align:right;color:#808090;font-weight:600;">—</th>
-                  <th style="padding:2px 6px;text-align:right;color:#a0c4ff;font-weight:600;">Δ</th>
-                </tr>
-              </thead>
-              <tbody id="pos-acc"></tbody>
-            </table>
-
-            <!-- Comisiones y derechos -->
+            <table style="width:100%;border-collapse:collapse;font-size:13px;font-family:'Calibri',sans-serif;margin-bottom:12px;"><thead><tr style="border-bottom:1px solid #2a2a3e;"><th style="padding:2px 6px;text-align:left;color:#808090;">Precio cpa.</th><th style="padding:2px 6px;text-align:right;color:#808090;">Cant.</th><th style="padding:2px 6px;text-align:right;color:#808090;">Last</th><th style="padding:2px 6px;text-align:right;color:#808090;">—</th><th style="padding:2px 6px;text-align:right;color:#a0c4ff;">Δ</th></tr></thead><tbody id="pos-acc"></tbody></table>
             <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Costos operativos</div>
             <div style="background:#111122;border-radius:8px;padding:10px 12px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
-                <div>
-                  <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:2px;">Comisión ALYC (%)</div>
-                  <input type="number" id="com-alyc" value="0.5" step="0.1" min="0" oninput="recalcularCostos()" style="font-size:13px;font-family:'Calibri',sans-serif;background:#1a1a2e;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:4px 7px;width:100%;">
-                </div>
-                <div>
-                  <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:2px;">Otros (%)</div>
-                  <input type="number" id="com-otros" value="0" step="0.1" min="0" oninput="recalcularCostos()" style="font-size:13px;font-family:'Calibri',sans-serif;background:#1a1a2e;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:4px 7px;width:100%;">
-                </div>
+                <div><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:2px;">Comisión ALYC (%)</div><input type="number" id="com-alyc" value="0.5" step="0.1" min="0" oninput="recalcularCostos()" style="font-size:13px;font-family:'Calibri',sans-serif;background:#1a1a2e;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:4px 7px;width:100%;"></div>
+                <div><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:2px;">Otros (%)</div><input type="number" id="com-otros" value="0" step="0.1" min="0" oninput="recalcularCostos()" style="font-size:13px;font-family:'Calibri',sans-serif;background:#1a1a2e;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:4px 7px;width:100%;"></div>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;border-top:1px solid #2a2a3e;padding-top:8px;">
-                <div style="text-align:center;">
-                  <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">D. Mercado</div>
-                  <div id="costo-derechos" style="font-size:13px;font-weight:700;color:#ef4444;font-family:'Calibri',sans-serif;">—</div>
-                </div>
-                <div style="text-align:center;">
-                  <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Comisión</div>
-                  <div id="costo-comision" style="font-size:13px;font-weight:700;color:#ef4444;font-family:'Calibri',sans-serif;">—</div>
-                </div>
-                <div style="text-align:center;">
-                  <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Total costos</div>
-                  <div id="costo-total" style="font-size:13px;font-weight:700;color:#ef4444;font-family:'Calibri',sans-serif;">—</div>
-                </div>
+                <div style="text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">D. Mercado</div><div id="costo-derechos" style="font-size:13px;font-weight:700;color:#ef4444;font-family:'Calibri',sans-serif;">—</div></div>
+                <div style="text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Comisión</div><div id="costo-comision" style="font-size:13px;font-weight:700;color:#ef4444;font-family:'Calibri',sans-serif;">—</div></div>
+                <div style="text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Total costos</div><div id="costo-total" style="font-size:13px;font-weight:700;color:#ef4444;font-family:'Calibri',sans-serif;">—</div></div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- ── PnL POR PATA ──────────────────────────────────────────────── -->
         <div style="margin-top:16px;">
           <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">PnL por pata</div>
-          <div id="pnl-patas-panel" style="background:#111122;border-radius:8px;padding:10px 14px;">
-            <span style="color:#404060;font-family:'Calibri',sans-serif;font-size:13px;">Cargá prima y last para ver PnL por pata.</span>
-          </div>
+          <div id="pnl-patas-panel" style="background:#111122;border-radius:8px;padding:10px 14px;"><span style="color:#404060;font-family:'Calibri',sans-serif;font-size:13px;">Cargá prima y last para ver PnL por pata.</span></div>
         </div>
 
-        <!-- ── SIMULADOR DE TIEMPO ──────────────────────────────────────── -->
         <div style="margin-top:16px;">
           <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Simulador de tiempo (días a vencimiento)</div>
           <div style="background:#111122;border-radius:8px;padding:12px 14px;">
@@ -670,7 +382,6 @@
           </div>
         </div>
 
-        <!-- ── SENSIBILIDAD DE VI ───────────────────────────────────────── -->
         <div style="margin-top:16px;">
           <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Sensibilidad de volatilidad implícita</div>
           <div style="background:#111122;border-radius:8px;padding:12px 14px;">
@@ -683,31 +394,17 @@
           </div>
         </div>
 
-        <!-- ── KELLY + SIZING ───────────────────────────────────────────── -->
         <div style="margin-top:16px;">
           <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Kelly & Sizing</div>
           <div style="background:#111122;border-radius:8px;padding:12px 14px;">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
-              <div>
-                <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:2px;">Capital total ($)</div>
-                <input type="number" id="kelly-capital" value="1000000" step="10000" oninput="calcularKelly()" style="font-size:13px;font-family:'Calibri',sans-serif;background:#1a1a2e;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:4px 7px;width:100%;">
-              </div>
-              <div>
-                <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:2px;">Fracción Kelly</div>
-                <select id="kelly-frac" onchange="calcularKelly()" style="font-size:13px;font-family:'Calibri',sans-serif;background:#1a1a2e;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:4px 7px;width:100%;">
-                  <option value="1">Full Kelly</option>
-                  <option value="0.5" selected>Half Kelly</option>
-                  <option value="0.25">Quarter Kelly</option>
-                </select>
-              </div>
+              <div><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:2px;">Capital total ($)</div><input type="number" id="kelly-capital" value="1000000" step="10000" oninput="calcularKelly()" style="font-size:13px;font-family:'Calibri',sans-serif;background:#1a1a2e;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:4px 7px;width:100%;"></div>
+              <div><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:2px;">Fracción Kelly</div><select id="kelly-frac" onchange="calcularKelly()" style="font-size:13px;font-family:'Calibri',sans-serif;background:#1a1a2e;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:4px 7px;width:100%;"><option value="1">Full Kelly</option><option value="0.5" selected>Half Kelly</option><option value="0.25">Quarter Kelly</option></select></div>
             </div>
-            <div id="kelly-resultado" style="font-family:'Calibri',sans-serif;font-size:13px;color:#a0a0c0;">
-              Cargá una posición para ver el sizing sugerido.
-            </div>
+            <div id="kelly-resultado" style="font-family:'Calibri',sans-serif;font-size:13px;color:#a0a0c0;">Cargá una posición para ver el sizing sugerido.</div>
           </div>
         </div>
 
-        <!-- ── VOLATILITY SMILE ─────────────────────────────────────────── -->
         <div style="margin-top:16px;">
           <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Volatility Smile</div>
           <div style="background:#111122;border-radius:8px;padding:12px 14px;">
@@ -716,174 +413,95 @@
           </div>
         </div>
 
-        <!-- ── ZONA DE MÁXIMA PROBABILIDAD ─────────────────────────────── -->
         <div style="margin-top:16px;margin-bottom:24px;">
           <div style="font-size:11px;font-weight:600;color:#606080;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-family:'Calibri',sans-serif;">Cono de volatilidad & Zona de probabilidad</div>
           <div style="background:#111122;border-radius:8px;padding:12px 14px;">
-            <div id="cono-info" style="font-family:'Calibri',sans-serif;font-size:13px;color:#a0a0c0;">
-              Cargá una posición para ver el cono de volatilidad.
-            </div>
+            <div id="cono-info" style="font-family:'Calibri',sans-serif;font-size:13px;color:#a0a0c0;">Cargá una posición para ver el cono de volatilidad.</div>
           </div>
-          <!-- VOLATILITY DASHBOARD -->
+        </div>
+      </div><!-- fin panel derecho -->
+    </div><!-- fin payoff-wrap -->
+  </div><!-- fin tab-payoff -->
+
+  <!-- ══ TAB VOLATILITY ═════════════════════════════════════════════════════ -->
   <div id="tab-volatility" class="tab-content">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px;">
-
-      <!-- Smile -->
       <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;">
         <div class="chart-title">Volatility Smile — VI por Strike</div>
         <canvas id="smile-chart2" height="180"></canvas>
         <div id="smile-skew2" style="margin-top:8px;font-family:'Calibri',sans-serif;font-size:12px;color:#606080;"></div>
       </div>
-
-      <!-- IV Rank + Histórico VI ATM -->
       <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;">
         <div class="chart-title">VI ATM — Histórico & IV Rank</div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;">
-          <div style="background:#f8f9ff;border-radius:6px;padding:8px;text-align:center;">
-            <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">VI ATM Actual</div>
-            <div id="vi-atm-actual" style="font-size:20px;font-weight:700;color:#a0c4ff;font-family:'Calibri',sans-serif;">—</div>
-          </div>
-          <div style="background:#f8f9ff;border-radius:6px;padding:8px;text-align:center;">
-            <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">IV Rank</div>
-            <div id="vi-rank" style="font-size:20px;font-weight:700;font-family:'Calibri',sans-serif;">—</div>
-          </div>
-          <div style="background:#f8f9ff;border-radius:6px;padding:8px;text-align:center;">
-            <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">IV Percentile</div>
-            <div id="vi-percentile" style="font-size:20px;font-weight:700;font-family:'Calibri',sans-serif;">—</div>
-          </div>
+          <div style="background:#f8f9ff;border-radius:6px;padding:8px;text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">VI ATM Actual</div><div id="vi-atm-actual" style="font-size:20px;font-weight:700;color:#a0c4ff;font-family:'Calibri',sans-serif;">—</div></div>
+          <div style="background:#f8f9ff;border-radius:6px;padding:8px;text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">IV Rank</div><div id="vi-rank" style="font-size:20px;font-weight:700;font-family:'Calibri',sans-serif;">—</div></div>
+          <div style="background:#f8f9ff;border-radius:6px;padding:8px;text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">IV Percentile</div><div id="vi-percentile" style="font-size:20px;font-weight:700;font-family:'Calibri',sans-serif;">—</div></div>
         </div>
         <canvas id="vi-historico-chart" height="140"></canvas>
       </div>
-
-      <!-- Skew dashboard -->
       <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;">
         <div class="chart-title">Skew & Estructura de Volatilidad</div>
-        <div id="skew-panel" style="font-family:'Calibri',sans-serif;font-size:13px;color:#606080;">
-          Cargando datos...
-        </div>
+        <div id="skew-panel" style="font-family:'Calibri',sans-serif;font-size:13px;color:#606080;">Cargando datos...</div>
       </div>
-
-      <!-- Vol realizada vs implícita -->
       <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;">
         <div class="chart-title">Vol. Realizada vs Implícita</div>
-        <div id="vol-real-panel" style="font-family:'Calibri',sans-serif;font-size:13px;color:#606080;">
-          Calculando con histórico...
-        </div>
+        <div id="vol-real-panel" style="font-family:'Calibri',sans-serif;font-size:13px;color:#606080;">Calculando con histórico...</div>
         <canvas id="vol-comp-chart" height="140" style="margin-top:8px;"></canvas>
       </div>
-
     </div>
   </div>
 
-  <!-- MI POSICIÓN -->
+  <!-- ══ TAB MI POSICIÓN ════════════════════════════════════════════════════ -->
   <div id="tab-posicion" class="tab-content">
     <div style="padding:16px;">
-
-      <!-- Header acciones -->
       <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap;">
         <button onclick="abrirModalPosicion()" style="padding:8px 16px;background:#a0c4ff;color:#0d0d1a;border:none;border-radius:6px;font-weight:700;font-family:'Calibri',sans-serif;cursor:pointer;font-size:13px;">+ Agregar posición</button>
         <button onclick="cerrarTodasPosiciones()" style="padding:8px 16px;background:none;color:#ef4444;border:1px solid #ef4444;border-radius:6px;font-family:'Calibri',sans-serif;cursor:pointer;font-size:13px;">Cerrar todas</button>
-        <div style="font-size:12px;color:#606080;font-family:'Calibri',sans-serif;">Las posiciones abiertas se siguen en tiempo real. "Guardar" en el Builder registra como operación cerrada — no afecta la posición abierta.</div>
+        <div style="font-size:12px;color:#606080;font-family:'Calibri',sans-serif;">Las posiciones abiertas se siguen en tiempo real.</div>
       </div>
-
-      <!-- Resumen griegas totales posición abierta -->
       <div style="background:#0d0d1a;border-radius:10px;padding:14px;margin-bottom:16px;display:grid;grid-template-columns:repeat(7,1fr);gap:8px;">
-        <div style="text-align:center;">
-          <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">P&L Día</div>
-          <div id="pos-pnl-dia" style="font-size:16px;font-weight:700;color:#a0c4ff;font-family:'Calibri',sans-serif;">—</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">P&L Total</div>
-          <div id="pos-pnl-total" style="font-size:16px;font-weight:700;font-family:'Calibri',sans-serif;">—</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Δ Delta</div>
-          <div id="pos-delta-total" style="font-size:16px;font-weight:700;color:#a0c4ff;font-family:'Calibri',sans-serif;">—</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Γ Gamma</div>
-          <div id="pos-gamma-total" style="font-size:16px;font-weight:700;color:#a0c4ff;font-family:'Calibri',sans-serif;">—</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Θ Theta/día</div>
-          <div id="pos-theta-total" style="font-size:16px;font-weight:700;font-family:'Calibri',sans-serif;">—</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">ν Vega</div>
-          <div id="pos-vega-total" style="font-size:16px;font-weight:700;color:#a0c4ff;font-family:'Calibri',sans-serif;">—</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Capital</div>
-          <div id="pos-capital-total" style="font-size:16px;font-weight:700;color:#f59e0b;font-family:'Calibri',sans-serif;">—</div>
-        </div>
+        <div style="text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">P&L Día</div><div id="pos-pnl-dia" style="font-size:16px;font-weight:700;color:#a0c4ff;font-family:'Calibri',sans-serif;">—</div></div>
+        <div style="text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">P&L Total</div><div id="pos-pnl-total" style="font-size:16px;font-weight:700;font-family:'Calibri',sans-serif;">—</div></div>
+        <div style="text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Δ Delta</div><div id="pos-delta-total" style="font-size:16px;font-weight:700;color:#a0c4ff;font-family:'Calibri',sans-serif;">—</div></div>
+        <div style="text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Γ Gamma</div><div id="pos-gamma-total" style="font-size:16px;font-weight:700;color:#a0c4ff;font-family:'Calibri',sans-serif;">—</div></div>
+        <div style="text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Θ Theta/día</div><div id="pos-theta-total" style="font-size:16px;font-weight:700;font-family:'Calibri',sans-serif;">—</div></div>
+        <div style="text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">ν Vega</div><div id="pos-vega-total" style="font-size:16px;font-weight:700;color:#a0c4ff;font-family:'Calibri',sans-serif;">—</div></div>
+        <div style="text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Capital</div><div id="pos-capital-total" style="font-size:16px;font-weight:700;color:#f59e0b;font-family:'Calibri',sans-serif;">—</div></div>
       </div>
-
-      <!-- Tabla de posiciones abiertas -->
       <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px;">
         <table style="width:100%;border-collapse:collapse;font-family:'Calibri',sans-serif;font-size:13px;">
-          <thead>
-            <tr style="background:#f8f9ff;border-bottom:2px solid var(--border);">
-              <th style="padding:8px 12px;text-align:left;color:#606080;font-weight:600;">Fecha entrada</th>
-              <th style="padding:8px 12px;text-align:left;color:#606080;font-weight:600;">Estrategia</th>
-              <th style="padding:8px 12px;text-align:left;color:#606080;font-weight:600;">Patas</th>
-              <th style="padding:8px 12px;text-align:right;color:#606080;font-weight:600;">Prima entrada</th>
-              <th style="padding:8px 12px;text-align:right;color:#606080;font-weight:600;">Valor actual</th>
-              <th style="padding:8px 12px;text-align:right;color:#606080;font-weight:600;">P&L</th>
-              <th style="padding:8px 12px;text-align:right;color:#606080;font-weight:600;">Δ</th>
-              <th style="padding:8px 12px;text-align:right;color:#606080;font-weight:600;">Θ/día</th>
-              <th style="padding:8px 12px;text-align:right;color:#606080;font-weight:600;">ν Vega</th>
-              <th style="padding:8px 12px;text-align:right;color:#606080;font-weight:600;">Días</th>
-              <th style="padding:8px 12px;text-align:center;color:#606080;font-weight:600;">Acciones</th>
-            </tr>
-          </thead>
+          <thead><tr style="background:#f8f9ff;border-bottom:2px solid var(--border);">
+            <th style="padding:8px 12px;text-align:left;color:#606080;font-weight:600;">Fecha entrada</th>
+            <th style="padding:8px 12px;text-align:left;color:#606080;font-weight:600;">Estrategia</th>
+            <th style="padding:8px 12px;text-align:left;color:#606080;font-weight:600;">Patas</th>
+            <th style="padding:8px 12px;text-align:right;color:#606080;font-weight:600;">Prima entrada</th>
+            <th style="padding:8px 12px;text-align:right;color:#606080;font-weight:600;">Valor actual</th>
+            <th style="padding:8px 12px;text-align:right;color:#606080;font-weight:600;">P&L</th>
+            <th style="padding:8px 12px;text-align:right;color:#606080;font-weight:600;">Δ</th>
+            <th style="padding:8px 12px;text-align:right;color:#606080;font-weight:600;">Θ/día</th>
+            <th style="padding:8px 12px;text-align:right;color:#606080;font-weight:600;">ν Vega</th>
+            <th style="padding:8px 12px;text-align:right;color:#606080;font-weight:600;">Días</th>
+            <th style="padding:8px 12px;text-align:center;color:#606080;font-weight:600;">Acciones</th>
+          </tr></thead>
           <tbody id="posiciones-body"></tbody>
         </table>
       </div>
-
-      <!-- Gráfico P&L posición a lo largo del tiempo -->
       <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px;">
-        <div class="chart-title">Evolución P&L posición abierta (intraday + histórico)</div>
+        <div class="chart-title">Evolución P&L posición abierta</div>
         <canvas id="pos-pnl-chart" height="120"></canvas>
       </div>
-
-      <!-- Gráfico de payoff de la posición abierta -->
       <div style="background:#0d0d1a;border:1px solid #2a2a3e;border-radius:10px;padding:16px;">
         <div class="chart-title" style="color:#606080;">Payoff & Teórico — Posición abierta</div>
-
-        <!-- Controles -->
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:14px;padding:10px 12px;background:#111122;border-radius:8px;">
-          <div>
-            <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:4px;">Spot GGAL</div>
-            <input type="number" id="pos-spot-input" placeholder="6600" oninput="recalcularGraficoPosicion()"
-              style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:5px;font-family:'Calibri',sans-serif;font-size:12px;">
-          </div>
-          <div>
-            <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:4px;">Rango (%)</div>
-            <input type="number" id="pos-rango-pct" value="30" min="5" max="100" oninput="recalcularGraficoPosicion()"
-              style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:5px;font-family:'Calibri',sans-serif;font-size:12px;">
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;">
-              <span style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">⏱ Días</span>
-              <span id="pos-dias-label" style="font-size:11px;font-weight:700;color:#a0c4ff;font-family:'Calibri',sans-serif;"></span>
-            </div>
-            <input type="range" id="pos-dias" min="1" max="365" value="37" style="width:100%;accent-color:#a0c4ff;margin-top:6px;"
-              oninput="onPosDiasChange(this.value)">
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;">
-              <span style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">📊 VI</span>
-              <span id="pos-vi-label" style="font-size:11px;font-weight:700;color:#f59e0b;font-family:'Calibri',sans-serif;">±0%</span>
-            </div>
-            <input type="range" id="pos-vi" min="-50" max="50" value="0" step="5" style="width:100%;accent-color:#f59e0b;margin-top:6px;"
-              oninput="onPosVIChange(this.value)">
-          </div>
+          <div><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:4px;">Spot GGAL</div><input type="number" id="pos-spot-input" placeholder="6600" oninput="recalcularGraficoPosicion()" style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:5px;font-family:'Calibri',sans-serif;font-size:12px;"></div>
+          <div><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:4px;">Rango (%)</div><input type="number" id="pos-rango-pct" value="30" min="5" max="100" oninput="recalcularGraficoPosicion()" style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:5px;font-family:'Calibri',sans-serif;font-size:12px;"></div>
+          <div><div style="display:flex;justify-content:space-between;"><span style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">⏱ Días</span><span id="pos-dias-label" style="font-size:11px;font-weight:700;color:#a0c4ff;font-family:'Calibri',sans-serif;"></span></div><input type="range" id="pos-dias" min="1" max="365" value="37" style="width:100%;accent-color:#a0c4ff;margin-top:6px;" oninput="onPosDiasChange(this.value)"></div>
+          <div><div style="display:flex;justify-content:space-between;"><span style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">📊 VI</span><span id="pos-vi-label" style="font-size:11px;font-weight:700;color:#f59e0b;font-family:'Calibri',sans-serif;">±0%</span></div><input type="range" id="pos-vi" min="-50" max="50" value="0" step="5" style="width:100%;accent-color:#f59e0b;margin-top:6px;" oninput="onPosVIChange(this.value)"></div>
         </div>
-
         <canvas id="pos-payoff-chart" height="200"></canvas>
         <div style="margin-top:8px;font-family:'Calibri',sans-serif;font-size:12px;color:#606080;" id="pos-payoff-stats"></div>
       </div>
-
     </div>
 
     <!-- Modal agregar posición -->
@@ -891,26 +509,14 @@
       <div style="background:#1a1a2e;border-radius:12px;padding:24px;width:480px;max-width:95vw;max-height:90vh;overflow-y:auto;">
         <div style="font-size:16px;font-weight:700;color:#fff;font-family:'Calibri',sans-serif;margin-bottom:16px;">Nueva posición abierta</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
-          <div>
-            <div style="font-size:11px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:4px;">Fecha entrada</div>
-            <input type="date" id="modal-fecha" style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:6px;font-family:'Calibri',sans-serif;font-size:13px;">
-          </div>
-          <div>
-            <div style="font-size:11px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:4px;">Nota / tesis</div>
-            <input type="text" id="modal-nota" placeholder="ej: alcista moderado..." style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:6px;font-family:'Calibri',sans-serif;font-size:13px;">
-          </div>
+          <div><div style="font-size:11px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:4px;">Fecha entrada</div><input type="date" id="modal-fecha" style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:6px;font-family:'Calibri',sans-serif;font-size:13px;"></div>
+          <div><div style="font-size:11px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:4px;">Nota / tesis</div><input type="text" id="modal-nota" placeholder="ej: alcista moderado..." style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:6px;font-family:'Calibri',sans-serif;font-size:13px;"></div>
         </div>
         <div id="modal-patas-container"></div>
         <button onclick="agregarPataModal()" style="width:100%;padding:8px;background:none;border:1px dashed #2a2a3e;border-radius:6px;color:#606080;font-family:'Calibri',sans-serif;cursor:pointer;margin-bottom:12px;">+ Agregar pata</button>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-          <div>
-            <div style="font-size:11px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:4px;">Option Size</div>
-            <input type="number" id="modal-optsize" value="100" style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:6px;font-family:'Calibri',sans-serif;font-size:13px;">
-          </div>
-          <div>
-            <div style="font-size:11px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:4px;">Und. Size</div>
-            <input type="number" id="modal-undsize" value="1" style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:6px;font-family:'Calibri',sans-serif;font-size:13px;">
-          </div>
+          <div><div style="font-size:11px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:4px;">Option Size</div><input type="number" id="modal-optsize" value="100" style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:6px;font-family:'Calibri',sans-serif;font-size:13px;"></div>
+          <div><div style="font-size:11px;color:#606080;font-family:'Calibri',sans-serif;margin-bottom:4px;">Und. Size</div><input type="number" id="modal-undsize" value="1" style="width:100%;background:#0d0d1a;color:#fff;border:1px solid #2a2a3e;border-radius:4px;padding:6px;font-family:'Calibri',sans-serif;font-size:13px;"></div>
         </div>
         <div style="display:flex;gap:8px;margin-top:16px;">
           <button onclick="guardarPosicionModal()" style="flex:1;padding:10px;background:#a0c4ff;color:#0d0d1a;border:none;border-radius:6px;font-weight:700;font-family:'Calibri',sans-serif;cursor:pointer;">Guardar posición</button>
@@ -920,70 +526,30 @@
     </div>
   </div>
 
-  <!-- ANALYTICS -->
+  <!-- ══ TAB ANALYTICS ══════════════════════════════════════════════════════ -->
   <div id="tab-analytics" class="tab-content">
     <div style="padding:16px;">
-
-      <!-- Stats resumen -->
       <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:16px;">
-        <div style="background:#0d0d1a;border-radius:8px;padding:12px;text-align:center;">
-          <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Total trades</div>
-          <div id="an-total" style="font-size:22px;font-weight:700;color:#a0c4ff;font-family:'Calibri',sans-serif;">—</div>
-        </div>
-        <div style="background:#0d0d1a;border-radius:8px;padding:12px;text-align:center;">
-          <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Win Rate</div>
-          <div id="an-winrate" style="font-size:22px;font-weight:700;font-family:'Calibri',sans-serif;">—</div>
-        </div>
-        <div style="background:#0d0d1a;border-radius:8px;padding:12px;text-align:center;">
-          <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Profit Factor</div>
-          <div id="an-pf" style="font-size:22px;font-weight:700;font-family:'Calibri',sans-serif;">—</div>
-        </div>
-        <div style="background:#0d0d1a;border-radius:8px;padding:12px;text-align:center;">
-          <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">P&L Total</div>
-          <div id="an-pnl" style="font-size:22px;font-weight:700;font-family:'Calibri',sans-serif;">—</div>
-        </div>
-        <div style="background:#0d0d1a;border-radius:8px;padding:12px;text-align:center;">
-          <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Mejor trade</div>
-          <div id="an-best" style="font-size:22px;font-weight:700;color:#22c55e;font-family:'Calibri',sans-serif;">—</div>
-        </div>
-        <div style="background:#0d0d1a;border-radius:8px;padding:12px;text-align:center;">
-          <div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Peor trade</div>
-          <div id="an-worst" style="font-size:22px;font-weight:700;color:#ef4444;font-family:'Calibri',sans-serif;">—</div>
-        </div>
+        <div style="background:#0d0d1a;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Total trades</div><div id="an-total" style="font-size:22px;font-weight:700;color:#a0c4ff;font-family:'Calibri',sans-serif;">—</div></div>
+        <div style="background:#0d0d1a;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Win Rate</div><div id="an-winrate" style="font-size:22px;font-weight:700;font-family:'Calibri',sans-serif;">—</div></div>
+        <div style="background:#0d0d1a;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Profit Factor</div><div id="an-pf" style="font-size:22px;font-weight:700;font-family:'Calibri',sans-serif;">—</div></div>
+        <div style="background:#0d0d1a;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">P&L Total</div><div id="an-pnl" style="font-size:22px;font-weight:700;font-family:'Calibri',sans-serif;">—</div></div>
+        <div style="background:#0d0d1a;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Mejor trade</div><div id="an-best" style="font-size:22px;font-weight:700;color:#22c55e;font-family:'Calibri',sans-serif;">—</div></div>
+        <div style="background:#0d0d1a;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:10px;color:#606080;font-family:'Calibri',sans-serif;">Peor trade</div><div id="an-worst" style="font-size:22px;font-weight:700;color:#ef4444;font-family:'Calibri',sans-serif;">—</div></div>
       </div>
-
       <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px;">
-        <!-- Curva de equity -->
-        <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;">
-          <div class="chart-title">Curva de Equity</div>
-          <canvas id="equity-chart" height="150"></canvas>
-        </div>
-
-        <!-- Por estrategia -->
-        <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;">
-          <div class="chart-title">P&L por estrategia</div>
-          <div id="an-por-estrategia" style="font-family:'Calibri',sans-serif;font-size:13px;"></div>
-        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;"><div class="chart-title">Curva de Equity</div><canvas id="equity-chart" height="150"></canvas></div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;"><div class="chart-title">P&L por estrategia</div><div id="an-por-estrategia" style="font-family:'Calibri',sans-serif;font-size:13px;"></div></div>
       </div>
-
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-        <!-- Distribución de retornos -->
-        <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;">
-          <div class="chart-title">Distribución de P&L por trade</div>
-          <canvas id="distrib-chart" height="150"></canvas>
-        </div>
-
-        <!-- Rachas y stats adicionales -->
-        <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;">
-          <div class="chart-title">Estadísticas detalladas</div>
-          <div id="an-stats-detalle" style="font-family:'Calibri',sans-serif;font-size:13px;color:#606080;">
-            Registrá operaciones con P&L para ver estadísticas.
-          </div>
-        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;"><div class="chart-title">Distribución de P&L por trade</div><canvas id="distrib-chart" height="150"></canvas></div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;"><div class="chart-title">Estadísticas detalladas</div><div id="an-stats-detalle" style="font-family:'Calibri',sans-serif;font-size:13px;color:#606080;">Registrá operaciones con P&L para ver estadísticas.</div></div>
       </div>
-
     </div>
   </div>
+
+</div><!-- fin .container -->
+<script>
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT3WNyHxyaxw15sycBbuKe1REh28RHytoNGw9y4No3-CbbtrvZUPpLJG7IU_D0ZYe5qrFzDU5RFAEhu/pub?gid=137375925&single=true&output=csv';
 let spotGGAL = null;
 let strikesDisponibles = [];
@@ -1039,19 +605,49 @@ function isATM(strike) {
   return Math.abs(parseFloat(strike) - spotGGAL) < 150;
 }
 
+let fetchIntentos = 0;
+const FETCH_MAX_INTENTOS = 3;
+
 async function fetchData() {
+  fetchIntentos++;
   try {
-    const res = await fetch(CSV_URL + '&t=' + Date.now());
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000); // 8s timeout
+
+    const res = await fetch(CSV_URL + '&t=' + Date.now(), { signal: controller.signal });
+    clearTimeout(timeout);
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const text = await res.text();
     const rows = parseCSV(text);
-    render(rows);
+
+    // Siempre ocultar loader y mostrar app, independientemente de errores en render
     document.getElementById('loader').style.display = 'none';
     if (!document.querySelector('.tab-content.active')) {
       document.getElementById('tab-plaza').classList.add('active');
     }
     document.getElementById('update-time').textContent = 'Act. ' + new Date().toLocaleTimeString('es-AR');
+    fetchIntentos = 0;
+
+    try { render(rows); } catch(renderErr) { console.warn('render error:', renderErr); }
   } catch(e) {
-    document.getElementById('loader').innerHTML = '<div class="loader-text" style="color:#dc2626">Error al cargar. Reintentando...</div>';
+    const loaderEl = document.getElementById('loader');
+    if (fetchIntentos >= FETCH_MAX_INTENTOS) {
+      // Después de 3 intentos: mostrar la app igual, sin datos de mercado
+      loaderEl.style.display = 'none';
+      if (!document.querySelector('.tab-content.active')) {
+        document.getElementById('tab-plaza').classList.add('active');
+      }
+      const toast = document.createElement('div');
+      toast.innerHTML = `⚠️ Sin datos de mercado · <span style="font-size:11px;opacity:0.8;">El CSV de Google Sheets no responde. Verificá que el Sheet esté publicado.</span>`;
+      toast.style.cssText = 'position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#7c3aed;color:#fff;padding:10px 18px;border-radius:8px;font-family:Calibri,sans-serif;font-size:13px;font-weight:600;z-index:9999;max-width:90vw;text-align:center;';
+      document.body.appendChild(toast);
+      // No hacer más retries automáticos — el setInterval sigue corriendo cada 15s
+      fetchIntentos = 0;
+    } else {
+      loaderEl.innerHTML = `<div class="loader-bar"><div class="loader-fill"></div></div><div class="loader-text" style="color:#dc2626">Reintentando (${fetchIntentos}/${FETCH_MAX_INTENTOS})...</div>`;
+      setTimeout(fetchData, 3000);
+    }
   }
 }
 
@@ -1101,11 +697,11 @@ function render(rows) {
     const atm = isATM(strike);
     const K = parseFloat(strike);
     const T = (diasVto||37)/365;
-    const r = Math.log(1+0.40);
+    const rf = Math.log(1+0.40);
     const viC = strikeLast[K]?.viCall || 0.60;
     const viP = strikeLast[K]?.viPut  || 0.60;
-    const gC  = spotGGAL ? bsGreeks(spotGGAL, K, T, r, viC, 'C') : null;
-    const gP  = spotGGAL ? bsGreeks(spotGGAL, K, T, r, viP, 'P') : null;
+    const gC  = spotGGAL ? bsGreeks(spotGGAL, K, T, rf, viC, 'C') : null;
+    const gP  = spotGGAL ? bsGreeks(spotGGAL, K, T, rf, viP, 'P') : null;
 
     // Colorimetría ITM/ATM/OTM
     let rowBgC = '', rowBgP = '';
@@ -3285,7 +2881,6 @@ function renderCono(spotInput, T, optSize) {
       </div>
     </div>`;
 }
-
 
 
 </script>
