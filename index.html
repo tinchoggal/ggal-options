@@ -1701,6 +1701,7 @@ function recalcularGraficoPosicion() {
       scales:{x:{ticks:{maxTicksLimit:10,color:'#505060',font:{family:'Calibri,Arial',size:10}},grid:{color:'#0d0d18'}},
               y:{ticks:{color:'#505060',font:{family:'Calibri,Arial',size:10},callback:v=>'$'+fmtARS(v)},grid:{color:'#0d0d18'}}}}
   });
+  
 // Tabla de escenarios Mi Posición
   const pnlAcumCerradas=JSON.parse(localStorage.getItem('posiciones_cerradas')||'[]')
     .reduce((s,c)=>s+c.pnlNeto,0);
