@@ -623,11 +623,12 @@
             <div class="chart-title">Escenarios — Abierta + Realizadas</div>
             <table style="width:100%;border-collapse:collapse;font-size:11px;font-family:var(--font);">
               <thead><tr style="border-bottom:1px solid #1a1a2a;">
-                <th style="padding:2px 5px;text-align:left;color:#505060;font-weight:700;">Var.</th>
-                <th style="padding:2px 5px;text-align:right;color:#505060;font-weight:700;">GGAL</th>
-                <th style="padding:2px 5px;text-align:right;color:#f59e0b;font-weight:700;">Abierta</th>
-                <th style="padding:2px 5px;text-align:right;color:#22c55e;font-weight:700;">Cerradas</th>
-                <th style="padding:2px 5px;text-align:right;color:#a0c4ff;font-weight:700;">Total</th>
+             <th style="padding:2px 5px;text-align:left;color:#505060;font-weight:700;">Var.</th>
+<th style="padding:2px 5px;text-align:right;color:#505060;font-weight:700;">GGAL</th>
+<th style="padding:2px 5px;text-align:right;color:#22c55e;font-weight:700;">Vto.</th>
+<th style="padding:2px 5px;text-align:right;color:#f59e0b;font-weight:700;">Teórico</th>
+<th style="padding:2px 5px;text-align:right;color:#606060;font-weight:700;">Cerradas</th>
+<th style="padding:2px 5px;text-align:right;color:#a0c4ff;font-weight:700;">Total</th>
               </tr></thead>
               <tbody id="pos-escenarios-body"></tbody>
             </table>
@@ -1708,24 +1709,27 @@ function recalcularGraficoPosicion() {
   for(let idx=0;idx<31;idx++){
     const pct=-rangoPct+idx*pasoPos;
     const precioS=spotInput*(1+pct/100);
-    const pnlAbierta=calcPnl(precioS,diasSlider);
-    const pnlTotal=pnlAbierta+pnlAcumCerradas;
+    const pnlVto=calcularPayoff(precioS,todasPatas,optSizePrincipal,undSizePrincipal);
+    const pnlTeorico=calcPnl(precioS,diasSlider);
+    const pnlTotal=pnlTeorico+pnlAcumCerradas;
     const esHoy=Math.abs(pct)<pasoPos/2;
     const bg=esHoy?'background:#0d1800;':'';
     const bld=esHoy?'font-weight:700;':'';
-    const cA=pnlAbierta>=0?'#22c55e':'#ef4444';
-    const cC=pnlAcumCerradas>=0?'#22c55e':'#ef4444';
+    const cV=pnlVto>=0?'#22c55e':'#ef4444';
+    const cTeo=pnlTeorico>=0?'#22c55e':'#ef4444';
+    const cC=pnlAcumCerradas>=0?'#22c55e':'#606060';
     const cT=pnlTotal>=0?'#22c55e':'#ef4444';
     tablaPos+=`<tr style="${bg}${bld}border-bottom:1px solid #12121e;">
       <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;color:${pct<0?'#ef4444':pct>0?'#22c55e':'#a0c4ff'};">${pct>=0?'+':''}${pct.toFixed(1)}%</td>
       <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:#c0c0d0;">${fmtARS(precioS)}</td>
-      <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:${cA};">${fmtARS(pnlAbierta)}</td>
+      <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:${cV};">${fmtARS(pnlVto)}</td>
+      <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:${cTeo};">${fmtARS(pnlTeorico)}</td>
       <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:${cC};">${fmtARS(pnlAcumCerradas)}</td>
       <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:${cT};font-weight:700;">${fmtARS(pnlTotal)}</td>
     </tr>`;
   }
   const tablaEl=document.getElementById('pos-escenarios-body');
-  if(tablaEl) tablaEl.innerHTML=tablaPos;}
+  if(tablaEl) tablaEl.innerHTML=tablaPos;
 
 function agregarDesdeChain(tipo,strike,last) {
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
