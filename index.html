@@ -1709,21 +1709,18 @@ function recalcularGraficoPosicion() {
   for(let idx=0;idx<31;idx++){
     const pct=-rangoPct+idx*pasoPos;
     const precioS=spotInput*(1+pct/100);
-    const pnlVto=calcularPayoff(precioS,todasPatas,optSizePrincipal,undSizePrincipal);
-    const pnlTeorico=calcPnl(precioS,diasSlider);
-    const pnlTotal=pnlTeorico+pnlAcumCerradas;
+    const pnlAbierta=calcPnl(precioS,diasSlider);
+    const pnlTotal=pnlAbierta+pnlAcumCerradas;
     const esHoy=Math.abs(pct)<pasoPos/2;
     const bg=esHoy?'background:#0d1800;':'';
     const bld=esHoy?'font-weight:700;':'';
-    const cV=pnlVto>=0?'#22c55e':'#ef4444';
-    const cTeo=pnlTeorico>=0?'#22c55e':'#ef4444';
-    const cC=pnlAcumCerradas>=0?'#22c55e':'#606060';
+    const cA=pnlAbierta>=0?'#22c55e':'#ef4444';
+    const cC=pnlAcumCerradas>=0?'#22c55e':'#ef4444';
     const cT=pnlTotal>=0?'#22c55e':'#ef4444';
     tablaPos+=`<tr style="${bg}${bld}border-bottom:1px solid #12121e;">
       <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;color:${pct<0?'#ef4444':pct>0?'#22c55e':'#a0c4ff'};">${pct>=0?'+':''}${pct.toFixed(1)}%</td>
       <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:#c0c0d0;">${fmtARS(precioS)}</td>
-      <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:${cV};">${fmtARS(pnlVto)}</td>
-      <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:${cTeo};">${fmtARS(pnlTeorico)}</td>
+      <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:${cA};">${fmtARS(pnlAbierta)}</td>
       <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:${cC};">${fmtARS(pnlAcumCerradas)}</td>
       <td style="padding:2px 5px;font-size:11px;font-family:Calibri,Arial;text-align:right;color:${cT};font-weight:700;">${fmtARS(pnlTotal)}</td>
     </tr>`;
